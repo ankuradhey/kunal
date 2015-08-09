@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kunal</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery.fullPage.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    </head>
+    <body>
+        <nav class="leftMenu" id="leftMenu">
+            <ul class="list-group">
+                <li><!-- Things Around me -->
+                    <a href="#things-around-me">
+                        <i class="glyphicon glyphicon-check left-icon valign-middle"></i>
+                    </a>
+                </li>
+                <li><!-- Women -->
+                    <a href="#women">
+                        <i class="glyphicon glyphicon-user left-icon valign-middle"></i>
+                    </a>
+                </li>
+                <li><!-- Mens -->
+                    <a href="#men">
+                        <i class="glyphicon glyphicon-user left-icon valign-middle"></i>
+                    </a>
+                </li>
+                <li><!-- Kids -->
+                    <a href="#kids">
+                        <i class="glyphicon glyphicon-user left-icon valign-middle"></i>
+                    </a>
+                </li>
+                <li><!-- HOME Decor -->
+                    <a href="#home-decor">
+                        <i class="glyphicon glyphicon-home left-icon valign-middle"></i>
+                    </a>
+                </li>
+                <li><!-- Beauty & Make up -->
+                    <a href="#beauty-and-makeup">
+                        <i class="glyphicon glyphicon-eye-open left-icon valign-middle"></i>
+                    </a>
+                </li>
+                <li><!-- Mobile cover and accessories -->
+                    <a href="#mobile-cover-and-accessories">
+                        <i class="glyphicon glyphicon-phone left-icon valign-middle"></i>
+                    </a>
+                </li>
+                <li><!-- Stationary and office supplies -->
+                    <a href="#stationary-and-office-supplies">
+                        <i class="glyphicon glyphicon-tasks left-icon valign-middle"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <section class="wrapper">
+            <section class="topbar">
+                <ul class="container-fluid top-menu">
+                    <li class="col-md-4">
+                        
+                    </li>
+                    <li class="col-md-4 text-center">
+                        <a href="/" class="brand logo">LOGO here</a>
+                    </li>
+                    <li class="col-md-4 text-right">
+                        <a>Login / </a><a>Register</a>
+                    </li>
+                </ul>
+            </section>
+            <section class="search-container container">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for location">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go</button>
+                        </span>
+                    </div>
+                </div>
+            </section>
+            <div id="fullpage">
+                <div class="section things-around-me container-fluid" data-anchor="things-around-me" >
+                    <div class="col-md-6 col-md-offset-3 text-center" style="height:200px;">
+                        <i class="glyphicon glyphicon-check white big-icon" style="margin-bottom:20px"></i>
+                        <span class="white label-section" style="display:block;">Things Around Me</span>
+                    </div>
+                </div>
+                <div class="section women-section container-fluid" data-anchor="women" >
+                    <div class="col-md-6 col-md-offset-3 text-center" style="height:200px;">
+                        <i class="glyphicon glyphicon-user white big-icon" style="margin-bottom:20px"></i>
+                        <span class="white label-section" style="display:block;">Women</span>
+                    </div>
+                </div>
+                <div class="section men-section container-fluid" data-anchor="men" >
+                    <div class="col-md-6 col-md-offset-3 text-center" style="height:200px;">
+                        <i class="glyphicon glyphicon-user white big-icon" style="margin-bottom:20px"></i>
+                        <span class="white label-section" style="display:block;">Men</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/jquery.fullPage.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#fullpage').fullpage();
+            });
+        </script>
+    </body>
+</html>
