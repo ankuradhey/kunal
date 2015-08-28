@@ -1,0 +1,1003 @@
+<link href="<?php echo $this->basePath("/css/website/profile.css"); ?>" rel="stylesheet">
+<!--Content section start here-->
+<div id="content" class="profile-pages">
+    <div class="container">
+        <div class="row">
+            <div class="myprofile-content">
+                <div class="profile-view globle-click clearfix">
+                    <strong>My Profile</strong>
+                    <i class="icons-ar"></i>	
+                </div>
+                <!-- OLD DESIGN -->
+                <?php
+                if ($this->zfcUserIdentity()) {
+                    if ($userLogCount <= 1 && ($social == '0') && $userObj->getUserTypeId() != 3) {
+                        echo '<script>$(".overlay").show();</script>';
+                    }
+                    echo $this->partial('zfc-user/user/profile-menu.phtml', array('page' => 'myProfile', 'addedmentors' => count($addedMentors), 'addedStudents' => $addedStudents));
+                    ?>
+                    <section class="profile-block">
+                        <div class="guest-info clearfix">
+                            <figure>
+                                <?php if ($userObj->getuserPhoto() != "") {
+                                    ?>
+                                    <img src="<?php echo $this->basePath() ?>/uploads/profileimages/<?php echo $userObj->getuserPhoto() . "?" . time(); ?>" id="userphoto" name="userphoto" style="" height="55"/>
+                                <?php } else {
+                                    ?>
+                                    <img src="<?php echo $this->basePath() ?>/images/<?php if ($userObj->getGender() == 'Male') { ?>avatar_100_1x.png<?php } else if ($userObj->getGender() == 'Female') { ?>avatar_100_G.png<?php } else { ?>avatar_100_1x.png<?php } ?>"id="userphoto" name="userphoto" style="" height="55"/>
+                                <?php } ?>
+                            </figure>
+                            <strong><?php echo $userObj->getDisplayName(); ?> 
+                                <span>
+                                    (<?php
+                                    if ($userObj->getUserTypeId() == '1') {
+                                        echo "student";
+                                    }if ($userObj->getUserTypeId() == '2') {
+                                        echo "parent";
+                                    }if ($userObj->getUserTypeId() == '3') {
+                                        echo "teacher";
+                                    }
+                                    ?>)
+                                </span>
+                            </strong>
+                        </div>
+                        <div class="tab-block" role="tabpanel">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Personal Details</a></li>
+                                <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Contact Details</a></li>
+                                <?php
+                                if ($this->zfcUserIdentity()->getUserTypeId() && $this->zfcUserIdentity()->getUserTypeId() != '2') {
+                                    ?>
+                                    <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">School Details</a></li>
+                                    <?php
+                                }
+                                if (isset($_SESSION['logintype']) && $_SESSION['logintype'] == 'tablet') {
+                                    ?>
+                                    <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">License Details</a></li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="tab1">
+                                    <div class="form-container clearfix">
+                                        <strong>Name</strong>
+                                        <div class="right-details"><span><?php echo $userObj->getDisplayName(); ?></span></div>	
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>Gender</strong>
+                                        <span><?php echo $userObj->getGender() ? $userObj->getGender() : 'NA'; ?></span>
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>Postal Code</strong>
+                                        <span><?php echo $userObj->getPostalCode() ? $userObj->getPostalCode() : 'NA'; ?></span>
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>User Location</strong>
+                                        <span>
+                                            <?php
+                                            $stateName = $countryName = '';
+                                            $otherCity = $userObj->getOtherCity();
+
+                                            if (is_object($userObj->getState()) && $userObj->getStateId() != '0')
+                                                $stateName = $userObj->getState()->getStateName();
+
+                                            if (is_object($userObj->getCountry()))
+                                                $countryName = $userObj->getCountry()->getCountryName();
+
+                                            if ($otherCity != "" && $stateName != "") {
+                                                if (isset($stateName) && isset($countryName)) {
+                                                    echo ucfirst($otherCity) . ',&nbsp;' . $stateName . ',&nbsp;' . $countryName;
+                                                } else {
+                                                    echo "NA";
+                                                }
+                                            } elseif ($otherCity != "" && $stateName == "") {
+                                                echo ucfirst($otherCity);
+                                            } else if ($stateName != "" && $otherCity == "") {
+                                                if (isset($stateName) && isset($countryName)) {
+                                                    echo ucfirst($stateName) . ',&nbsp;' . $countryName;
+                                                } else {
+                                                    echo "NA";
+                                                }
+                                            } else {
+                                                echo "NA";
+                                            }
+                                            ?>
+                                        </span>
+                                    </div>	
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab2">
+                                    <div class="form-container clearfix">
+                                        <strong>Mobile</strong>
+                                        <span><?php echo $userObj->getMobile(); ?></span>	
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>Email</strong>
+                                        <span><?php echo $userObj->getEmail(); ?></span>	
+                                    </div>	
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab3">
+                                    <div class="form-container clearfix">
+                                        <strong>Board</strong>
+                                        <span><?php echo $userObj->getBoardId() ? $userObj->getBoard()->getRackName()->getName() : "NA"; ?></span>	
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>Class</strong>
+                                        <span><?php echo $userObj->getClassId() ? $userObj->getClass()->getRackName()->getName() : "NA"; ?></span>	
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>School Name</strong>
+                                        <span><?php echo!empty($userObj->getSchoolName()) ? $userObj->getSchoolName() : "NA"; ?></span>	
+                                    </div>	
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab4">
+                                    <div class="form-container clearfix">
+                                        <strong>Project Name</strong>
+                                        <span><?php echo isset($_SESSION['user']['project_name']) ? $_SESSION['user']['project_name'] : "NA"; ?></span>	
+                                    </div>
+                                    <div class="form-container clearfix">
+                                        <strong>License Id</strong>
+                                        <span><?php echo isset($_SESSION['user']['license_id']) ? $_SESSION['user']['license_id'] : "NA"; ?></span>	
+                                    </div>
+                                    <div class="form-container clearfix">
+                                        <strong>License Start Date</strong>
+                                        <span><?php echo isset($_SESSION['user']['start_date']) ? $_SESSION['user']['start_date'] : "NA"; ?></span>	
+                                    </div>
+                                    <div class="form-container clearfix">
+                                        <strong>License End Date</strong>
+                                        <span><?php echo isset($_SESSION['user']['expiration_date']) ? $_SESSION['user']['expiration_date'] : "NA"; ?></span>	
+                                    </div>
+                                    <div class="form-container clearfix">
+                                        <strong>License Status</strong>
+                                        <span><?php echo isset($_SESSION['user']['activation_type']) ? $_SESSION['user']['activation_type'] : "NA"; ?></span>	
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="edit-container">
+                                <button type="button" class="btn btn-primary" onclick="location.href = '<?php echo $this->Url("zfcuser/changeprofile"); ?>'">EDIT PROFILE</button>
+                                <?php if ($social == '0') {
+                                    ?>
+                                    <button type="button" class="btn btn-warning" onclick="location.href = '<?php echo $this->Url("zfcuser/changepassword"); ?>';">CHANGE PASSWORD</button>
+                                    <?php
+                                }
+                                if ($userObj->getUserTypeId() == 1) {
+                                    ?>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> <strong> Allow parent/mentor to manage schedule</strong>
+                                        </label>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+
+                            </div>
+                        </div>
+
+                    </section>
+                <?php } else { ?>
+                    <script>
+                        window.location = "<?php echo $this->url('home'); ?>"
+                    </script>
+                    <?php
+                }
+                ?>
+
+                <!-- Social Other Info Pop-up starts-->
+                <?php
+                $socialFlag = false;
+                if ($userObj->getMobile() == '' && $social == '1') {
+                    $socialFlag = true;
+                    ?>
+                    <div id="overlay" class="overlay" style="display:block;"></div>
+                    <div style="display: block;" id="register_banner">
+                        <div class="sign-box" style="position:absolute;z-index:800000" id="inline2">
+                            <div class="sign-contbox">
+                                <form name="registerNew" id="registerNew" method="post">
+                                    <h1>Personal Information </h1>
+                                    <input type="hidden" name="username" value="<?php
+                                    if (isset($_SESSION['user']['username'])) {
+                                        echo $_SESSION['user']['username'];
+                                    }
+                                    ?>"/>
+                    <!--                <input type="hidden" name="socialuser" id="socialuser" value="<?php //  echo $providerName;        ?>" />-->
+                                    <div class="log-rigfld" style="padding-right:6px;">
+                                        <div id="rig-lftbg">
+                                            <div class="log-bx">
+                                                <div class="reg-lftbx">Name<span>*</span></div>
+                                                <div class="reg-rhtbx">
+                                                    <input tabindex="1" type="text" onkeypress="regSubmit(event);" name="name" id="name" 
+                                                           value="<?php echo $userObj->getDisplayName(); ?>" readonly='readonly' placeholder="Please enter your name" class="inputBg" style=" border: 1px solid #D3D3D3">
+                                                    <span class="valid-error error_margin" id="errorusername"></span>
+                                                    <span class="valid-error error_margin" id="errorlengthusername"></span>
+                                                    <span class="valid-error error_margin" id="checkname"></span>
+                                                </div>
+                                            </div>
+                                            <div class="log-bx">
+                                                <div class="reg-lftbx">Email ID<span>*</span></div>
+                                                <div class="reg-rhtbx">
+                                                    <input tabindex="2" type="text" onkeypress="regSubmit(event);" name="emailId" id="emailId" value="<?php echo $userObj->getEmail(); ?>" 
+                                                    <?php if ($userObj->getEmail()) { ?> 
+                                                               readonly='readonly'  
+                                                           <?php } ?>
+                                                           placeholder="Please enter your email address" class="inputBg" style=" border: 1px solid #D3D3D3;">
+                                                    <span class="valid-error error_margin" id="erroremail"></span>
+                                                </div>
+                                            </div>
+                                            <div class="log-bx">                            
+                                                <div class="reg-lftbx">Mobile<span>*</span></div>
+                                                <div class="reg-phonebx">
+                                                    <span class="dropdown_reg_custom">
+                                                        <select  tabindex="3" id="phonecode" name="phonecode" class="select-country">                                      
+                                                            <?php
+                                                            if (isset($countryData) && count($countryData) > 0) {
+                                                                foreach ($countryData as $Countries) {
+                                                                    ?>
+                                                                    <?php if (isset($_SESSION['ip_countrycode']) && strtolower($_SESSION['ip_countrycode']) == strtolower($Countries->getIso())) { ?>
+                                                                        <option value="+<?php echo $Countries->getCountryId(); ?>" data-image="<?php echo $this->basePath() ?>/images/flags/<?php echo strtolower($_SESSION['ip_countrycode']) ?>_32.png" selected="selected">+<?php echo $Countries->getPhoneCode() ?></option>										
+                                                                    <?php } else { ?>
+                                                                        <option value="+<?php echo $Countries->getCountryId(); ?>" data-image="<?php echo $this->basePath() ?>/images/flags/<?php echo strtolower($Countries->getIso()) ?>_32.png">+<?php echo $Countries->getPhoneCode() ?></option>
+                                                                    <?php } ?>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </span>
+                                                    <input id="phone" value="<?php echo $userObj->getMobile(); ?>" tabindex="4" onkeypress="regSubmit(event);" type="text" name="phone" maxlength="10" placeholder="Please enter mobile number" class="reg_phone">
+                                                    <span style="display: block; margin-top: 0px;" class="valid-error" id="errormobileNo"></span>
+                                                </div>
+                                            </div>        
+                                            <div class="log-bx">
+                                                <div class="reg-lftbx" style="padding-top:0px;">I am</div>
+
+                                                <input tabindex="6" name="usertype" id="radio1" class="css-checkbox usertype" value="1" type="radio" />
+                                                <label tabindex="5" for="radio1" class="css-label">Student</label>
+                                                <input tabindex="7" name="usertype" id="radio2" class="css-checkbox usertype" value="2" type="radio" />
+                                                <label tabindex="5" for="radio2" class="css-label">Parent</label>
+                                                <input tabindex="8" name="usertype" id="radio3" class="css-checkbox usertype" value="3" type="radio" />
+                                                <label tabindex="5" for="radio3" class="css-label">Teacher</label>
+                                                <span style="font-size: 14px;margin-left:89px; width:90%;color:red;" class="valid-error" id="errorusertype"></span>
+
+                                            </div>
+                                            <div class="log-bx agebar" style="margin-bottom:10px;">
+                                                <div style="claer:both;"></div>
+                                                <div class="" style=" margin-bottom:10px; position:relative;width:450px">
+                                                    <!--<input type="checkbox" name="age_bar" id="age_bar" value="Y" class="css-checkbox1">-->                       
+                                                    I certify that I am 13 years of age or older:
+                                                    <input type="radio" name="age_bar" id="age_bar1" value="Y" class="css-checkbox">
+                                                    <label style="color:#888;" tabindex="5" for="age_bar1" class="css-label">
+                                                        Yes</label>
+                                                    <input type="radio" name="age_bar" id="age_bar2"  value="N" class="css-checkbox">
+                                                    <label style="color:#888;" tabindex="5" for="age_bar2" class="css-label">
+                                                        No</label>
+
+                                                    <span class="chk-valid-error" id="errorage_bar" style="left:0; margin-left:89px;"></span>
+                                                    <span class="chk-valid" style="color:red" id="age_msg" style="left:0;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="log-bx" style="margin-bottom:0px;">
+                                                <div class="reg-lftbx" style="padding-top:2px!important ">Gender<span>*</span></div>
+                                                <div class="" style=" margin-bottom:10px; position:relative">                        
+
+                                                    <input type="radio" name="sex" id="Male" value="Male" class="css-checkbox">
+                                                    <label style="color:#888;" tabindex="5" for="Male" class="css-label">
+                                                        Male</label>
+                                                    <input type="radio" name="sex" id="Female"  value="Female" class="css-checkbox">
+                                                    <label style="color:#888;" tabindex="5" for="Female" class="css-label">
+                                                        Female</label>
+
+                                                    <span style="font-size: 14px;margin-left:89px; width:90%;color:red;" id="errorgender" ></span>
+
+                                                </div>
+                                            </div>
+
+                                            <p class="terms" style="color:#888;margin-left:0px!important;width: 350px!important;">By clicking on "Join" you have agreed to the <a target="_blank" href="<?php echo $this->url('terms-of-use') ?>" tabindex="8">Terms of use.</a></p>
+                                            <span class="valid-error" id="regAuthmail" style="color:green"></span>
+                                        </div>
+                                    </div>
+                                    <div class="rg-ftbg">
+
+                                        <span  id="loadding" style="display:none"><img src="<?php echo $this->basePath() ?>/images/loader16.gif"/></span>
+                                        <div class="join-butbg">
+                                            <a class="register fancybox" id="various1" onClick="return formSubmit();" href="javascript:void(0);" tabindex="10"> <div class="logins">&nbsp;&nbsp;&nbsp;Join&nbsp;&nbsp;&nbsp;</div></a>
+                                            <input type="hidden" id="hidemailerror" name="hidemailerror" value="0" />
+                                        </div>
+                                    </div>
+                                </form>                
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+                <!--  Social other info pop-up ends-->
+
+
+                <?php if (!$isClass && $userObj->getBoardId() && $userObj->getUserTypeId() == 1 && $socialFlag == false) { ?>
+                    <div id="overlay" class="overlay" style="display:block;"></div>
+
+                    <div class="nursery-box sign-box" id="nursery-popup" style="border: 2px solid #F39A22;border-radius:2px; padding-top:0;">
+                        <form name="nursery" id="nursery" method="post">
+                            <h1 style="margin-top:0px;" id="nurseyheadingLogin" class="nursery_popup_margin">Select your Board and Class below</h1>
+                            <div class="prefer" id="boardclass_box" style="display: block; padding-top: 5px;"> 
+
+                                <div class="board-box">
+                                    <select name="board1" id="board1" class="board-select" tabindex="1">
+                                        <option value="">Select Board</option>
+                                        <?php foreach ($boardList as $key => $value) { ?>
+                                            <option value="<?php echo $key; ?>"><?php echo $value ?></option>
+                                        <?php } ?>
+                                        <?php
+                                        foreach ($boardList as $key => $val) {
+                                            if ($val == 'ICSE') {
+                                                ?>
+                                                <option value="<?php echo $key; ?>">Other</option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="class-box" id="classdetails1">
+                                    <select name="class1" id="class1" class="class-select"  tabindex="2">
+                                        <option value="">Select Class</option>
+                                    </select>
+                                </div>
+                                <span id="errormessage" style="color:red;padding:12%;"></span>			
+                                <div class="clear"></div>
+                            </div>  
+
+                            <div class="clear">&nbsp;</div>
+                            <div class="register_conf_button">
+                                <div class="log-bx" id="otherboardclass" style="display:none;">
+                                    <div class="log-rhtbx" style="width:45%">
+                                        <input type="text" name="otherboard" id="otherboard" />
+                                        <span style="color:red;padding:12%;font-size: 14px;" id="errorotherboard"></span>
+                                    </div>
+                                </div>
+
+                                <div class="register_submit_board" id="submit_button" style="display: block;">
+                                    <a class="register" id="various1" style="margin-right:3%; float:right;" onclick="return updateBoardClassParent('<?php echo $_SERVER['HTTP_HOST'] ?>')" href="javascript:void(0);" tabindex="3"> <div class="logins">SUBMIT</div></a>
+                                </div>
+
+                            </div>	
+                            <span id="loadding" style="display:none"><img src="<?php echo $this->basePath() ?>/images/loader16.gif"/></span>
+                            <div id="regSuccessful"></div>			
+                        </form>
+                    </div>
+                <?php } ?>
+
+
+                <?php if ($userObj->getBoardId() == NULL && $userObj->getClassId() == NULL && $social == '1' && $socialFlag == false && $userObj->getUserTypeId() == 1) { ?>
+                    <!-- Student pop-up starts --> 
+                    <?php //if( ($userObj->getUserTypeId()==1 && $userLogCount<=1 && $social =='0') || ($userObj->getUserTypeId()==3 && $userLogCount<=1 && $social =='0') ){ ?>
+                    <?php if (($userObj->getUserTypeId() == 1 && $userLogCount <= 1)) { ?>
+                        <div id="overlay" class="overlay" style="display:block;"></div>
+
+                        <div class="nursery-box sign-box" id="nursery-popup" style="border: 2px solid #F39A22;border-radius:2px; padding-top:0;">
+
+                        <?php } ?>   
+
+                        <?php
+                        $selectBoardHeadingShow = true;
+                        if ($userLogCount <= 1 && ($social == '0')) {
+                            $selectBoardHeadingShow = null;
+                            ?>
+
+                            <h1 class="nursery_popup_margin" style="margin-top:0px;">Your Login Details
+                                <?php if ($userObj->getUserTypeId() == 3) { ?>    
+                                    <a href="JavaScript:void(0)" id="close_button" onclick="closePopupLoginDetails(<?php echo $userObj->getId(); ?>,<?php echo $userObj->getUserTypeId(); ?>)"></a>
+                                <?php } ?>
+                            </h1>
+                            <br/>
+                            <p id="loginIdEmail" style="margin-left: 30px; font-size: 14px;">Login ID : <small><span style="font-size:14px;"><?php echo $userObj->getEmail(); ?></span></small></P>
+                            <br/>
+                            <?php if ($userObj->getUserTypeId() == 3) { ?>    
+                                <div class="register_submit_board"  id="cancel_button">               
+                                    <a class="register" id="various1" style="margin-right:3%; float:right;" onclick="closePopupLoginDetails(<?php echo $userObj->getId(); ?>,<?php echo $userObj->getUserTypeId(); ?>);" href="javascript:void(0);" tabindex="3"> <div class="logins">Close</div></a>
+
+                                </div>
+                            <?php } ?>
+                            <?php
+                            $passwordArr = explode('@', $userObj->getEmail());
+//        $passwordConcat = '';
+//        if(strlen($passwordArr[0])<6){
+//            for($passVar = 1 ; $passVar <= 6-strlen($passwordArr[0]) ; $passVar++){
+//                $passwordConcat .= $passVar;  
+//            }
+//        }
+//        $password = $passwordArr[0].$passwordConcat;
+                            $password = $passwordArr[0];
+                            ?>
+                            <p  id="loginIdPwd" style="margin-left: 30px; font-size: 14px;">Password : <small><span style="font-size: 14px;"><?php echo $password; ?></span></small></p>
+
+                        <?php } ?>
+                        <?php if ($userObj->getUserTypeId() == 1) { ?>
+
+                            <form name="nursery" id="nursery" method="post">
+                                <div style="font-size: 14px; margin: 5px 0;  padding-left:30px; position: relative; text-align: left;">Select your Board and Class below</div>
+                                <?php if (0) { ?>
+                                    <h1 style="margin-top:0px;" id="nurseyheadingLogin" class="nursery_popup_margin">Select your Board and Class belowg</h1>
+                                <?php } ?>
+                                <div class="prefer" id="boardclass_box" style="display: block; padding-top: 5px;"> 
+
+                                    <div class="board-box">
+                                        <select name="board1" id="board1" class="board-select" tabindex="1" style="position:inherit;">
+                                            <option value="">Select Board</option>
+                                            <?php foreach ($boardList as $key => $value) { ?>
+                                                <option value="<?php echo $key; ?>"><?php echo $value ?></option>
+                                            <?php } ?>
+                                            <?php
+                                            foreach ($boardList as $key => $val) {
+                                                if ($val == 'ICSE') {
+                                                    ?>
+                                                    <option value="<?php echo $key; ?>">Other</option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+
+                                        </select>
+                                        <div class='clear'></div>
+                                        <span id="errormessageBoard" style="color:red;padding:5px 0; display:block;"></span>
+                                    </div>
+
+                                    <div class="class-box" id="classdetails1">
+                                        <select name="class1" id="class1" class="class-select"  tabindex="2" style="position:inherit;">
+                                            <option value="">Select Class</option>
+                                        </select>
+                                        <div class='clear'></div>
+                                        <span id="errormessageClass" style="color:red;padding:5px 0; display:block;"></span>
+
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>  
+
+                                <div class="clear">&nbsp;</div>
+                                <div class="register_conf_button">
+                                    <div class="log-bx" id="otherboardclass" style="display:none; margin:15px 0">
+                                        <div class="log-rhtbx" style="padding-left: 12px; width: 48%;">
+                                            <input id="otherboard" class="inputBg" type="text" style="padding:3px 5px" name="otherboard" tabindex="13">
+                                            <div class="clear"></div>
+                                            <span style="color:red;padding:5px 0;font-size: 14px;" id="errorotherboard"></span>
+                                        </div>
+                                    </div>
+                    <!--                <p style="font-size:12px; color:#898989; margin-left: 10px; margin-top: 10px; float:left;">We will send you an email on your email ID regarding </p>-->
+                                    <div class="register_submit_board" id="submit_button" style="display: block;">
+
+
+                                        <a class="register" id="various1" style="margin-right:3%; float:right;" onclick="return updateBoardClassSocial('<?php echo $_SERVER['HTTP_HOST'] ?>')" href="javascript:void(0);" tabindex="3"> <div class="logins">SUBMIT</div></a>
+                                    </div>
+                                    <div class="register_submit_board"  id="cancel_button" style="display: none;">
+                                        <?php if (isset($_SESSION['user']['type']) && $_SESSION['user']['type'] == '') { ?>	
+                                            <a class="register" id="various1" style="margin-right:3%; float:right;" onclick="closeChildPopup('');" href="javascript:void(0);" tabindex="3"> <div class="logins">Close</div></a>
+                                        <?php } else { ?>
+                                            <a class="register" id="various1" style="margin-right:3%; float:right;" onclick="closeChildPopup('my-profile');" href="javascript:void(0);" tabindex="3"> <div class="logins">Close</div></a>
+                                        <?php } ?>
+                                    </div>
+                                </div>	
+                                <span id="loadding" style="display:none"><img src="<?php echo $this->basePath() ?>/images/loader16.gif"/></span>
+                                <div id="regSuccessful"></div>			
+                            </form>
+
+                        <?php } ?>
+                        <div class="clear">&nbsp;</div>
+                    </div> 
+                <?php } ?>  
+
+
+                <?php if ($userObj->getUserTypeId() == 2 && $userLogCount <= 1 && $childDataCount == 0) { ?>
+
+                    <div id="overlay AddChildPopupLoginOverlay" class="overlay" style="display:block;"></div>
+
+                    <div class="nursery-box sign-box AddChildPopupLogin" id="nursery-popup" style="border: 2px solid #F39A22;border-radius:2px; padding-top:0;">
+                        <h1 class="nursery_popup_margin" style="margin-top:0px;">
+                            <?php if ($userLogCount <= 1 && ($social == '0')) { ?>
+                                Your Login Details  
+                            <?php } ?>
+                            <span style="float:right; font-size:13px;"> Already have a child registered on <br>Extramarks.com? Link account <a onclick="openChildLinkPopup();" href="javascript:void(0);">here</a></span><div style="clear:both;"></div></h1>
+                        <div class="register_conf_button">
+
+                            <?php if ($userLogCount <= 1 && ($social == '0')) { ?>
+
+
+                                <br/>
+                                <p id="loginIdEmail" style="margin-left: 30px; font-size: 14px;">Login ID : <small><span style="font-size:14px;"><?php echo $userObj->getEmail(); ?></span></small></P>
+                                <br/>
+
+                                <?php
+                                $passwordArr = explode('@', $userObj->getEmail());
+//        $passwordConcat = '';
+//        if(strlen($passwordArr[0])<6){
+//            for($passVar = 1 ; $passVar <= 6-strlen($passwordArr[0]) ; $passVar++){
+//                $passwordConcat .= $passVar;  
+//            }
+//        }
+//        $password = $passwordArr[0].$passwordConcat;
+                                $password = $passwordArr[0];
+                                ?>
+                                <p  id="loginIdPwd" style="margin-left: 30px; font-size: 14px;">Password : <small><span style="font-size: 14px;"><?php echo $password; ?></span></small></p>
+
+                            <?php } ?>
+
+                            <ul style=" float:right; margin-top:10px;">
+                                <li style="margin-right:10px; float:left;"><a class="register" id="" onclick="addPopup('1')" href="#"> <div class="logins">Add Child</div></a></li>
+                                <li style="margin-right:10px; float:left;"><a class="register" id="various1" onclick="closeChildPopup(<?php echo $userLogCount; ?>,<?php echo $userObj->getId(); ?>);" href="javascript:void(0);" tabindex="3"> <div class="logins">Skip</div></a></li>				
+                                <div class="clear">&nbsp;</div>
+                            </ul>
+                        </div>
+                    </div>   
+
+
+                    <div class="addchild-box sign-box register-contbox" id="addchild-popup" style="border: 2px solid #F39A22;border-radius:2px; padding-top:0px; height:235px;">
+
+
+
+                        <div id="ChildDetailPopup" style="display:block;">   
+                            <h1 class="nursery_popup_margin addchild" style="margin-top:0px;display:block;">Login Detail<span style="float:right; font-size:13px;"> Already have a child registered on <br>Extramarks.com? Link account <a href="javascript:void(0);" onclick="openChildLinkPopup();">here</a></span>
+                                <div style="clear:both;"></div>
+                            </h1>
+
+
+                        </div>
+
+
+
+                        <form name="addchild" id="addchild" method="post">
+                            <div id="addChildPopup" >     
+                                <h1 class="nursery_popup_margin addchild" style="margin-top:0px;">
+                                    <span id="redirect" style="display:none"><a onclick="closeChildPopup(<?php echo $userLogCount; ?>);" id="close_button"  href="javascript:void(0)"></a></span>
+                                    <span id="noredirect" style="display:none"><a onclick="closeChildPopup('');" id="close_button"  href="javascript:void(0)"></a></span>
+                                    Add Child <span style="float:right; font-size:13px; margin-right:10px;"> Already have a child registered on <br>Extramarks.com? Link account <a id="redirecthere" style="display:none" href="javascript:void(0);" onclick="openChildLinkPopup();">here</a><a style="display:none" id="noredirecthere" href="javascript:void(0);" onclick="openChildLinkPopup('1');">here</a></span>
+                                    <div style="clear:both;"></div>
+                                </h1>
+                                <div class="log-fld" style="padding-top:15px;">
+                                    <span class="green-color" id="success_msg"></span>
+                                    <div class="log-bx">
+                                        <div class="log-lftbx" style="width:24%">Child Name:<span>*</span></div>
+                                        <div class="log-rhtbx" style="width:76%">
+                                            <input type="text" name="childName" id="childName"/>
+                                            <span class="valid-error" id="errorchildName"></span>
+                                        </div>
+                                    </div>  
+                                    <div class="log-bx">
+                                        <div class="log-lftbx" style="width:24%">User Id:<span>*</span></div>
+                                        <div class="log-rhtbx" style="width:76%">
+                                            <input type="text" name="childUserId" id="childUserId"/>
+                                            <span class="valid-error" id="errorchildUserId"></span>
+                                        </div>
+                                    </div>  
+                                    <div class="log-bx">
+                                        <div class="log-lftbx" style="width:24%">Password:<span>*</span></div>
+                                        <div class="log-rhtbx" style="width:76%">
+                                            <input type="password" name="childPassword" id="childPassword"/>
+                                            <span class="valid-error" id="errorchildPassword"></span>
+                                        </div>
+                                    </div>  
+                                    <div class="log-bx">
+                                        <div class="log-lftbx" style="width:24%">Age:<span>*</span></div>
+                                        <div class="log-rhtbx" style="width:76%">
+                                            <input type="text" name="childAge" id="childAge"/>
+                                            <span class="valid-error" id="errorchildAge"></span>
+                                            <span class="valid-error" id="errorchildAge1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="log-bx">
+                                        <div class="log-lftbx" style="width:24%">
+                                            School:
+                                            <span>
+                                                *
+                                            </span>
+                                        </div>
+                                        <div class="log-rhtbx" style="width:76%">
+                                            <input type="text" name="school_name" id="school_name_child"/>
+                                            <span class="valid-error" id="errorSchoolName">
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div id="classdetails1" class="log-bx">
+                                        <div style="width:24%" class="log-lftbx">Select Gender:<span>*</span></div>
+                                        <div style="width:27%; margin-top:0px;" class="log-rhtbx">
+                                            <select style="text-indent:inherit; background-image:none; font-size:12px;width:290px;" tabindex="31" class="class-select custom-selects" id="classgender" name="gender">
+                                                <option value="">Select Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                            <div class="clear"></div>
+                                            <span id="errorgenderChild" class="valid-error"></span>
+                                        </div>
+                                    </div>
+
+                                    <div id="classdetails1" class="log-bx">
+                                        <div style="width:24%" class="log-lftbx">Select Country:<span>*</span></div>
+                                        <div style="width:27%; margin-top:0px;" class="log-rhtbx">
+                                            <select id="ucountriesChild" class='custom-selects loc' name="ucountries" style="text-indent:inherit; background-image:none; font-size:12px;width:290px;">
+                                                <option value="">Country</option>
+                                                <?php
+                                                if (isset($this->countryData)) {
+                                                    foreach ($this->countryData as $countryname) {
+                                                        ?>
+                                                        <?php if ($userObj->getCountryId() == $countryname->getCountryId()) { ?>
+                                                            <option value="<?php echo $countryname->getcountryid(); ?>" selected="selected"><?php echo $countryname->getcountryname(); ?></option>
+                                                        <?php } else { ?>
+                                                            <option value="<?php echo $countryname->getcountryid(); ?>"><?php echo $countryname->getcountryname(); ?></option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                            <div class="clear"></div>
+                                            <span id="errorcountryChild" class="valid-error"></span>
+                                        </div>
+                                    </div>
+
+                                    <div id="classdetails1" class="log-bx">
+                                        <div style="width:24%" class="log-lftbx">Select State:<span>*</span></div>
+                                        <div style="width:27%; margin-top:0px;" class="log-rhtbx">
+                                            <select id="stateChild" class='custom-selects state' name="state" style="text-indent:inherit; background-image:none; font-size:12px;width:290px;">
+                                                <option value="">State</option>
+                                                <?php
+                                                if (isset($_SESSION['statelist'])) {
+                                                    foreach ($_SESSION['statelist'] as $statename) {
+                                                        ?>
+                                                        <?php if ($userObj->getStateId() == $statename->getstateid()) { ?>
+                                                            <option value="<?php echo $statename->getstateid(); ?>" selected="selected"><?php echo $statename->getstatename(); ?></option>
+                                                        <?php } else { ?>
+                                                            <option value="<?php echo $statename->getstateid(); ?>"><?php echo $statename->getstatename(); ?></option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                            <div class="clear"></div>
+                                            <span id="errorstateChild" class="valid-error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="log-bx">
+                                        <div class="log-lftbx" style="width:24%">
+                                            City:
+                                            <span>
+                                                *
+                                            </span>
+                                        </div>
+                                        <div class="log-rhtbx" style="width:76%">
+                                            <input type="text" name="city" id="cityChild" value="<?php echo $userObj->getOtherCity(); ?>"/>
+                                            <span class="valid-error" id="errorCityName">
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="log-bx">
+                                        <div class="log-lftbx" style="width:24%">Select Board:<span>*</span></div>
+                                        <div class="log-rhtbx" style="width:27%; margin-top:0px;">
+
+                                            <select name="boardChild" id="boardChild" class="board-select custom-selects"  tabindex="1" style="text-indent:inherit; background-image:none; font-size:12px;width:290px;">
+                                                <option value="">Select Board</option>
+                                                <?php foreach ($boardList as $key => $value) { ?>
+                                                    <option value="<?php echo $key; ?>"><?php echo $value ?></option>
+                                                <?php } ?>
+                                                <?php
+                                                foreach ($boardList as $key => $val) {
+                                                    if ($val == 'ICSE') {
+                                                        ?>
+                                                        <option value="<?php echo $key; ?>">Other</option>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                            <div class='clear'></div>
+                                            <span class="valid-error" id="errorboardChild"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="log-bx" id="otherboardChildclass" style="display:none;">
+                                        <div class="log-lftbx" style="width:24%">Other Board:<span>*</span></div>
+                                        <div class="log-rhtbx" style="width:27%; margin-top:-10px;">
+                                            <input type="text" name="otherboardchild" id="otherboardchild" />
+                                            <div class='clear'></div>
+                                            <span class="valid-error" id="errorotherboardchild"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="log-bx" id="classdetails1">
+                                        <div class="log-lftbx" style="width:24%">Select Class:<span>*</span></div>
+                                        <div class="log-rhtbx" style="width:27%; margin-top:0px;">
+                                            <select name="classChild" id="classChild" class="class-select custom-selects"  tabindex="2" style="text-indent:inherit; background-image:none; font-size:12px;">
+                                                <option value="">Select Class</option>
+                                            </select>
+                                            <div class='clear'></div>
+                                            <span class="valid-error" id="errorclassChild"></span>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                    <!--<div class="register_conf_text" id="reg_msg" style="width:auto; float:none; margin-left:0px;">
+                                          <p style="font-size:14px; color:#898989; text-align:left;">We have sent you an email with all the above details</p>
+                                  </div>-->
+                                </div>  
+                                <div class="clear">&nbsp;</div>
+                                <div class="register_conf_button_h">
+
+                                    <ul style=" float:right; margin-top:10px;">
+                                        <li style="margin-right:10px; float:left;"><a class="register" id="various1" onclick="return addChildData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'add',<?php echo $userLogCount ?>,<?php echo $userObj->getUserTypeId() ?>)" href="javascript:void(0);" tabindex="3"> <div class="logins">Save & Add More</div></a></li>
+                                        <li style="margin-right:10px; float:left;"><a class="register" id="various1" onclick="return addChildData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'save',<?php echo $userLogCount ?>,<?php echo $userObj->getUserTypeId() ?>)" href="javascript:void(0);" tabindex="3"> <div class="logins">Save & Continue</div></a></li>
+                                        <!--<li style="margin-right:10px; float:left;"><a class="register" id="various1" onclick="closeChildPopup('');" href="javascript:void(0);" tabindex="3"> <div class="logins">Skip</div></a></li>-->
+                                        <div class="clear">&nbsp;</div>
+                                    </ul>
+                                </div>	
+
+
+                                <span id="loadding" style="display:none"><img src="<?php echo $this->basePath() ?>/images/loader16.gif"/></span>
+                                <div id="regSuccessful"></div>
+                            </div>			
+                        </form>
+
+                        <div class="clear">&nbsp;</div>
+                    </div>
+
+
+                    <div style="display: none;" id="childlink-popup" class="childlink-box sign-box">
+                        <input type="hidden" name=skipbut" id="skipbut" value=''/> 
+                        <form name="linkchild" id="linkchild" method="post">
+                            <span id="skip1" style="display: none;"><a onclick="closeChildPopup();" style="margin-right: 8px;margin-top:7px;" id="close_button" href="javascript:void(0)"></a></span>
+                            <span id="skip2" style="display: none;"><a onclick="closeChildPopup('');" style="margin-right: 8px;margin-top:7px;" id="close_button" href="javascript:void(0)"></a></span>             
+                            <h1 class="childlink_popup_margin">Link Child</h1>            
+                            <span class="green-color" id="success_msg"></span>
+                            <div class="prefer">
+                                <div class="log-bx">
+                                    <div class="log-lftbx" style="padding-left:15px;width: 17%">Child  Email:<span>*</span></div>
+                                    <div class="log-rhtbx">
+                                        <input type="text" name="linkChildUserId" id="linkChildUserId" value=""/>
+                                        <span class="valid-error" id="errorlinkChildUserId"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="register_conf_button_h">
+                                <div style="float:right; margin-top:10px; margin-right:10px;">
+                                    <a class="register" id="various1" style="margin-right:10px; float:left;" onclick="return linkChildData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'add',<?php echo $childDataCount; ?>)" href="javascript:void(0);" tabindex="3"> <div class="logins">Save & Add More</div></a>
+                                    <a class="register" id="various1" style="margin-right:10px; float:left;" onclick="return linkChildData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'save',<?php echo $childDataCount; ?>)" href="javascript:void(0);" tabindex="3"> <div class="logins">Save & Continue</div></a>
+                                    <!--<a class="register" id="various1" style="margin-right:10px; float:left;" onclick="closeChildPopup();" href="javascript:void(0);" tabindex="3"> <div class="logins">Skip</div></a>-->
+                                    <!--<a  id ="skip1" class="register" id="various1" style="margin-right:10px; float:left;display:none;"  onclick="closeChildPopup();" href="javascript:void(0);" tabindex="3"> <div class="logins">Skip</div></a>
+                                    <a  id ="skip2" class="register" id="various1" style="margin-right:10px; float:left; display:none;"  onclick="closeChildPopup('');" href="javascript:void(0);" tabindex="3"> <div class="logins">Skip</div></a>-->
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                <?php } ?> 
+            </div>
+        </div>
+    </div>
+</div>
+<?php if ($userObj->getUserTypeId() == 2 && $childDataCount > 0) { ?>
+    <script>
+        //        $(".AddChildPopupLogin").hide();
+        $("#overlay").hide();
+        //        $.cookie("adChildVar",null);
+    </script>
+<?php } else if ($userObj->getBoardId() != NULL && $isClass) { ?>
+    <script>
+        $(".overlay").hide();
+    </script>
+<?php } ?>
+<script>
+    var selectedOption = $("#boardChild").find(":selected").text();
+    $("#boardChild").next(".holders").text(selectedOption);
+    var selectedOption = $("#classChild").find(":selected").text();
+    $("#classChild").next(".holders").text(selectedOption);
+    $("#board1").change(function() {
+        var optionString = '<option value="">Select Class</option>';
+        $("#class1").html(optionString);
+        $("#otherboardclass").hide();
+        if (($("#board1 :selected").text()) == "Other") {
+            $("#otherboardclass").show();
+        }
+
+        if ($(this).val()) {
+            $.ajax({type: 'POST',
+                url: BASE_URL + "/lms/index/containerlist/" + $(this).val(),
+                dataType: 'json',
+                success: function(data) {
+                    var optionString = '<option value="">Select Class</option>';
+                    $("#class1").html(optionString);
+
+                    $.each(data.options, function(key, obj)
+                    {
+                        optionString += '<option value="' + obj.rack_id + '">' + obj.rack_name + '</option>';
+
+                    })
+                    $("#class1").html(optionString);
+
+                }
+            });
+        }
+
+    });
+
+
+    $("#boardChild").change(function() {
+        var optionString = '<option value="">Select Class</option>';
+        $("#classChild").html(optionString);
+        $("#otherboardChildclass").hide();
+        if (($("#boardChild :selected").text()) == "Other") {
+            $("#otherboardChildclass").show();
+        }
+        if ($(this).val()) {
+            $.ajax({type: 'POST',
+                url: BASE_URL + "/lms/index/containerlist/" + $(this).val(),
+                dataType: 'json',
+                success: function(data) {
+                    var optionString = '<option value="">Select Class</option>';
+                    $("#classChild").html(optionString);
+
+                    $.each(data.options, function(key, obj)
+                    {
+                        optionString += '<option value="' + obj.rack_id + '">' + obj.rack_name + '</option>';
+
+                    })
+                    $("#classChild").html(optionString);
+
+                }
+            });
+        }
+
+    });
+
+
+
+    $("#ucountriesChild").change(function() {
+        $("#stateChild").parent().find(".holders").text("");
+        $("#stateChild").parent().find(".holders").text("Select a state");
+        var countryid = $("#ucountriesChild").val();
+        $.ajax({
+            type: 'POST',
+            url: BASE_URL + '/user/getstates',
+            data: {countryid: countryid},
+            success: function(data) {
+                $("#stateChild").html(data.statenames);
+            }
+        });
+    });
+
+</script>
+
+
+<!-- Student pop-up ends -->
+<script>
+    $(document).ready(function() {
+        $(".dropdown_reg_custom select").msDropDown();
+        $(".main-bg").height($(".right-content").height() + 7);
+
+        $(".agebar").hide();
+        $('.usertype').click(function() {
+            var usertype = $(this).prop('id');
+            if (usertype == 'radio1') {
+                $(".agebar").show();
+            } else {
+                $(".agebar").hide();
+            }
+        });
+
+        $('input[name="age_bar"]').click(function(e) {
+            var agval = $(this).val();
+            if (agval == 'Y') {
+                $('#age_msg').html('');
+                $('.join-butbg').show();
+            } else if (agval == 'N') {
+                $('#age_msg').html('Persons below the age of thirteen are advised to take the help of an older acquaintance in order to log in. Legally they are not allowed to have an e-mail account.');
+                $('.join-butbg').hide();
+                $('#errorage_bar').hide();
+            }
+
+        });
+
+        $('input[name="usertype"]').click(function(e) {
+            $('.join-butbg').show();
+        });
+    });
+    $(window).resize(function() {
+        $(".main-bg").height($(".right-content").height() + 7);
+    });
+</script>
+<script>
+    function resetTabs() {
+        $("#perofileTabcontent > div").hide(); //Hide all content
+        $("#perofiletabs a").attr("id", ""); //Reset id's      
+    }
+
+    var myUrl = window.location.href; //get URL
+    var myUrlTab = myUrl.substring(myUrl.indexOf("#")); // For localhost/tabs.html#tab2, myUrlTab = #tab2     
+    var myUrlTabName = myUrlTab.substring(0, 4); // For the above example, myUrlTabName = #tab
+
+    (function() {
+        $("#addChildPopup").hide();
+        $("#perofileTabcontent > div").hide(); // Initially hide all content
+        $("#perofiletabs li:first a").attr("id", "current"); // Activate first tab
+        $("#perofileTabcontent > div:first").fadeIn(); // Show first tab content
+
+        $("#perofiletabs a").on("click", function(e) {
+            e.preventDefault();
+            if ($(this).attr("id") == "current") { //detection for current tab
+                return
+            }
+            else {
+                resetTabs();
+                $(this).attr("id", "current"); // Activate this
+                $($(this).attr('name')).fadeIn(); // Show content for current tab
+            }
+        });
+        for (i = 1; i <= $("#perofiletabs li").length; i++) {
+            if (myUrlTab == myUrlTabName + i) {
+                resetTabs();
+                $("a[name='" + myUrlTab + "']").attr("id", "current"); // Activate url tab
+                $(myUrlTab).fadeIn(); // Show url tab content        
+            }
+        }
+
+        if ($.cookie("adChildVar_<?php echo $userObj->getId(); ?>") == 'true') {
+            $(".AddChildPopupLogin").hide();
+            $(".overlay").hide();
+            $("#nursery-popup").hide();
+
+            //            $.cookie("adChildVar_<?php // echo $userObj->getId();           ?>",null);
+        }
+    })()
+
+    function addPopup(id) {
+        if (id == '1') {
+            $('#redirect').css('display', 'block');
+            $('#redirecthere').css('display', 'block');
+        } else {
+            $('#noredirect').css('display', 'block');
+            $('#noredirecthere').css('display', 'block');
+        }
+        $("#addChildPopup").show();
+        $("#addchild-popup").show();
+
+        $("#addchild-popup").css("height", "auto");
+        $("#ChildDetailPopup").hide();
+        $(".register_conf_button").hide();
+
+    }
+
+    function updateBoardClassSocial(host) {
+        var classId = $('#class1').val();
+        var boardId = $('#board1').val();
+        $("#errormessageBoard").html("");
+        $("#errormessageClass").html("");
+        var otherboardname = null;
+        if ($("#board1 :selected").text() == 'Other') {
+            var otherboardname = $("#otherboard").val();
+            if ($("#otherboard").val() == '') {
+                $("#errorotherboard").html("Please enter other board");
+                return false;
+            } else {
+                $("#errorotherboard").html("");
+            }
+        } else {
+            $("#errorotherboard").html("");
+        }
+        if (boardId == '') {
+            $("#errormessageBoard").html("Please select board");
+            return false;
+        } else if (classId == '') {
+            $("#errormessageClass").html("Please select class");
+            return false;
+        } else {
+            $("#loadding").show();
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + '/user/updateboardclass',
+                data: {classId: classId, boardId: boardId, otherboardname: otherboardname},
+                success: function(data) {
+                    location.href = BASE_URL + "/user/user-dashboard/1/welcome";
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Assessment'.$this->translate('- Extramarks'))->setSeparator(' - ')->setAutoEscape(false) ?>
+         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+         <!-- Le styles -->
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->cdn() . '/images/website/favicon.ico'))
+                 ->offsetSetStylesheet(1,$this->cdn() . '/css/website/bootstrap.css?' . filemtime($filepath . "/css/website/bootstrap.css"))
+            ->offsetSetStylesheet(2,$this->cdn() . '/css/website/global.css?' . filemtime($filepath . "/css/website/global.css"))
+            ->offsetSetStylesheet(4,$this->cdn() . '/css/website/responsive.css?' . filemtime($filepath . "/css/website/responsive.css"));
+        ?>
+     <!-- Scripts -->
+        <?php
+        echo $this->headScript()
+               ->appendFile("https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js", "text/javascript", array("conditional" => "lt IE 9"))
+            ->appendFile($this->basePath() . '/js/website/jquery-1.11.2.js?' . filemtime($filepath . "/js/website/jquery-1.11.2.js"))
+            ->appendFile($this->basePath() . '/js//website/bootstrap.js?' . filemtime($filepath . "/js/bootstrap.js"))
+            ->appendFile($this->basePath() . '/js/website/jquery.selectbox-0.2.js?' . filemtime($filepath . "/js/website/jquery.selectbox-0.2.js"))
+           ->appendFile($this->basePath() . '/js/website/custom.js?' . filemtime($filepath . "/js/website/custom.js"))
+          // ->appendFile($this->basePath() . '/js/extramark.js?' . filemtime($filepath . "/js/extramark.js"))
+            ->appendFile($this->basePath() . '/js/website/jquery.cookie.js?' . filemtime($filepath . "/js/website/jquery.cookie.js"));
+        ?>
+<style type="text/css">
+            #in-container{height:auto !important; min-height:0 !important;}
+        </style>
+</head>
+    <body>
+  <!-- container start -->
+        <div id="in-containerbg">
+            <div id="in-container">
+                <div id="inner-cont_st">
+                    <?php echo $this->content; ?>   
+                </div>
+                <div class="cl"></div>
+            </div>
+        </div>
+        <!-- container end-->
+        <!-- footer end -->
+    </body>
+</html>

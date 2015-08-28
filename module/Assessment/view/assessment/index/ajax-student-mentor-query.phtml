@@ -1,0 +1,185 @@
+
+<div class="message" id="succussesMessage" style="text-color:green;text-align:center"></div>         
+<?php if($this->persontype == 'student' || $this->persontype == 'mentor'){ ?>
+   <div class="post_comment comment_text testarea-box rating-bg"  id="groupowner_<?php  echo $this->relationId; ?>">
+                                            <form action="" name="post_comment" id="post_comment" method="post">
+                                   <!--   <label class="message" id="msg_'<?php  echo $this->relationId ?>"></label>-->
+
+                                                <div class="cmnt-cell post-textarea"><textarea id="comment_text_<?php  echo $this->relationId; ?>"  name="comment_text" class="form-control" placeholder="Post a query..." ></textarea></div>
+                                                <?php if ($this->zfcUserIdentity() && $this->zfcUserIdentity()->getId() != "") { ?>
+                                                   <div class="cmnt-cell cmnt-cell-postBnt"> <input type="button" class="btn btn-primary" name="qa_post" id="qa_post" onclick="commentgroupPost('<?php  echo $this->relationId; ?>')" value="POST"></div>
+                                                <?php  } else { ?>
+                                                    <a class="showmnu fancybox" id="various1" onclick="getPopupForms('login');" href="javascript:void(0);" >
+                                                        <input type="button" class="user-cmnt-form-submit" name="qa_post" id="qa_post" value="POST"></a>
+                                                <?php  } ?>
+                                            </form>
+                                        </div>
+
+         <?php }?>
+
+<div class="clear" ></div>
+<table id="show_activity" cellpadding="0" cellspacing="0" width="100%" class="container-content">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div>
+                                       <div class="line"></div>
+                                <form class="groupact_form" method="post" id="groupact_form">
+
+                                    <span style="display:none;float:left;"  id="loaddingActivity" href="javascript:void(0);"><img  src="<?php echo $this->cdn() ?>/images/loader16.gif" /></span>
+                                    <span id="all_page_question">
+            <?php //echo "<pre />"; print_r($this->getQuestions); ?>
+    <?php echo $this->partial('assessment/index/pagination-questions.phtml', array('currentPage' => $this->currentPage, 'resultsPerPage' => $this->resultsPerPage, 'getQuestions' => $this->getQuestions, 'countposts' => $this->countposts, 'currentchapter_details' => $this->currentchapter_details)); ?>
+                                    </span>
+                                </form>							
+                            </div>
+                        </td>					
+                    </tr>
+                </tbody>
+            </table>
+
+<script type="text/javascript">
+    function commentgroupPost(groupowner_id) {        
+        $('#loadingPost').show();
+        //var boardid=$("#hidboardid").val();
+        //var classid=$("#hidclassid").val();	
+        var groupownerId = groupowner_id;
+        var commenttext = $("#comment_text_" + groupowner_id).val();
+        var questionaskedto = 'mentor';
+        //var totcount=$("#totPosts").val();		
+        if (commenttext == "") {
+            alert("Please enter your comment.");
+            $("#comment_text").focus();
+            return false;
+
+        }
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->Url('comments'); ?>',
+            data: {groupownerId: groupownerId, commenttext: commenttext,questionaskedto:questionaskedto},
+            success: function(data) {
+                      jQuery('#student_query').trigger('click');
+                      //console.log('yessssss');
+                      getTads('Query','1');
+                      //console.log(data['output']);
+                      $("#succussesMessage").html('<b>Query post successfully</b>');
+                if (data.output == 'success') {
+                      
+                      //getTads('Query','1'); 
+                      
+                      //$('#loadingPost').hide();
+                      //$("#comment_text_" + groupowner_id).val('');
+                      // $("#msg_"+groupowner_id).html('Query Posted Successfully');	
+                      //$("#msg_"+groupowner_id).show().delay(1000).fadeOut();          
+                      //$(".message").show();
+                      //$("#comments").html(data.get_comments);	
+                      
+                }
+
+            }
+        });
+    }
+    
+       function postsNext(type, currentPage, resultsPerPage) {
+       
+       
+        $('#loadingnext').show();
+        var group_name = $("#group_names").val();
+        var board = $("#boards").val();
+        var classid = $("#classnames").val();
+        var subjectid = $("#subjects").val();
+        var chapterid = $("#chapter").val();
+         var questionaskedto = 'mentor';
+         var id = '<?php echo $this->queryuserId?>';
+            
+         var relationId =  '<?php  echo $this->relationId; ?>';
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->Url('pagination-questions'); ?>',
+            data: {currentPage: currentPage, resultsPerPage: resultsPerPage, type: type, group_name: group_name, board: board, classid: classid, subjectid: subjectid, chapterid: chapterid,questionaskedto:questionaskedto,relationId:relationId,id:id},
+            success: function(data) {
+                $('#loadingnext').hide();
+                if (data) {
+                    $("#nextPost").hide();
+                    $("#all_question").html(data);
+                }
+            }
+        });
+    }
+    
+      function postsPrevious(type, currentPage, resultsPerPage) {
+        $('#loadingprev').show();
+        var group_name = $("#group_names").val();
+        var board = $("#boards").val();
+        var classid = $("#classnames").val();
+        var subjectid = $("#subjects").val();
+        var chapterid = $("#chapter").val();
+         var questionaskedto = 'mentor';
+         var id = '<?php echo $this->queryuserId?>';
+            
+         var relationId =  '<?php  echo $this->relationId; ?>';
+       
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->Url('pagination-questions'); ?>',
+            data: {currentPage: currentPage, resultsPerPage: resultsPerPage, group_name: group_name, board: board, classid: classid, subjectid: subjectid, chapterid: chapterid, type: type,questionaskedto:questionaskedto,relationId:relationId,id:id},
+            success: function(data) {
+                $('#loadingprev').hide();
+                if (data) {
+                    $("#all_question").html(data);
+                }
+            }
+        });
+    }
+     function replyQuestion(userid, questionid) {
+        $("#postReply" + questionid).hide();
+        $("#replyAnswers" + questionid).toggle();
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->Url('reply-answers'); ?>',
+            data: {userid: userid, questionid: questionid},
+            success: function(data) {
+                if (data) {
+                    $("#replyAnswers" + questionid).html(data);
+                }
+            }
+        });
+    }
+    function replyAnswer1(questionid) {
+        $("#postReply" + questionid).toggle();
+        $("#replyAnswers" + questionid).hide();
+    }
+    function postQuestion(questionid, userid, replyCount) {
+        var postReply = $("#replyAnswer" + questionid).val();
+        if (postReply == "") {
+            alert("Plese enter reply maessage");
+            $("#replyAnswer" + questionid).focus();
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->Url('reply-add'); ?>',
+            data: {userid: userid, questionid: questionid, replymessage: postReply},
+            success: function(data) {
+                if (data.output == 'success') {
+                    $("#postReply" + questionid).toggle();
+                    $("#view" + questionid).show();
+                    $("#countReplys" + questionid).html(data.count_reply);
+                    $("#replyAnswer" + questionid).val('');
+                }
+            }
+        });
+    }
+    
+     function getUserdata(id) {
+
+        var htmlData = $('.groupact_popcont' + id).html();
+
+        //$("#overlay_logins").css({display: "block"});
+        $('#model_body_p').html(htmlData);
+
+
+    }
+
+    
+    </script>

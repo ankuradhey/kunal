@@ -1,0 +1,420 @@
+<link rel="stylesheet" href="<?php echo $this->basePath("css/website_reg/register.css"); ?>" type="text/css" media="screen" />
+<script>
+    $(document).ready(function () {
+        $(".ChildSelect").each(function () {
+            $(this).wrap("<span class='select-wrapper'></span>");
+            $(this).after("<span class='holder'></span>");
+        });
+        $(".ChildSelect").change(function () {
+            var selectedOption = $(this).find(":selected").text();
+            $(this).next(".holder").text(selectedOption);
+        }).trigger('change');
+    });
+</script>
+<style>
+    .ddcommon .ddTitle, .ddcommon{ display: block}
+.dd .ddTitle{border: 1px solid #DDDDDD;  border-radius: 3px; padding-right: 22px;}
+.dd .ddTitle .ddTitleText{ line-height: 40px;}
+.ddcommon .ddArrow{ left: inherit; right: 4px;}
+.ddcommon .ddChild{height: 200px !important;}
+</style>
+<div class="modal fade addchild-popup userprofile-popup" id="addchild" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <?php
+    $moduleinfo = $this->controllerName();
+    //echo '<pre>';print_r($moduleinfo);echo '</pre>';//die('Macro Die');
+// $path       = ($moduleinfo['action'] == 'mychild')?'child':'register';
+// 
+    if ($moduleinfo['action'] == 'mychild') {
+        $path = 'child';
+    } elseif ($moduleinfo['action'] == 'packagespecification') {
+        $path = 'package';
+    } else {
+        $path = 'register';
+    }
+    ?>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header clearfix">
+           <!--button type="button" id="addChildGroup" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button-->
+                <span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close" onclick="return checkAddedChild('<?php echo $_SERVER['REQUEST_URI']; ?>');">&times;</span>
+                <h4 class="modal-title" id="exampleModalLabel">Add Child <span> Already have a child registered on
+                        Extramarks.com? Link account <a href="javascrip:void(0);" data-toggle="modal" data-dismiss="modal" aria-label="Close" data-target="#linkChild" data-whatever="@mdo" id='linkpopup'>here</a></span></h4>
+            </div>
+            <div class="modal-body">
+                <form id="formB" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="cname" class="col-sm-3 control-label">Child Name:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="childName" id="childName">
+                            <span class="valid-error" id="errorchildName"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="user" class="col-sm-3 control-label">User Id:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control"  name="childUserId" id="childUserId">
+                            <span class="valid-error" id="errorchildUserId"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Password:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" name="childPassword" id="childPassword">
+                            <span class="valid-error" id="errorchildPassword"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Date Of Birth:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <div class="col-sm-4 padd-left">
+                                <select name="dob_month" id="dob_month" class="CostomSelect" onchange="getAge('month')">
+                                    <option value="">Month</option>
+                                    <?php
+                                    for ($i = 1; $i <= 12; $i++) {
+                                        $monthName = date("M", mktime(0, 0, 0, $i, 10));
+                                        ?>
+                                        <option value="<?php echo $i; ?>"><?php echo $monthName; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <select name="dob_day" id="dob_day" class="CostomSelect" onchange="getAge('day')">
+                                    <option value="">Day</option>
+                                    <?php for ($i = 1; $i <= 31; $i++) { ?>
+                                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                    <?php } ?>                                                                                        
+                                </select>
+                            </div>
+                            <div class="col-sm-4 padd-right">
+                                <select name="dob_year" id="dob_year" class="CostomSelect" onchange="getAge('year')">
+                                    <option value="">Year</option>
+                                    <?php for ($i = Date('Y'); $i > Date('Y') - 70; $i--) { ?>
+                                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <span id="errordob" class="valid-error" style="display:none;"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="age" class="col-sm-3 control-label">Age:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="childAge" id="childAge">
+                            <span class="valid-error" id="errorchildAge"></span>
+                            <span class="valid-error" id="errorchildAge1"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="school" class="col-sm-3 control-label">School:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="school_name" id="school_name"/>
+                            <span class="valid-error" id="errorSchoolName"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="select_gender_div">
+                        <label class="col-sm-3 control-label">Select Gender:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <select class="select" id="classgender" name="gender">
+                                <option>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select> 
+                            <div class="clear"></div>
+                            <span id="errorgenderChild" class="valid-error"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="select_country_div">
+                        <label class="col-sm-3 control-label">Select Country:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <select class="CostomSelect" id="ucountriesChild" name="ucountriesChild">
+                                <option value="">Country</option>
+                                <?php
+                                if (isset($countries)) {
+                                    foreach ($countries as $countryname) {
+                                        ?>
+                                        <?php if ($userCountryId == $countryname->getCountryId()) { ?>
+                                            <option value="<?php echo $countryname->getcountryid(); ?>" selected="selected"><?php echo $countryname->getcountryname(); ?></option>
+                                        <?php } else { ?>
+                                            <option value="<?php echo $countryname->getcountryid(); ?>"><?php echo $countryname->getcountryname(); ?></option>
+        <?php }
+    }
+} ?>
+                            </select>  
+                            <span class="valid-error" id="errorcountryChild"></span>   
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="select_state_div">
+                        <label class="col-sm-3 control-label">Select State:<sup>*</sup></label>
+                        <div class="col-sm-9" id="statedate">
+
+                            <select class="CostomSelect" id="stateChild" class='custom-selects state' name="state">
+                                <option value="">State</option>
+                                <?php if (isset($states)) {
+                                    foreach ($states as $statename) { ?>
+                                        <?php if ($userStateId == $statename->getstateid()) { ?>
+                                            <option value="<?php echo $statename->getstateid(); ?>" selected="selected"><?php echo $statename->getstatename(); ?></option>
+                                        <?php } else { ?>
+                                            <option value="<?php echo $statename->getstateid(); ?>"><?php echo $statename->getstatename(); ?></option>
+                                        <?php }
+                                        }
+                                } ?>
+                            </select>
+                            <span class="valid-error" id="errorstateChild"></span>    
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="city" class="col-sm-3 control-label">City:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="city" id="cityChild" value="<?php echo $userCity; ?>">  
+                            <span class="valid-error" id="errorCityName"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="board_select_dd_child">
+                        <label class="col-sm-3 control-label">Select Board:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <select class="CostomSelect" name="boardChild" id="boardChild">
+                                <option value="">Select Board</option>
+                            <?php foreach($boardList as $key => $value){?>
+                                 <option value="<?php echo $value[0]['customBoard']['customBoardId'];?>"><?php echo $value[0]['customBoard']['boardName'];?></option>
+                            <?php }?>
+                            <?php foreach($boardList as $key => $val){
+                                if($val == 'ICSE'){ ?>
+                                    <option value="<?php echo $key;?>">Other</option>
+                            <?php }
+                            } ?>
+                            </select>
+                            <div class='clear'></div>
+                            <span class="valid-error" id="errorboardChild"></span>   
+                        </div>
+                    </div>
+                    <div class="form-group" id="otherboardChildclass" style="display:none;">
+                        <label for="school" class="col-sm-3 control-label">Other Board:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <input id="otherboardchild" class="form-control" type="text" placeholder="Please enter other board" style="padding:3px 5px" name="otherboardchild" />
+                            <span class="valid-error" id="errorotherboardchild"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="class_select_dd_child">
+                        <label class="col-sm-3 control-label">Select Class:<sup>*</sup></label>
+                        <div class="col-sm-9" id="selectedClass">
+                            <select class="CostomSelect" name="classChild" id="classChild">
+                                <option>Select Class</option>
+                            </select>
+                            <div class='clear'></div>
+                            <span class="valid-error" id="errorclassChild"></span>   
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" id="contactNo">Contact No:</label>
+                        <div class="col-sm-9">
+                            <div class="col-sm-3 padd-left"><span class="dropdown_reg_custom" >
+                            <select  tabindex="3" id="phonecode" name="country_id" class="select-country">      
+                                <?php $user= $this->zfcUserIdentity(); ?>
+                                <?php if(isset($this->countries) && count($this->countries)>0){foreach($this->countries as $Countries){  ?>
+                                    <?php if($user->getCountryId() == $Countries->getCountryId()){?>
+                                    <option value="+<?php echo $Countries->getphonecode(); ?>" data-image="<?php echo $this->basePath() ?>/images/website/flags/<?php echo strtolower($Countries->getiso())?>_32.png" selected="selected">+<?php echo $Countries->getphonecode() ?></option>
+                                    <?php }else {
+                                                $selected = "";
+                                                ?>
+                                                <option value="<?php echo $Countries->getCountryId(); ?>" data-image="<?php echo $this->basePath(); ?>/images/website/flags/<?php echo strtolower($Countries->getIso()) ?>_32.png" <?php echo $selected; ?> >+<?php echo $Countries->getPhoneCode() ?> 
+                                                <?php
+                                                $countryNamePhoneCode = $Countries->getnicename();
+                                                $countryNamePhoneCode = str_replace(" and", "", $countryNamePhoneCode);
+                                                $countryNamePhoneCode = str_replace("People's ", "", $countryNamePhoneCode);
+                                                $countryNamePhoneCode = str_replace("the South Sandwich", "Sandwich", $countryNamePhoneCode);
+                                                $countryNamePhoneCode = str_replace("United States Minor", "US Minor", $countryNamePhoneCode);
+                                                $countryNamePhoneCodeArr = explode(",", $countryNamePhoneCode);
+                                                echo $countryNamePhoneCodeArr[0];
+                                                ?> 
+
+                                                </option>
+                                <?php }}} ?>							
+                            </select>
+                                </span>
+                                </div>
+                            <div class="col-sm-9 padd"><input type="text"  maxlength="10" id="phonenumber" name="phonenumber" class="form-control" placeholder="Please enter mobile no."></div>
+                            <span class="valid-error" id="errorphonenumber"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" id="emailId">Email ID:</label>
+                        <div class="col-sm-9">                           
+                            <input type="text" class="form-control" name="emailId" id="emailid">  
+                            <span class="valid-error" id="erroremailId" style="display:none;"></span>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer clearfix">
+                <div class="form-group">
+                    <div class="col-sm-9"><span id="success_msg" style="color: red;"></span></div>
+                </div>
+                <button class="btn btn-warning" id="various1" onclick="return addChildData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'add', '<?php echo $path; ?>')" type="button">Save &amp; Add More</button>
+                <button class="btn btn-warning" id="various1" onclick="return addChildData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'save', '<?php echo $path; ?>')" type="button">Save &amp; Continue</button>  
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="linkChild" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header clearfix">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="return checkAddedChild('<?php echo $_SERVER['REQUEST_URI']; ?>');">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">Link Child</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name=skipbut" id="skipbut" value=''/> 
+                <form id="linkchild" name="linkchild" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="cname" class="col-sm-3 control-label">Child  Email:<sup>*</sup></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="linkChildUserId" id="linkChildUserId">
+                            <span class="valid-error" id="errorlinkChildUserId"></span>
+                            <span class="valid-error" id="success_msg_link_child"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer clearfix">
+                <button class="btn btn-warning" onclick="return linkChildData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'add', 0, '<?php echo $path; ?>')" id="various1" type="button">Save &amp; Add More</button>
+                <button class="btn btn-warning" onclick="return linkChildData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'save', 0, '<?php echo $path; ?>')" id="various1" type="button">Save &amp; Continue</button>  
+                <span id="uploadImagesAjax" style="display:none; margin-left:5px;"><img src="<?php echo $this->cdn(); ?>/images/website/loader16.gif"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/jquery.dd.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#ucountriesChild").change(function () {
+            $("#stateChild").parent().find(".holder").text("");
+            $("#stateChild").parent().find(".holder").text("State");
+            var countryid = $("#ucountriesChild").val();
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + '/user/getstates',
+                data: {countryid: countryid},
+                success: function (data) {
+                    $("#stateChild").html(data.statenames);
+                }
+            });
+        });
+
+    });
+    //$("#classChild").selectbox();
+
+
+    $("#boardChild").change(function () {
+
+        $("#otherboardChildclass").hide();
+        if (($("#boardChild :selected").text()) == "Other") {
+            $("#otherboardChildclass").show();
+        }
+        $("#classChild").parent().find(".holder").text("");
+        $("#classChild").parent().find(".holder").text("Select Class");
+
+        var optionString = '<option value="">Select Class</option>';
+        $("#classChild").html(optionString);
+
+        if ($(this).val()) {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + "/lms/index/custom-containerlist/" + $(this).val(),
+                dataType: 'json',
+                success: function (data) {
+                    var optionString = '<option value="">Select Class</option>';
+                    $("#classChild").html(optionString);
+
+                    $.each(data.options, function (key, obj)
+                    {
+                        optionString += '<option value="' + obj.rack_id + '">' + obj.rack_name + '</option>';
+
+                    })
+                    $("#classChild").html(optionString);
+                }
+            });
+        }
+    });
+
+
+
+    $(window).load(function () {
+        $("#linkpopup").click(function () {
+            $('#addChildGroup').trigger('click');
+            $('#AddChildPopupLogin').trigger('click');
+
+            $('#addchild').trigger('click');
+        });
+    })
+    
+    $(".dropdown_reg_custom select").msDropDown();
+    
+//    $("#phonecode").change(function() {
+//        var selectedPhoneCode = $("#phonecode option:selected").text();
+//        var selectedPhoneCodeArr = selectedPhoneCode.split(" ");
+//        $('select option:contains(' + selectedPhoneCode + ')').text(selectedPhoneCodeArr[0]);
+//    });
+    
+    function getAge(variable){
+       if(variable=='year' && $('#dob_year').val()!=''){
+            if( $('#dob_month').val()!='' && $('#dob_day').val()!=''){
+                var age=calculateAge($('#dob_month').val(),$('#dob_day').val(),$('#dob_year').val());
+                $('#childAge').val(age);
+                $('#childAge').prop('readonly',true);
+            }
+       }else if(variable=='month' && $('#dob_month').val()!=''){
+            if( $('#dob_year').val()!='' && $('#dob_day').val()!=''){
+                var age=calculateAge($('#dob_month').val(),$('#dob_day').val(),$('#dob_year').val());
+                $('#childAge').val(age);
+                $('#childAge').prop('readonly',true);
+            }
+       }else if(variable=='day' && $('#dob_day').val()!=''){
+            if( $('#dob_year').val()!='' && $('#dob_month').val()!=''){
+                var age=calculateAge($('#dob_month').val(),$('#dob_day').val(),$('#dob_year').val());
+                $('#childAge').val(age);
+                $('#childAge').prop('readonly',true);
+            }
+       }
+       if($('#childAge').val()>= 13){
+           $('#contactNo').html('Contact No:<sup>*</sup>');
+           $('#emailId').html('Email ID:<sup>*</sup>');
+       }else{
+           $('#contactNo').html('Contact No:');
+           $('#emailId').html('Email ID:');
+       }
+        
+    }
+    
+    function calculateAge(birthMonth, birthDay, birthYear)
+    {
+      todayDate = new Date();
+      todayYear = todayDate.getFullYear();
+      todayMonth = todayDate.getMonth();
+      todayDay = todayDate.getDate();
+      age = todayYear - birthYear;
+
+      if (todayMonth < birthMonth - 1)
+      {
+        age--;
+      }
+
+      if (birthMonth - 1 == todayMonth && todayDay < birthDay)
+      {
+        age--;
+      }
+      return age;
+    }
+</script>

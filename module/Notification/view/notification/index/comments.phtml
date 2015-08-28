@@ -1,0 +1,48 @@
+<?php  if(count($this->get_comments)>0) {foreach($this->get_comments as $key=>$comments){ 
+	$day='';
+	if($comments->added_date!=''){
+		$loggeddate=$comments->added_date;
+		$timestamp = explode(" ",$loggeddate);
+		$date = explode('-', $timestamp[0]);
+		$year=$date[0];	
+		$month=$date[1];
+		$day=$date[2];
+		$mnth='';
+		if($month=='1'){$mnth='Jan';}else if($month=='2'){$mnth='Feb';}else if($month=='3'){$mnth='Mar';}
+		else if($month=='4'){$mnth='Apr';}else if($month=='5'){$mnth='May';}else if($month=='6'){$mnth='Jun';}
+		else if($month=='7'){$mnth='Jul';}else if($month=='8'){$mnth='Aug';}else if($month=='9'){$mnth='Sep';}
+		else if($month=='10'){$mnth='Oct';}else if($month=='11'){$mnth='Nov';}else if($month=='12'){$mnth='Dec';}
+}?>
+<div class="comments-bg">
+	<p><?php  echo $comments->question;?></p>
+	<div class="post_author">
+		<p class="author_name">by  <?php  echo ucfirst($comments->first_name);?></p>
+		<p class="board_name"><?php  echo $comments->board_name;?></p>
+		<p class="class_name"><?php  echo $comments->class_name;?></p>
+		<p class="post_year"><?php  echo $day;?>&nbsp;&nbsp;<?php  echo $mnth;?>&nbsp;&nbsp;<?php  echo $year;?></p>
+                
+                  <?php  if($comments->countReplys!="0"){?>
+		<p class="post_countReplys"><a href="javascript:void(0)" onclick="replyQuestion(<?php  echo $this->userId;?>,<?php  echo $comments->question_id;?>);">View(<span id="countReplys<?php  echo $comments->question_id;?>"><?php if($comments->countReplys!=""){ echo $comments->countReplys;}else{?>0<?php }?></span>)</a></p>
+                  <?php }?>
+                
+                <p class="post_question"><a href="javascript:void(0)" onclick="replyAnswer(<?php  echo $comments->question_id;?>,<?php  echo $comments->countReplys;?>);">Answer</a></p>
+	</div>
+	<div id="replyAnswers<?php  echo $comments->question_id;?>" style="display:none"></div>
+	<div id="postReply<?php  echo $comments->question_id;?>" style="display:none">
+	    <p><textarea id="replyAnswer<?php  echo $comments->question_id;?>" name="replyAnswer"></textarea></p>
+	    <p><a href="javascript:void(0)" id="postReply" name="postReply" value="" class="reply_button" onclick="postQuestion(<?php  echo $comments->question_id;?>,<?php  echo $this->userId;?>,<?php  echo $comments->countReplys;?>)"><span>Reply</span></a></p>
+	</div>
+</div>
+<?php $key++;}}?>
+<input type="hidden" name="pageCount" id="pageCount" value="<?php  echo $this->countComments;?>">
+<input type="hidden" name="totPosts" id="totPosts" value="<?php  echo $this->countposts;?>">
+<div>
+<?php $totalpages = ''; if($this->countposts>0) { $totalpages=ceil(($this->countposts/$this->resultsPerPage)); }?>
+<?php  if($this->countposts>$this->resultsPerPage && $this->currentPage>1){?>
+	<a href="javascript:void(0)" id="prevPost" onclick="postsPrevious(<?php  echo $this->currentchapter_details['3']['rack_id'];?>,<?php  echo $this->currentchapter_details['2']['rack_id'];?>,'prev','<?php  echo ($this->currentPage-1);?>','<?php  echo ($this->resultsPerPage);?>')"><img src="<?php  echo $this->basePath() ?>/images/btn_prev.png" alt="" title="" border="0"></a>
+	<?php }?>
+		&nbsp;&nbsp;
+	<?php 	if(@$totalpages!=$this->currentPage && $this->countposts>$this->resultsPerPage){?>
+		<a href="javascript:void(0)" onclick="postsNext(<?php  echo $this->currentchapter_details['3']['rack_id'];?>,<?php  echo $this->currentchapter_details['2']['rack_id'];?>,'next','<?php  echo ($this->currentPage+1);?>','<?php  echo ($this->resultsPerPage);?>')"  id="nextPost"><img src="<?php  echo $this->basePath() ?>/images/btn_next.png" alt="" title="" border="0"></a>
+	<?php }?>
+</div>

@@ -1,0 +1,77 @@
+
+<?php if($this->videodata->ticker_type=='video'){?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $PlayerFactory = new EmPlayerFactory("<?php echo $this->basePath() ?>/");
+        $player = $PlayerFactory.createGenericVideoPlayer();
+        $player.attachPDVideoPlayer(
+                "<?php echo $this->basePath() ?>/uploads/ticker/<?php echo $this->videodata->ticker_file ?>",
+                "#videoplayerB",
+                null,
+                null,
+                true
+                );
+    });
+</script>
+  <?php }else{?>
+             <img src='<?php echo $this->basePath() ?>/uploads/ticker/<?php echo $this->videodata->ticker_file ?>' />
+  <?php }?>
+<input type="hidden" name="nextbutton" id="nextbutton" value="<?php if ($this->nextvalue != '') {
+    echo $this->nextvalue;
+} ?>"/>
+<input type="hidden" name="prebutton" id="prebutton" value="<?php if ($this->prevalue != '') {
+    echo $this->prevalue;
+} ?>"/> 
+
+<?php if ($this->prevalue != '') { ?>
+
+    <script type="text/javascript">
+        if ($("#videoPrev")) {
+            $("#videoPrev").remove();
+        }
+        $("<a/>", {
+            "id": "videoPrev",
+            "href": "javascript:void(0);",
+            "onclick": "predatafeach()",
+            "class": "videoPrev",
+            html: "<span><img src=\"<?php echo $this->cdn() ?>/images/btn_prev_white.png\" /></span>"
+        }).appendTo("#videoplayerA");
+    </script>
+    <?php
+} else {
+    ?>
+    <script type="text/javascript">
+        if ($("#videoPrev")) {
+            $("#videoPrev").hide();
+        }
+    </script>
+
+    <?php
+}
+
+if ($this->nextvalue != '') {
+    ?>
+
+    <script type="text/javascript">
+        if ($("#nextVideo")) {
+            $("#nextVideo").remove();
+        }
+        $("<a/>", {
+            "id": "nextVideo",
+            "href": "javascript:void(0);",
+            "onclick": "nextdatafeach('<?php echo $this->nextvalue; ?>')",
+            "class": "videoNext",
+            html: "<span><img src=\"<?php echo $this->cdn() ?>/images/btn_next_white.png\" /></span>"
+        }).appendTo("#videoplayerA");
+    </script>
+    <?php
+} else {
+    ?>
+    <script type="text/javascript">
+        if ($("#nextVideo")) {
+            $("#nextVideo").hide();
+        }
+    </script>
+
+<?php
+}?>

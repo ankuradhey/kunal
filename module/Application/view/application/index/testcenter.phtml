@@ -1,0 +1,71 @@
+<script src="<?php echo $this->basePath() ?>/js/website/scroller.js"></script>
+<script> 
+ $(window).load(function(){
+                        $(".scrollcontent").mCustomScrollbar({
+                                theme:"minimal"
+                        });
+                });        
+</script>
+
+<div id="content" class="globalwhitebg">
+  <div class="container">
+    <section class="row marginbot20">
+      <div class="cap-breadscum"><a href="<?php echo $this->Url('home')?>" class="breadcrum">&nbsp;</a> &raquo; <span> <a href="<?php echo $this->Url('school-solutions')?>">School Solution</a> &raquo; Assessment Centre</span></div>
+      <div id="row1">
+        <div class="col-sm-4">
+          <div class="pdding5"></div>
+          <div class="staticLeftimg"><img  src="<?php echo $this->cdn() ?>/images/website/school-solution/test-center.png" /></div>
+          <div class="textbig">
+            <div class="contactfordem">To Schedule a demo <a href="http://erphelpdesk.extramarks.com/helpdeskserp/?site_topic=SCH" target="_blank">Click here <img  src="<?php echo $this->cdn() ?>/images/website/click_arrow.png" /></a></div>
+            <div class="track-feedback"> <a href="http://erphelpdesk.extramarks.com/helpdeskserp/?action=trackTicket" target="_blank">Track your ticket</a></div>
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="">
+            <div class="pdding5">
+              <h3 class="font18">Assessment Centre</h3>
+            </div>
+            <div class="text1 scrollcontent"> Extramarks Assessment Centre is an exciting tool that reinforces Extramarks' philosophy of making teaching-learning easy and effortless. It is a platform that facilitates and automates the assessment activities for a school. These assessments are scientifically designed based on hierarchical and layered pedagogy and can be accessed through browser or tablets.<br>
+              <br>
+              <div class="career-list">
+                <div class="career-list-item" style="font-size:inherit; color:#8c8c8c;">Complete automation and flexibility for the teachers to create and publish their own customized assessment papers, as per the class, school or curriculum's assessment guidelines.</div>
+                <div class="career-list-item" style="font-size:inherit; color:#8c8c8c;">Automated assessment invigilation, marking and result management by the teacher.</div>
+                <div class="career-list-item" style="font-size:inherit; color:#8c8c8c;">Real-time or scheduled submission of assessments to learners.</div>
+                <div class="career-list-item" style="font-size:inherit; color:#8c8c8c;">Instant submission of completed assessments by learners through their tablets or browsers.</div>
+                <div class="career-list-item" style="font-size:inherit; color:#8c8c8c;">Automated analysis of learners' result and progress in assessments, visible to both- teachers and learners.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="pdding5"></div>
+          <ul class="feature">
+            <li class="feature4"><a href="<?php echo $this->Url('testcenter')?>">&nbsp;</a></li>
+          </ul>
+          <div class="clearfix"></div>
+           <div id="video-part" style="height: 200px; width:100%;"></div>
+           <script type="text/javascript">
+            $(document).ready(function() {
+            $PlayerFactory = new EmPlayerFactory("<?php echo $this->basePath() ?>/");
+            $player = $PlayerFactory.createGenericVideoPlayer();
+            $player.attachPDVideoPlayer(
+                   "<?php echo $this->cdn() ?>/uploads/staticvideo/testcenter.mp4",
+                    "#video-part",
+                    null,
+                    null,
+                    false,
+                     "<?php echo $this->cdn() ?>/uploads/staticvideo/test-center-cover.jpg"
+                    );
+        });
+        </script>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </section>
+    <style type="text/css">
+.fancybox-margin{margin-right:17px;}
+.mCSB_container{ padding-right:10px;}
+</style>
+  </div>
+</div>

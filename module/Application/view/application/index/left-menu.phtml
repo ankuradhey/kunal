@@ -1,0 +1,77 @@
+<?php
+$manu = array(
+  		
+        "product-submenu" => array(
+               'smart-learn-class' => array('Smart Learn Class','smart-learn-icon'),
+			    'classroomtab' => array('Classroom Tablet Programme','classroom-icon'),
+				'testcenter' => array('Assessment Centre','assessment-icon'),
+				'cce-report' => array('CCE Report Card','reports-icon'),
+				'schoolmangement' => array('School Management System','management-icon')
+         	),
+		 "studyabroad-submenu" => array(
+				'studyabroadservices' => array('Services','smart-learn-icon'),
+				'ourpartneruniversities' => array('Partner Universities','classroom-icon'),
+				'topuniversities' => array('Top Universities','assessment-icon'),
+				'satservicesfaq' => array('Study Abroad FAQ','reports-icon')
+		),
+		"cap-submenu" => array(
+				'about-cap' => array('About CAP','about-cap-icon'),
+				'cap-features' => array('CAP Features','cap-features-icon'),
+				'cap-testimonials' => array('CAP Testimonials','cap-testimonial-icon'),
+				'cap-faq' => array('CAP FAQ','cap-faq-icon')
+		),
+		"sat-submenu" => array(
+				'aboutsat' => array('About SAT','sat-about-icon'),
+				'satpattern' => array('SAT Pattern','sat-pattern-icon'),
+				'extramarksoffer' => array('Extramarks Offerings','sat-offer-icon'),
+				'coursefeature' => array('Course Features','sat-cfeatures-icon')
+		),
+		"toefl-submenu" => array(
+				'toefl' => array('TOEFL Introduction','toefl-intro-icon'),
+				'toeflabout' => array('About TOEFL','toefl-about-icon'),
+				'toeflpattern' => array('TOEFL Pattern','toefl-pattern-icon'),
+				'toefloffering' => array('Extramarks Offerings','toefl-offerings-icon'),
+				'toeflcfeatures' => array('Course Features','toefl-cfeatures-icon')
+		),
+		"career-submenu" => array(
+				'career-academics' => array('Academics','career-acd-icon'),
+				'career-technology' => array('Technology','career-tech-icon'),
+				'career-animation' => array('Animation','career-anim-icon'),
+				'career-marketing' => array('Marketing','career-market-icon'),
+				'career-implementation-operation' => array('Implementation Operation','career-implementation-icon')
+		),
+		"testimonial-submenu" => array(
+				'students' => array('Students','student-icon'),
+				'parents' => array('Parents','parents-icon'),
+				'teachers' => array('Teachers','teachers-icon'),
+				'school' => array('School','school-icon'),
+				'post-testimonial' => array('Write testimonial','write-icon','login')
+		)
+  );
+
+?>
+        <ul class="testimonial-cate">
+        <?php
+        foreach($manu[$this->menu] as $key=>$ManuNames){ 
+            echo '<pre>'; print_r($ManuNames); exit;
+            if (strpos($key, "http://") === false) { ?>
+            <?php if(!$this->zfcUserIdentity() && ($key=='post-testimonial' || @$ManuNames[2] == 'login') ){
+                ?> 
+            <li <?php echo $this->active == $key ? "class='active'" : ""; ?>><a data-dismiss="modal" data-target="#login" data-toggle="modal" href="#"><span><i class="<?php echo $ManuNames[1]; ?>"></i></span></a>
+              <a href="#" data-dismiss="modal" data-target="#login" data-toggle="modal" class="testimonial-ca-text"><?php echo $ManuNames[0]; ?></a></li>
+            <?php  }else{
+                ?>
+         <li <?php echo $this->active == $key ? "class='active'" : ""; ?>><a href="<?php echo ($key=='post-testimonial') ? $this->Url('testimonial/default', array('action' => "post-testimonial"), false):$this->Url($key) ?>"><span><i class="<?php echo $ManuNames[1]; ?>"></i></span></a>
+          <a href="<?php echo ($key=='post-testimonial') ? $this->Url('testimonial/default', array('action' => "post-testimonial"), false):$this->Url($key); ?>" class="testimonial-ca-text"><?php echo $ManuNames[0]; ?></a></li>
+	     <?php 
+                  }
+            }else{
+                ?>
+         <li <?php echo $this->active == $key ? "class='active'" : ""; ?>>
+             <a href="<?php echo $this->Url($key) ?>"><span><i class="<?php echo $ManuNames[1]; ?>"></i></span></a>
+             <a href="<?php echo $this->Url($key); ?>"><span><i class="management-icon"></i></span></a>
+             <a href="<?php echo $key; ?>" class="testimonial-ca-text"><?php echo $ManuNames; ?></a>
+         </li>
+	    <?php } } ?>
+       
+    </ul>	

@@ -1,0 +1,379 @@
+<?php if($this->type=='down' && $this->personType=='mentor'){?>
+<h2>
+	<b>Downloads of </b><b id="studentDownload"></b>
+</h2>
+<div class="table-responsive common_table">
+<table class="table table-bordered">	
+	<tbody>											
+	<tr>
+		<th>Date</th>
+		<th>File Uploaded</th>
+		<th>Subject</th>
+		<th>Chapter</th>
+		<th>Status</th>													
+	</tr>
+        <?php 
+        
+        ?>
+	<?php if(count($this->alldownloads)!=0){?>
+<?php foreach($this->alldownloads as $key=> $alldownloads){
+        //echo '<pre>'; print_r($alldownloads); //exit;
+        $filename = $alldownloads->pdf_file_name;
+        $fileArr = explode('.',$filename);
+        $fileRevArr = array_reverse($fileArr);
+        $file_ext = $fileRevArr[0];
+        $filenamess=explode('.',$alldownloads->pdf_file_name);
+        //$fine_path = "http://10.1.9.99/uploads/downloads/".$alldownloads->student_id.'-'.$alldownloads->mentor_id.'/'.$alldownloads->up_down_id.'.'.$filenamess[1]; 
+        //echo '<pre>'; print_r($filenamess); exit;
+        ?>	
+        <tr>																
+		<td id="stu-row-<?php echo  $key?>-1">
+		<?php  echo date("d/m/Y", strtotime($alldownloads->posted_date))?>
+		</td>
+                <?php if(!empty($alldownloads->download_relation_id)) { ?>
+                 <td id="stu-row-<?php echo  $key?>-2"><a href="javascript:void(0)" onclick="downloadfile('<?php echo $alldownloads->pdf_file_name; ?>','<?php echo $alldownloads->up_down_id; ?>')" ><?php  echo ($alldownloads->file_name !='')?$alldownloads->file_name:$alldownloads->pdf_file_name; ?></a></td>
+                <?php }else{ ?>
+                       <td id="stu-row-<?php echo  $key?>-2"><a href="<?php echo $this->Url('download-file'); ?>/<?php  echo $filenamess[1].'-'.$filenamess[0].'-'.$alldownloads->student_id.'-'.$alldownloads->mentor_id.'-'.$alldownloads->up_down_id;?>" onclick="changeStatus(<?php echo $alldownloads->up_down_id;?>)" target="_blank" ><?php  echo $alldownloads->pdf_file_name?></td>     
+                <?php } ?>
+		
+		<?php if(isset($alldownloads->board_class_parent_subject_id) && $alldownloads->board_class_parent_subject_id!=0){?>
+		<td id="stu-row-<?php echo  $key?>-3"><?php echo $alldownloads->parent_subject_name;?></td>
+		<?php }else{?>
+		<td id="stu-row-<?php echo  $key?>-3"><?php echo $alldownloads->subject_name;?></td>
+		<?php }?>
+		<td id="stu-row-<?php echo  $key?>-4"><?php  echo $alldownloads->chepter_name?></td>
+		<td id="stu-row-<?php echo  $key?>-5">Uploaded</td>
+		<td id="#<?php echo "mobile".$key?>" class="view_details mentor_cell"><img onclick="showdownPopup('<?php echo  $key?>')" src="<?php echo $this->cdn() ?>/images/website/view_details.png" width="30px"/></td>
+	</tr>
+	<input type="hidden" id="checkStatus<?php  echo $alldownloads->up_down_id?>" name="checkStatus<?php  echo $alldownloads->up_down_id?>" value="<?php  echo $alldownloads->status?>">
+	<?php }}else{?>
+		<tr>														
+			<p class="upload_download_data">There are no downloads</p>
+		</tr>
+	<?php }?>
+</tbody>
+</table>
+</div>
+<div class="">&nbsp;</div>
+<div class="modal fade" id="upddown_popupModel" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
+            <!--h4 class="modal-title" id="myModalLabel">Modal title</h4-->
+            </div>
+            <div class="modal-body upddown_popup">
+                <h3>Modal Body</h3>
+            </div>
+            
+    </div>
+  </div>
+</div>
+<script>
+	function closedownpopup()
+	{
+		$(".upddown_popup").hide();
+		$(".backbase_transform").hide();
+		$("#close_button").hide();
+                $('#upddown_popupModel').modal('hide');
+	}
+	function showdownPopup(key)
+	{						
+		var new_date=$("#stu-row-"+key+"-1").html();														
+		var file_name=$("#stu-row-"+key+"-2").html();
+		var subject_name=$("#stu-row-"+key+"-3").html();
+		var chapter_name=$("#stu-row-"+key+"-4").html();
+		var status=$("#stu-row-"+key+"-5").html();														
+		var data="<a id='close_button' onclick='closedownpopup()' href='JavaScript:void(0)'></a><div class='datapopup_class'><span class='datapopup_title'>Date:&nbsp;&nbsp;&nbsp;</span>"+new_date+"</div><div class='datapopup_class'><span class='datapopup_title'>File Uploaded:&nbsp;&nbsp;&nbsp;</span>"+file_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Subject:&nbsp;&nbsp;&nbsp;</span>"+subject_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Chapter:&nbsp;&nbsp;&nbsp;</span>"+chapter_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Status:&nbsp;&nbsp;&nbsp;</span>"+status+"</div>";
+		$(".upddown_popup").html(data);
+                $('#upddown_popupModel').modal('show');
+		$(".backbase_transform").show();
+		$("#close_button").show();
+	}
+</script>
+<input type="hidden" id="ddhid_id" name="ddhid_id">
+<input type="hidden" id="mainSubjectId" name="mainSubjectId">
+<input type="hidden" id="mainSubjectName" name="mainSubjectName">
+<input type="hidden" id="typeSubject" name="typeSubject">
+<input type="hidden" id="classIdHid" name="classIdHid">
+<?php }else{?>
+<?php if($this->type=='up'){?>
+<h2>
+	Uploads for <b id="studentUpload">Student</b>
+</h2>
+<b id="uploadsHideshow">
+<a  onclick="hideAndshowUploads(1)" href="javascript:void(0)"><img src="<?php echo $this->cdn() ?>/images/website/plus.png"></a>New upload
+</b>
+
+<form action="<?php  echo $this->Url('ajax-uploads');?>" id="uploadForm" name="uploadForm" class="form-horizontal"  method="post" enctype="multipart/form-data" >
+
+<div id="uploadsHideDiv" class="students_bg_color" style="display:none">
+<div class="form-group">
+    <div class="col-md-2"></div><div id="uploadAjaxSuccess" class="col-md-4" style="color:red;"></div>
+</div>
+<div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Subject</label>
+    <div class="col-sm-4">
+     <select name="uploadsubject" id="uploadsubject" onchange="getChaptersBysubject('upload','')" class="select form-control " placeholder="Class">
+			<?php if(count($this->subjectdetails)!=0){foreach($this->subjectdetails as $subjectdetails){
+                           // echo "<pre />"; print_r($subjectdetails);
+				if($subjectdetails['rack_type_id']!=7){
+					$subjectId=$subjectdetails['id'];
+					$subjectName=$subjectdetails['subject_name'];
+				}else{
+					$subjectId=$subjectdetails['id'];
+					$subjectName=$subjectdetails['subject_name'];
+				}
+			?>							
+				<option value="<?php  echo $subjectId;?>"><?php  echo $subjectName;?></option>
+			<?php }}?> 
+		</select>
+    </div>
+   
+      <label for="inputEmail3" class="col-sm-2 control-label">Chapter </label>
+       <div class="col-sm-4" id="uploadchapters_div">
+        <select name="uploadchapters" id="uploadchapters"  class="select form-control" placeholder="Class">
+			<?php if(count($this->chapterdetails)!=0){foreach($this->chapterdetails as $chapterdetails){ if($chapterdetails['chapter_name']!=''){?>									
+				<option value="<?php  echo $chapterdetails['id'];?>"><?php  echo $chapterdetails['chapter_name'];?></option>
+			<?php }}}?>
+		</select>
+    </div>
+    
+  </div>
+   <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Upload File</label>
+    <div class="col-sm-10 upload_File">
+     <!--input type="file" id="input04" name="myfile" value=""-->
+     <input type="file" id="fileNameUpload" name="myfile" value="">
+    </div>
+    </div>
+   <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">&nbsp;</label>
+    <div class="col-sm-10">
+        <a href="javascript:void(0);" onclick="uploadValidation()">
+			<input type="submit" value="UPLOAD" class="btn btn-warning" />
+			<span id="uploadImagesAjax" style="display:none; margin-left:5px;"><img src="<?php echo $this->cdn(); ?>/images/website/loader16.gif"></span>
+        </a>
+    </div>
+    </div>
+</div>
+<input type="hidden" id="hid_id" name="hid_id">
+<input type="hidden" id="hidpersonType" name="hidpersonType">
+<input type="hidden" id="mainSubjectId" name="mainSubjectId">
+<input type="hidden" id="mainSubjectName" name="mainSubjectName">
+<input type="hidden" id="typeSubject" name="typeSubject">
+<input type="hidden" id="classIdHid" name="classIdHid">
+<input type="hidden" id="boardId" name="boardId">
+</form>	
+<div class="table-responsive common_table"> 
+<table class="table table-bordered" style="margin-top:10px;">	
+
+<thead>									
+<tr>
+	<th>Date</th>
+	<th>File Uploaded</th>
+	<th>Subject</th>
+	<th>Chapter</th>
+	<th>Status</th>													
+</tr>
+</thead>
+<tbody id='ajaxUploadsTable'>
+<?php if(count($this->allUploads)!=0){?>
+<?php foreach($this->allUploads as $key=>$allUploads){
+   
+       $date=explode('-',$allUploads->posted_date);
+	$newDate=$date[2].'/'.$date[1].'/'.$date[0];
+?>										
+<tr>													
+	<td id="upd-row-<?php echo  $key?>-1">
+	<?php echo $newDate;?>
+	</td>
+	<td id="upd-row-<?php echo  $key?>-2"><?php echo $allUploads->pdf_file_name;?></td>
+	<?php if($allUploads->subject_id!=0){?>
+		<td id="upd-row-<?php echo  $key?>-3"><?php echo $allUploads->subject_name;?></td>
+	<?php }else{?>
+		<td id="upd-row-<?php echo  $key?>-3"><?php echo $allUploads->subject_name;?></td>
+	<?php }?>
+	<td id="upd-row-<?php echo  $key?>-4"><?php echo $allUploads->chepter_name;?></td>
+	<td id="upd-row-<?php echo  $key?>-5">Uploaded</td>
+	<td id="#<?php echo "mobile".$key?>" class="view_details"><img onclick="showPopup('<?php echo  $key?>')" src="<?php echo $this->cdn() ?>/images/website/view_details.png" width="30px"/></td>
+</tr>
+<?php }}else{?>
+	<tr>
+            <td colspan="5"><p class="upload_download_data">There are no uploads</p></td>	
+	</tr>
+<?php }?>
+</tbody>
+</table>
+</div>
+<!--div class="updshow_popup">&nbsp;</div-->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body updshow_popup">
+            </div>
+    </div>
+  </div>
+</div>
+<script>
+	function closepopup()
+	{
+		//$(".updshow_popup").hide();
+		$(".backbase_transform").hide();
+		$("#close_button").hide();
+                $('#basicModal').modal('hide');
+	}
+	function showPopup(key)
+	{														
+		var new_date=$("#upd-row-"+key+"-1").html();														
+		var file_name=$("#upd-row-"+key+"-2").html();
+		var subject_name=$("#upd-row-"+key+"-3").html();
+		var chapter_name=$("#upd-row-"+key+"-4").html();
+		var status=$("#upd-row-"+key+"-5").html();														
+		var data="<a id='close_button' onclick='closepopup()' href='JavaScript:void(0)'></a><div class='datapopup_class'><span class='datapopup_title'>Date:&nbsp;&nbsp;&nbsp;</span>"+new_date+"</div><div class='datapopup_class'><span class='datapopup_title'>File Uploaded:&nbsp;&nbsp;&nbsp;</span>"+file_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Subject:&nbsp;&nbsp;&nbsp;</span>"+subject_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Chapter:&nbsp;&nbsp;&nbsp;</span>"+chapter_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Status:&nbsp;&nbsp;&nbsp;</span>"+status+"</div>";
+		//$(".updshow_popup").html(data).show();
+                $(".updshow_popup").html(data);
+		$(".backbase_transform").show();
+		$("#close_button").show();
+                $('#basicModal').modal('show');
+	}
+</script>
+<?php }else{?>
+<section class="profile-block students_graybg" style="padding-top:0;">
+<h2>
+	<b>Downloads of </b><b id="studentDownload"></b>
+</h2>
+<div class="table-responsive common_table">
+	<table class="table table-bordered">
+		<thead>									
+                <tr>
+                        <th>Date</th>
+                        <th>File Uploaded</th>
+                        <th>Subject</th>
+                        <th>Chapter</th>
+                        <th>Status</th>													
+                </tr>
+                </thead>
+                <tbody>
+		<?php if(count($this->alldownloads)!=0){?>
+		<?php foreach($this->alldownloads as $key=>$alldownloads) {
+                //echo '<pre>'; print_r($alldownloads); exit;
+		$date=explode('-',$alldownloads->posted_date);
+		$newdDate=$date[0].'/'.$date[1].'/'.$date[2];
+		$filenames=explode('.',$alldownloads->pdf_file_name);
+                $filename = $alldownloads->pdf_file_name;
+                $fileArr = explode('.',$filename);
+                $fileRevArr = array_reverse($fileArr);
+                $file_ext = $fileRevArr[0];
+                $filenamess=explode('.',$alldownloads->pdf_file_name);
+                //$file_path = "http://10.1.9.99/uploads/downloads/".$alldownloads->mentor_id.'-'.$alldownloads->student_id.'/'.$alldownloads->up_down_id.'.'.$filenamess[1];
+		//echo '<pre>'; print_r($filenamess); exit;
+                ?>
+		<tr>
+			<td id="men-row-<?php echo  $key?>-1" class="mentor_cell men-row-1"><?php  echo $newdDate?></td>
+			<td id="men-row-<?php echo  $key?>-2" class="mentor_cell men-row-2"><a href="<?php echo $this->Url('download-file'); ?>/<?php  echo $filenames[1].'-'.$filenames[0].'-'.$alldownloads->mentor_id.'-'.$alldownloads->student_id.'-'.$alldownloads->up_down_id;?>" onclick="changeStatus(<?php echo $alldownloads->up_down_id;?>)" target="_blank"><?php  echo $alldownloads->pdf_file_name?></a></td>
+			<?php if($alldownloads->student_id!=0){?>
+				<td id="men-row-<?php echo  $key?>-3" class="mentor_cell men-row-3"><?php  echo $alldownloads->subject_name?></td>
+			<?php }else{?>
+				<td id="men-row-<?php echo  $key?>-3" class="mentor_cell men-row-3"><?php  echo $alldownloads->subject_name?></td>
+			<?php }?>
+			<td id="men-row-<?php echo  $key?>-4" class="mentor_cell men-row-4"><?php  echo $alldownloads->chepter_name?></td>
+			<td id="men-row-<?php echo  $key?>-5" class="mentor_cell men-row-5">Uploaded</td>
+			<td id="#<?php echo "mobile".$key?>" class="view_details mentor_cell"><img onclick="showdownPopup('<?php echo  $key?>')" src="<?php echo $this->cdn() ?>/images/website/view_details.png" width="30px"/></td>
+		</tr>
+		<input type="hidden" id="checkStatus<?php  echo $alldownloads->up_down_id?>" name="checkStatus<?php  echo $alldownloads->up_down_id?>" value="<?php  echo $alldownloads->status?>">
+		<?php }}else{?>
+                <tr><td colspan="6">
+                        <p class="upload_download_data">There are no downloads</p></td></tr>
+		
+		<?php }?>
+        </tbody>              
+	</table>
+</div>
+
+<div class="modal fade" id="upddown_popupModel" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <!--h4 class="modal-title" id="myModalLabel">Modal title</h4-->
+            </div>
+            <div class="modal-body upddown_popup">
+                
+            </div>
+    </div>
+  </div>
+</div>
+</section>
+<script>
+	function closedownpopup()
+	{
+		$(".upddown_popup").hide();
+		$(".backbase_transform").hide();
+		$("#close_button").hide();
+                $('#upddown_popupModel').modal('hide');
+	}
+	function showdownPopup(key)
+	{														
+		var new_date=$("#men-row-"+key+"-1").html();														
+		var file_name=$("#men-row-"+key+"-2").html();
+		var subject_name=$("#men-row-"+key+"-3").html();
+		var chapter_name=$("#men-row-"+key+"-4").html();
+		var status=$("#men-row-"+key+"-5").html();														
+		var data="<a id='close_button' onclick='closedownpopup()' href='JavaScript:void(0)'></a><div class='datapopup_class'><span class='datapopup_title'>Date:&nbsp;&nbsp;&nbsp;</span>"+new_date+"</div><div class='datapopup_class'><span class='datapopup_title'>File Uploaded:&nbsp;&nbsp;&nbsp;</span>"+file_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Subject:&nbsp;&nbsp;&nbsp;</span>"+subject_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Chapter:&nbsp;&nbsp;&nbsp;</span>"+chapter_name+"</div><div class='datapopup_class'><span class='datapopup_title'>Status:&nbsp;&nbsp;&nbsp;</span>"+status+"</div>";
+		$(".upddown_popup").html(data);//.show();
+                $('#upddown_popupModel').modal('show');
+		$(".backbase_transform").show();
+		$("#close_button").show();
+	}
+</script>
+<input type="hidden" id="dhid_id" name="dhid_id">
+<input type="hidden" id="mainSubjectId" name="mainSubjectId">
+<input type="hidden" id="mainSubjectName" name="mainSubjectName">
+<input type="hidden" id="typeSubject" name="typeSubject">
+<input type="hidden" id="classIdHid" name="classIdHid">
+<?php }}?>
+
+<div class="clearfix"></div>
+<script>
+	function changeStatus(upAndDownId){
+		$.ajax({
+				type	:	'POST',
+				url		: 	BASE_URL+'/account/change-status-downloads',
+				data	:	{upAndDownId:upAndDownId},
+				success	: 	function(data){
+					var value=$('#checkStatus'+upAndDownId).val();
+					if(value==0){
+						var countN=$('#totalNotifications').html();
+						var newN=parseInt(countN)-1;
+						if(newN!=0){
+							$('#totalNotifications').html(newN);
+							$('#updown'+upAndDownId).hide();
+						}else{
+							$('#notifiBox').hide();
+						}
+					}
+				}
+			});
+	}
+	function hideAndshowUploads(type){
+		if(type==1){
+			$('#uploadsHideDiv').show();
+			$('#uploadsHideshow').html('<a  onclick="hideAndshowUploads(0)" href="javascript:void(0)"><img src="<?php echo $this->cdn() ?>/images/website/minus.png"></a>New upload');
+		}else{
+			$('#uploadsHideDiv').hide();
+			$('#uploadsHideshow').html('<a  onclick="hideAndshowUploads(1)" href="javascript:void(0)"><img src="<?php echo $this->cdn() ?>/images/website/plus.png"></a>New upload');
+		}
+	}
+</script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/website/bootstrap-filestyle.js"></script>
+<script type="text/javascript">
+			
+			$('#input04').filestyle({
+				icon : false
+			});
+
+</script>

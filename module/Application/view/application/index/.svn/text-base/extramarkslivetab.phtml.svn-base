@@ -1,0 +1,67 @@
+<script src="<?php echo $this->basePath() ?>/js/website/scroller.js"></script>
+<script>
+    $(window).load(function() {
+        $(".scrollcontent").mCustomScrollbar({
+            theme: "minimal"
+        });
+    });
+</script>
+
+<div id="content" class="globalwhitebg">
+    <div class="container">
+        <section class="row marginbot20">
+            <div class="cap-breadscum"><a href="<?php echo $this->Url('home') ?>" class="breadcrum">&nbsp;</a> &raquo; <span> <a href="<?php echo $this->Url('school-solutions') ?>">School Solution</a> &raquo;  Extramarks Live Tab</span></div>
+            <div id="row1">
+                <div class="col-sm-4">
+                    <div class="pdding5"></div>
+                    <div class="staticLeftimg"><img  src="<?php echo $this->cdn() ?>/images/website/school-solution/Em-Live-Tab.png" /></div>
+
+                    <div class="contactfordem" style="margin-left:85px">To buy <a href="<?php //echo $this->Url('package') ?>">Click here <img  src="<?php echo $this->cdn() ?>/images/website/school-solution/click_arrow.png" /></a></div>
+
+                </div>
+                <div class="col-sm-5">
+                    <div class="pdding5"><h3><b>Extramarks Live Tab</b></h3></div>
+                    <div class="text1 scrollcontent" >
+                        Extramarks Live embedded tablet empowers students to fill the learning gaps in class by allowing them to revisit concepts at their own pace and space. Extramarks Live Tablets promise deeper comprehension to each student and lead them into a new era of learning. It also enables students to access Extramarks curriculum aligned modules anytime, anywhere!<br />
+                        <br />
+                        With Extramarks Live, the students can easily schedule their study time tables, understand concepts through smart study modules and take MCQs with instant results and prepare for tests and exams. It's a revolutionary tool that propels students towards excellence. Since all the relevant content resides in the tablet it does not require internet connection that results in anytime anywhere access to learning modules.<br />
+                        <br />
+                        <h2>Extramarks Smart Book</h2>
+                        Extramarks Smart Book annotator tool, bundled with Extramarks Live Tablet makes e-learning closer to the experience of studying from books. One can underline and highlight relevant text, add sticky notes to record their comprehension and also bookmark pages in the easiest of ways. It helps all round study of PDF based content and prepares it for easy revision, not to forget the personal touch that it adds to content that has been read across.  	
+
+
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+
+                    <div class="pdding5"></div>
+
+                    <ul class="feature">
+                        <li class="feature11"><a href="<?php //echo $this->Url('classroomtab') ?>">&nbsp;</a></li>
+                        <li class="feature12"><a href="#">&nbsp;</a></li>
+                    </ul>
+
+
+                    <div style="clear:both"></div>
+                    <div id="video-part" style="height: 200px; width:100%;"></div>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $PlayerFactory = new EmPlayerFactory("<?php echo $this->basePath() ?>/");
+                            $player = $PlayerFactory.createGenericVideoPlayer();
+                            $player.attachPDVideoPlayer(
+                                    "<?php echo $this->cdn() ?>/uploads/staticvideo/extramarkslivetab.mp4",
+                                    "#video-part",
+                                    null,
+                                    null,
+                                    false,
+                                    "<?php echo $this->cdn() ?>/uploads/staticvideo/em-live-tab-cover.jpg"
+                                    );
+                        });
+                    </script> 
+                </div>            
+            </div>
+            <div style="clear:both"></div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<?php $replyanswers=array();if(count($this->getreply)>0){foreach($this->getreply as $replyanswer){ $replyanswers=$replyanswer;?>
+<p><?php echo $replyanswer->reply_message;?></p>
+		<a style="" href="javascript:void(0);">by  <?php echo ucfirst($replyanswer->first_name);?></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a style="margin-left:5%" href="javascript:void(0);"><?php echo $replyanswer->board_name;?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a style="margin-left:5%" href="javascript:void(0);"><?php echo $replyanswer->class_name;?></a>
+<?php }}?>

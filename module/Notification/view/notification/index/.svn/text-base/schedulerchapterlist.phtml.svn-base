@@ -1,0 +1,45 @@
+ <script type="text/javascript">
+    $(document).ready(function() {
+        closelist();
+        $("#overlay").hide();
+ });
+ 
+ function closelist(){
+      $(".chapterclose").click(function(){
+
+	$(".cbp-spmenu-push").hide();    
+        $('#calendar12').html('');        
+        calendar();
+        //addSubjectColor();
+        //$('#calendar12').css('width','85%');
+        $('#inner-cont_rhtst').css('width','87%');
+ }); 
+ }
+ </script>
+<!--- according menu -->
+
+	<div id="inner-image-show" style="display:none;">
+		<img src="<?php echo $this->cdn() ?>/images/website/slide_open_icon.png"/>
+	</div>
+	<div id="inner-image-close" style="display:none;">
+		<img src="<?php echo $this->cdn() ?>/images/website/slide_close_icon.png"/>
+	</div>
+	<div id="inner-cont_lftst">
+		<div class="cbp-spmenu-push" id="ms2item" style="display:block;margin-top:0px;padding-left: 140px;">
+			<a href="#" class="chapterclose"><img src="<?php echo $this->cdn() ?>/images/website/chapterlist_closebtn.png" /></a>
+			<div class="cbp-spmenu cbp-spmenu-left" >
+				<div class="close_mobile">&nbsp;</div>
+				<div>
+					<div class="horizontalBorder" style="width:272px;">
+						<div class="sch_drag1" id="drag1">
+							<div class="sch_drag1_txt">Drag your Lesson here</div>
+						</div>
+						<span id="ajaxChapters">
+						<?php echo $this->partial('notification/index/tabslist.phtml',array('chapterdetails'=>$this->chapterdetails,'testChapterdetails'=>$this->testChapterdetails,'statusArr'=>$this->statusArr,'subjectName'=>strtolower($this->subjectName),'user_id'=>$this->user_id,'lessionid'=>$this->lessionid,'paramtype'=>$this->paramtype,'sceduledetail'=>$this->sceduledetail,'customboardId'=>$this->customboard));?>  
+						</span> 
+					</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+

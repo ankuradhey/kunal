@@ -1,0 +1,714 @@
+<style type="text/css">
+.select-wrappers{margin-top:0;  float:none; width:287px; background:url("../images/package_confirmation/dropdown_arrow.png") no-repeat scroll 97% 50% #fff;}
+</style>
+<div class="addchild-box sign-box register-contbox" id="addchild-popup" style="border: 2px solid #F39A22;border-radius:2px; padding-top:0px; height:235px;">
+  <div id="ChildDetailPopup" style="display:block;">
+    
+    <h1 class="nursery_popup_margin addchild" style="margin-top:0px;display:block;">
+      Login Detail
+      <span style="float:right; font-size:13px;">
+        Already have a child registered on 
+        <br>
+        Extramarks.com? Link account 
+        <a href="javascript:void(0);" onclick="openChildLinkPopup();">
+          here
+        </a>
+      </span>
+      <div style="clear:both;">
+      </div>
+    </h1>
+  </div>
+  <form name="addchild" id="addchild" method="post">
+    <div id="addChildPopup">
+      
+      <h1 class="nursery_popup_margin addchild" style="margin-top:0px;">
+        <span id="redirect" style="display:none">
+          <a onclick="closeChildPopup();" id="close_button"  href="javascript:void(0)">
+          </a>
+        </span>
+        <span id="noredirect" style="display:none">
+          <a onclick="closeChildPopup('');" id="close_button"  href="javascript:void(0)">
+          </a>
+        </span>
+		Add Child 
+      <span style="float:right; font-size:13px; margin-right:10px;">
+        Already have a child registered on 
+        <br>
+        Extramarks.com? Link account 
+        <a id="redirecthere" style="display:none" href="javascript:void(0);" onclick="openChildLinkPopup();">
+          here
+        </a>
+        <a style="display:none" id="noredirecthere" href="javascript:void(0);" onclick="openChildLinkPopup('1');">
+          here
+        </a>
+      </span>
+      <div style="clear:both;">
+      </div>
+     </h1>
+     <div class="log-fld" style="padding-top:15px;">
+       <span class="green-color" id="success_msg">
+       </span>
+       <div class="log-bx">
+         <div class="log-lftbx" style="width:24%">
+           Child Name:
+           <span>
+             *
+           </span>
+         </div>
+         <div class="log-rhtbx" style="width:76%">
+           <input type="text" name="childName" id="childName"/>
+           <span class="valid-error" id="errorchildName">
+           </span>
+         </div>
+       </div>
+       
+       <div class="log-bx">
+         <div class="log-lftbx" style="width:24%">
+           User Id:
+           <span>
+             *
+           </span>
+         </div>
+         <div class="log-rhtbx" style="width:76%">
+           <input type="text" name="childUserId" id="childUserId"/>
+           <span class="valid-error" id="errorchildUserId">
+           </span>
+         </div>
+       </div>
+       
+       <div class="log-bx">
+         <div class="log-lftbx" style="width:24%">
+           Password:
+           <span>
+             *
+           </span>
+         </div>
+         <div class="log-rhtbx" style="width:76%">
+           <input type="password" name="childPassword" id="childPassword"/>
+           <span class="valid-error" id="errorchildPassword">
+           </span>
+         </div>
+       </div>
+       
+       <div class="log-bx">
+         <div class="log-lftbx" style="width:24%">
+           Age:
+           <span>
+             *
+           </span>
+         </div>
+         <div class="log-rhtbx" style="width:76%">
+           <input type="text" name="childAge" id="childAge"/>
+           <span class="valid-error" id="errorchildAge">
+           </span>
+           <span class="valid-error" id="errorchildAge1">
+           </span>
+         </div>
+       </div>
+         
+         <div class="log-bx">
+         <div class="log-lftbx" style="width:24%">
+           School:
+           <span>
+             *
+           </span>
+         </div>
+         <div class="log-rhtbx" style="width:76%">
+           <input type="text" name="school_name" id="school_name"/>
+           <span class="valid-error" id="errorSchoolName">
+           </span>
+         </div>
+       </div>
+         
+       <div id="classdetails1" class="log-bx">
+            <div style="width:24%" class="log-lftbx">Select Gender:<span>*</span></div>
+             <div style="width:27%; margin-top:0px;" class="log-rhtbx">
+                            <select style="text-indent:inherit; background-image:none; font-size:12px;width:290px;" tabindex="31" class="class-select custom-selects" id="classgender" name="gender">
+                                <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+            </select>
+                 <div class="clear"></div>
+            <span id="errorgenderChild" class="valid-error"></span>
+            </div>
+       </div>
+         
+         <div id="classdetails1" class="log-bx">
+            <div style="width:24%" class="log-lftbx">Select Country:<span>*</span></div>
+             <div style="width:27%; margin-top:0px;" class="log-rhtbx">
+                <select id="ucountries" class='custom-selects loc' name="ucountries" style="text-indent:inherit; background-image:none; font-size:12px;width:290px;">
+                    <option value="">Country</option>
+                    <?php if(isset($countries)){foreach($countries as $countryname){ ?>
+                    <?php if($userCountryId == $countryname->getCountryId()){?>
+                    <option value="<?php echo $countryname->getcountryid();?>" selected="selected"><?php echo $countryname->getcountryname();?></option>
+                    <?php }else{?>
+                    <option value="<?php echo $countryname->getcountryid();?>"><?php echo $countryname->getcountryname();?></option>
+                    <?php }}}?>
+                 </select>
+             <div class="clear"></div>
+            <span id="errorcountryChild" class="valid-error"></span>
+            </div>
+       </div>
+         
+         <div id="classdetails1" class="log-bx">
+            <div style="width:24%" class="log-lftbx">Select State:<span>*</span></div>
+             <div style="width:27%; margin-top:0px;" class="log-rhtbx">
+                <select id="state" class='custom-selects state' name="state" style="text-indent:inherit; background-image:none; font-size:12px;width:290px;">
+                    <option value="">State</option>
+                    <?php if(isset($states)){foreach($states as $statename){ ?>
+                    <?php if($userStateId == $statename->getstateid()){?>
+                    <option value="<?php echo $statename->getstateid();?>" selected="selected"><?php echo $statename->getstatename();?></option>
+                    <?php }else{?>
+                    <option value="<?php echo $statename->getstateid();?>"><?php echo $statename->getstatename();?></option>
+                    <?php }}}?>
+                 </select>
+             <div class="clear"></div>
+            <span id="errorstateChild" class="valid-error"></span>
+            </div>
+       </div>
+       <div class="log-bx">
+         <div class="log-lftbx" style="width:24%">
+           City:
+           <span>
+             *
+           </span>
+         </div>
+         <div class="log-rhtbx" style="width:76%">
+           <input type="text" name="city" id="city" value="<?php echo $userCity; ?>"/>
+           <span class="valid-error" id="errorCityName">
+           </span>
+         </div>
+       </div>
+       <div class="log-bx">
+         <div class="log-lftbx" style="width:24%">
+           Select Board:
+           <span>
+             *
+           </span>
+         </div>
+         <div class="log-rhtbx" style="width:27%; margin-top:0px;">
+           
+           <select name="boardChild" id="boardChild" class="board-select custom-selects"  tabindex="1" style="text-indent:inherit; background-image:none; font-size:12px;width:290px;" >
+             
+             <?php foreach($boardList as $key => $value){?>
+                <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                  <?php }?>
+                 <?php foreach($boardList as $key => $val){
+                    if($val == 'ICSE'){ ?>
+                        <option value="<?php echo $key;?>">Other</option>
+                    <?php }
+                } ?>
+
+                  </select>
+                  <div class='clear'>
+                  </div>
+                  <span class="valid-error" id="errorboardChild">
+                  </span>
+              </div>
+          </div>
+          
+                      <div class="log-bx" id="otherboardChildclass" style="display:none;">
+                <div class="log-lftbx" style="width:24%">Other Board:<span>*</span></div>
+                <div class="log-rhtbx" style="width:76%; margin-top:0px;">
+                        <input type="text" name="otherboardchild" id="otherboardchild" />
+                        <div class='clear'></div>
+                    <span class="valid-error" id="errorotherboardchild"></span>
+                </div>
+            </div>
+                
+
+          <div class="log-bx" id="classdetails1">
+            <div class="log-lftbx" style="width:24%">
+              Select Class:
+              <span>
+                *
+              </span>
+            </div>
+            <div class="log-rhtbx" style="width:27%; margin-top:0px;">
+              <select name="classChild" id="classChild" class="class-select custom-selects"  tabindex="2" style="text-indent:inherit; background-image:none; font-size:12px;width:290px;">
+                <option value="">
+                  Select Class
+                </option>
+              </select>
+              <div class='clear'>
+              </div>
+              <span class="valid-error" id="errorclassChild">
+              </span>
+            </div>
+          </div>
+          <div class="clear">
+          </div>
+          <!--
+<div class="register_conf_text" id="reg_msg" style="width:auto; float:none; margin-left:0px;">
+<p style="font-size:14px; color:#898989; text-align:left;">
+We have sent you an email with all the above details
+</p>
+</div>
+-->
+     </div>
+     
+     <div class="clear">
+       &nbsp;
+     </div>
+     <div class="register_conf_button_h">
+       
+       <ul style=" float:right; margin-top:10px;">
+         <li style="margin-right:10px; float:left;">
+           <a class="register" id="various1" onclick="return addChildDataChildPopup('<?php echo $_SERVER['HTTP_HOST']?>','add')" href="javascript:void(0);" tabindex="3">
+  
+  <div class="logins">
+    Save & Add More
+  </div>
+                  </a>
+              </li>
+              <li style="margin-right:10px; float:left;">
+                <a class="register" id="various1" onclick="return addChildDataChildPopup('<?php echo $_SERVER['HTTP_HOST']?>','save')" href="javascript:void(0);" tabindex="3">  
+    <div class="logins">
+      Save & Continue
+   </div>
+                  </a>
+              </li>
+              <div class="clear">
+                &nbsp;
+              </div>
+          </ul>
+     </div>
+     
+     
+     
+     <span id="loadding" style="display:none">
+       <img src="<?php echo $this->cdn() ?>/images/loader16.gif"/>
+     </span>
+     <div id="regSuccessful">
+     </div>
+    </div>
+    
+  </form>
+  
+  <div class="clear">
+    &nbsp;
+  </div>
+</div>
+
+
+<div style="display: none;" id="childlink-popup" class="childlink-box sign-box">
+     <input type="hidden" name=skipbut" id="skipbut" value=''/> 
+        <form name="linkchild" id="linkchild" method="post">
+            <span id="skip1" style="display: none;"><a onclick="closeChildPopup();" style="margin-right: 8px;margin-top:7px;" id="close_button" href="javascript:void(0)"></a></span>
+             <span id="skip2" style="display: none;"><a onclick="closeChildPopup('');" style="margin-right: 8px;margin-top:7px;" id="close_button" href="javascript:void(0)"></a></span>             
+            <h1 class="childlink_popup_margin">Link Child</h1>            
+            <span class="green-color" id="success_msg"></span>
+            <div class="prefer">
+                <div class="log-bx">
+                    <div class="log-lftbx" style="padding-left:15px;width: 17%">Child  Email:<span>*</span></div>
+                    <div class="log-rhtbx">
+                        <input type="text" name="linkChildUserId" id="linkChildUserId" value=""/>
+                        <span class="valid-error" id="errorlinkChildUserId"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="register_conf_button">
+			<div style="float:right; margin-top:10px; margin-right:10px;">
+				<a class="register" id="various1" style="margin-right:10px; float:left;" onclick="return linkChildDataPopupChild('www.extramarks.com','add')" href="javascript:void(0);" tabindex="3"> <div class="logins">Save & Add More</div></a>
+				<a class="register" id="various1" style="margin-right:10px; float:left;" onclick="return linkChildDataPopupChild('www.extramarks.com','save')" href="javascript:void(0);" tabindex="3"> <div class="logins">Save & Continue</div></a>
+				<!--<a class="register" id="various1" style="margin-right:10px; float:left;" onclick="closeChildPopup();" href="javascript:void(0);" tabindex="3"> <div class="logins">Skip</div></a>-->
+                                <!--<a  id ="skip1" class="register" id="various1" style="margin-right:10px; float:left;display:none;"  onclick="closeChildPopup();" href="javascript:void(0);" tabindex="3"> <div class="logins">Skip</div></a>
+                                <a  id ="skip2" class="register" id="various1" style="margin-right:10px; float:left; display:none;"  onclick="closeChildPopup('');" href="javascript:void(0);" tabindex="3"> <div class="logins">Skip</div></a>-->
+                                
+			</div>
+		</div>
+        </form>
+    </div>  
+
+
+<script>
+    
+    function addChildDataChildPopup(host, type) {
+    
+    var letters = /^[a-zA-Z ]*$/;
+    var numbers = /^[0-9]+$/;
+    var childAge = $('#childAge').val();
+    var usernamepattern = /[-!$%@^&*()_+|~=`\\#{}\[\]:";'<>?,.\/]/;
+    alert(yes);
+    var flg = true;
+    if ($("#childName").val() == '') {
+        $("#errorchildName").css('display', 'block');
+        $("#errorchildName").html("Please enter child name");
+        flg = false;
+    } else {
+        $("#errorchildName").css('display', 'none');
+        $("#errorchildName").html("");
+    }
+
+    if ($("#childUserId").val() == '') {
+        $("#errorchildUserId").css('display', 'block');
+        $("#errorchildUserId").html("Please enter user id");
+        flg = false;
+    }
+    else if (/[-!$%@^&*()_+|~=`\\#{}\[\]:";.'<>?,\/]/.test($("#childUserId").val()))
+    {
+        $("#errorchildUserId").css('display', 'block');
+        $('#errorchildUserId').html('Only a-zA-Z0-9 is allowed');
+        flg = false;
+    }
+    else {
+        $("#errorchildUserId").css('display', 'none');
+        $("#errorchildUserId").html("");
+    }
+
+    if ($("#childPassword").val() == '') {
+        $("#errorchildPassword").css('display', 'block');
+        $("#errorchildPassword").html("Please enter password");
+        flg = false;
+    }else if ($("#childPassword").val().length < 6) {
+        $("#errorchildPassword").css('display', 'block');
+        $("#errorchildPassword").html("Please enter minimum 6 characters for password");
+        flg = false;
+    }else {
+        $("#errorchildPassword").css('display', 'none');
+        $("#errorchildPassword").html("");
+    }
+
+    if (childAge == '') {
+        $("#errorchildAge").css('display', 'block');
+        $("#errorchildAge1").css('display', 'none');
+        $("#errorchildAge").html("Please enter child age");
+        flg = false;
+    } else if (!childAge.match(numbers)) {
+        $("#errorchildAge").css('display', 'none');
+        $("#errorchildAge1").css('display', 'block');
+        $("#errorchildAge1").html('Please enter only numbers.');
+        flg = false;
+    } else {
+        $("#errorchildAge").css('display', 'none');
+        $("#errorchildAge1").css('display', 'none');
+        $("#errorchildAge1").html("");
+        $("#errorchildAge").html("");
+    }
+    if ($("#school_name").val() == '') {
+        $("#errorSchoolName").css('display', 'block');
+        $("#errorSchoolName").html("Please enter school name");
+        flg = false;
+    } else {
+        $("#errorSchoolName").css('display', 'none');
+        $("#errorSchoolName").html("");
+    }
+
+    if ($("#classgender").val() == '') {
+        $("#errorgenderChild").css('display', 'block');
+        $("#errorgenderChild").html("Please select gender");
+        flg = false;
+    } else {
+        $("#errorgenderChild").css('display', 'none');
+        $("#errorgenderChild").html("");
+    }
+    
+    if ($("#ucountries").val() == '') {
+        $("#errorcountryChild").css('display', 'block');
+        $("#errorcountryChild").html("Please select country");
+        flg = false;
+    } else {
+        $("#errorcountryChild").css('display', 'none');
+        $("#errorcountryChild").html("");
+    }
+    if ($("#state").val() == '') {
+        $("#errorstateChild").css('display', 'block');
+        $("#errorstateChild").html("Please select state");
+        flg = false;
+    } else {
+        $("#errorstateChild").css('display', 'none');
+        $("#errorstateChild").html("");
+    }
+    if ($("#city").val() == '') {
+        $("#errorCityName").css('display', 'block');
+        $("#errorCityName").html("Please enter city");
+        flg = false;
+    } else {
+        $("#errorCityName").css('display', 'none');
+        $("#errorCityName").html("");
+    }
+    
+    if ($("#boardChild").val() == '') {
+        $("#errorboardChild").css('display', 'block');
+        $("#errorboardChild").html("Please select board");
+        flg = false;
+    } else {
+        $("#errorboardChild").css('display', 'none');
+        $("#errorboardChild").html("");
+    }
+        var otherboardname = null;
+    if ($("#boardChild :selected").text() == 'Other') {
+        var otherboardname = $("#otherboardchild").val();
+        if ($("#otherboardchild").val() == '') {
+            $("#errorotherboardchild").css('display', 'block');
+            $("#errorotherboardchild").html("Please enter other board");
+            flg = false;
+        }else{
+            $("#errorotherboardchild").css('display', 'none');
+            $("#errorotherboardchild").html("");
+        }
+    }else{
+        $("#errorotherboardchild").css('display', 'none');
+        $("#errorotherboardchild").html("");
+    }
+
+    if ($("#classChild").val() == '' || $("#classChild").val() == 'Class') {
+        $("#errorclassChild").css('display', 'block');
+        $("#errorclassChild").html("Please select class");
+        flg = false;
+    } else {
+        $("#errorclassChild").css('display', 'none');
+        $("#errorclassChild").html("");
+    }
+    
+    var passwordVal = $('#childPassword').val();
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo $this->basePath(); ?>' + "/user/childpasswordcheck",
+        async: false,
+        dataType: 'json',
+        data: 'newpwd='+passwordVal,
+        success: function(data) {
+            $("#errorchildPassword").css('display','block');
+            if(data.response == 'required') {
+                flg = false;
+                $('#errorchildPassword').html('Please enter password');
+            } else if(data.response == 'match') {
+                flg = false;
+                $('#errorchildPassword').html('The new password and confirmation password do not match. Please try again!');
+            } else if(data.response == 'length') {
+                flg = false;
+                $('#errorchildPassword').html('Password length should be minimum of six characters!');
+            } else if(data.response == 'space') {
+                flg = false;
+                $('#errorchildPassword').html('Password should not have blank spaces!');
+            } else if(data.response == 'special') {
+                flg = false;
+                $('#errorchildPassword').html('Password should not have junk characters. Allowed Special Characters are ! @ ; , $ # & ( ) + : . _');
+            } else if(data.response == 'failed') {
+                flg = false;
+                $('#errorchildPassword').html('Password reset failed!');
+            } else if(data.status == false) {
+                flg = false;
+                $('#errorchildPassword').html('Password reset failed!');
+            } else if(data.status == true) {
+                $('#errorchildPassword').html('');
+            }
+        }
+    });
+
+    if (flg == false) {
+        return false;
+    } else {
+        $.ajax({
+            type: 'POST',
+            dataType:'json',
+            url: BASE_URL + '/user/registerchild',
+            data: $("#addchild").serialize(),
+            success: function(data) {
+                if (data.output == 'success') {
+                   
+                    if (type == 'save') {
+                        //redirect user to profile page
+                        
+                        $(".overlay").css("display", "none");
+                        $("#addchild-popup").hide();
+                        //window.location.reload();                      
+
+                        if (data.redirect_url == BASE_URL + '/user/signup') {
+                            window.location.href = BASE_URL + '/dashboard';
+                        } else {
+                            window.location.reload();
+                        }
+                    } else if (type == 'add') {
+                        //blank add child form for more data
+                        $("#childName").val('');
+                        $("#childUserId").val('');
+                        $("#childPassword").val('');
+                        $("#childAge").val('');
+                        $("#classgender").val($("#classgender option:first").val());
+                        var selectedOption = $("#classgender").find(":selected").text();
+                        $("#classgender").next(".holders").text(selectedOption);
+                        $("#boardChild").val($("#boardChild option:first").val());
+                        $("#classChild").val($("#classChild option:first").val());
+                        var selectedOption = $("#boardChild").find(":selected").text();
+                        $("#boardChild").next(".holders").text(selectedOption);
+                        var selectedOption = $("#classChild").find(":selected").text();
+                        $("#classChild").next(".holders").text(selectedOption);
+                        $("#otherboardChildclass").hide();
+                        $("#success_msg").html(data.message);
+                        //$('span.holders').text('');
+                    }else{
+                        $("#errorchildUserId").css('display', 'block');
+                        $("#errorchildUserId").html(data.message);
+                       window.location.href = data.redirect_url;
+                    }
+                } else if (data.output == 'usernameExists') {
+                    $("#errorchildUserId").css('display', 'block');
+                    $("#errorchildUserId").html("User Id is already exists in record");
+                    //window.location.href = BASE_URL;
+                }
+
+            }
+        });
+    }
+}
+
+
+function linkChildDataPopupChild(host, type) {
+    var flg = true;
+    if ($("#linkChildUserId").val() == '') {
+        $("#errorlinkChildUserId").css('display', 'block');
+        $("#errorlinkChildUserId").html("Please enter child email");
+        flg = false;
+    } else {
+        $("#errorlinkChildUserId").css('display', 'none');
+        $("#errorlinkChildUserId").html("");
+    }
+
+    if (flg == false) {
+        return false;
+    } else {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: BASE_URL + '/user/linkchild',
+            data: $("#linkchild").serialize(),
+            success: function(data) {
+
+                if (data.output == 'success') {
+                    if (type == 'save') {
+                        //redirect user to profile page
+                        $(".overlay").css("display", "none");
+                        $("#childlink-popup").hide();
+                        //window.location.reload();
+                        window.location.reload();
+                        return false;
+                        
+                    } else if (type == 'add') {
+                        //blank add child form for more data
+                        $("#success_msg").html(data.message);
+                        $("#linkChildUserId").val('');
+                    }
+                } else if (data.output == 'emailNotExists') {
+                    $("#errorlinkChildUserId").css('display', 'block');
+                    $("#errorlinkChildUserId").html("Child Email does not exists in record");
+                    //window.location.href = BASE_URL;
+                } else if (data.output == 'exists') {
+                    $("#errorlinkChildUserId").css('display', 'block');
+                    $("#errorlinkChildUserId").html("Request for this user is already pending");
+                    //window.location.href = BASE_URL;
+                }
+
+            }
+        });
+    }
+}
+
+
+$(document).ready(function() {
+  $("#board1").change(function() {
+    var optionString = '<option value="">Select Class</option>';
+    $("#class1").html(optionString);
+    if($(this).val()){
+      $.ajax({
+        type: 'POST',
+        url: BASE_URL + "/lms/index/containerlist/"+$(this).val(),
+        dataType: 'json',
+        success: function(data) {
+          var optionString = '<option value="">Select Class</option>';
+          $("#class1").html(optionString);
+          
+          $.each(data.options, function(key, obj)
+                 {
+                   optionString += '<option value="'+obj.rack_id+'">'+obj.rack_name+'</option>';
+                   
+                 }
+                )
+            $("#class1").html(optionString);
+          
+        }
+      }
+            );
+    }
+    
+  }
+                     );
+  
+  
+  $("#boardChild").change(function() {
+    var optionString = '<option value="">Select Class</option>';
+    $("#classChild").html(optionString);
+    $("#otherboardChildclass").hide();
+    if( ($("#boardChild :selected").text()) == "Other"){
+        $("#otherboardChildclass").show();
+    }
+
+    if($(this).val()){
+      $.ajax({
+        type: 'POST',
+        url: BASE_URL + "/lms/index/containerlist/"+$(this).val(),
+        dataType: 'json',
+        success: function(data) {
+          var optionString = '<option value="">Select Class</option>';
+          $("#classChild").html(optionString);
+          
+          $.each(data.options, function(key, obj)
+                 {
+                   optionString += '<option value="'+obj.rack_id+'">'+obj.rack_name+'</option>';
+                   
+                 }
+                )
+            $("#classChild").html(optionString);
+          
+        }
+      }
+            );
+    }
+    
+  }
+                         );
+                         
+   function closeChildPopup(redirect) {
+    $(".packageconfirmation-box,.overlay").css('display', 'none');
+    $(".overlay").css("display", "none");
+    $("#addchild-popup").hide();
+    $("#childlink-popup").hide();
+    $("#nursery-popup").hide();
+   }
+   
+   
+
+  
+function openChildLinkPopup(par) {
+
+    if (par == 1) {
+        $('#skip2').css('display', 'block');
+    } else {
+        $('#skip1').css('display', 'block');
+    }
+    $(".overlay").css("display", "none");
+    $("#addchild-popup").hide();
+    $(".childlink-box,.overlay").css('display', 'block');
+    $(".overlay").css({'opacity': '0.65'});
+} 
+
+
+
+$("#ucountries").change(function(){
+   	$("#state").parent().find(".holders").text("");
+   	$("#state").parent().find(".holders").text("Select a state");
+   	var countryid=$("#ucountries").val();		
+   	$.ajax({
+   		type:	'POST',
+   		url:   	BASE_URL+'/user/getstates',
+   		data:	{countryid:countryid},
+   		success: function(data){ 						
+   			$("#state").html(data.statenames);							
+   		}
+   	});	
+   });
+
+});
+</script>

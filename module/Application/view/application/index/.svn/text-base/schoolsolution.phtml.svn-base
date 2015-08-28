@@ -1,0 +1,254 @@
+<script src="<?php echo $this->basePath() ?>/js/website/scroller.js"></script>
+<script> 
+ $(window).load(function(){
+ 	
+                        $(".scrollcontent").mCustomScrollbar({
+                                theme:"minimal"
+                        });
+                });        
+</script>
+
+<div id="content" class="globalwhitebg">
+<div class="container">
+<section class="row marginbot20">
+<div class="cap-breadscum"><a href="<?php echo $this->Url('home')?>" class="breadcrum">&nbsp;</a> <span> &raquo; School Solution</span></div>
+<div id="row1">
+<div class="col-sm-4">
+<div class="pdding5"></div>
+<div class="staticLeftimg"><img src="<?php echo $this->cdn() ?>/images/website/school-solution/home_live_tab.jpg" /></div>
+<div class="textbig">
+<h3>Technology Enabled</h3>
+<h3>Class Room</h3>
+<!--<h3>Serving K-12 students since 2009</h3>-->
+<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() ?>/fb/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+<div class="contactfordem">To Schedule a demo <a href="http://erphelpdesk.extramarks.com/helpdeskserp/?site_topic=SCH" target="_blank">Click here <img  src="<?php echo $this->cdn() ?>/images/website/school-solution/click_arrow.png" /></a></div>
+<div class="track-feedback"> <a href="http://erphelpdesk.extramarks.com/helpdeskserp/?action=trackTicket" target="_blank">Track your ticket</a></div>
+<div id="inline1" style="width:730px; height:550px;display: none;">
+<div class="biggreybg" style="margin-top:0;">
+<form name="feedbackstudy" id="feedbackstudy" method="post" enctype="multipart/form-data" action="">
+<div class="ticket-head"><a href=""><img src="<?php echo $this->cdn() ?>/images/website/About_us_products_contact_us/foodback_arrow.png" /></a> <span>School Solutions Feedback Registration</span></div>
+<div style="border-bottom: 1px solid #d6d6d6"></div>
+<div class="feedback_main">
+  <div class="trtdspec">
+    <div class="feedbacklabel">City Name<span class="redstar">*</span> </div>
+    <div class="feedback_reg_right">
+      <input type="text" name="cityname" onkeyPress="subreg_feedback(event)" autofocus id="cityname" value="" placeholder="Please enter your city name" class="feedbackbigtxtbox">
+      <span class="validation-error"></span> <span class="validation-error" id="cityname1"></span> </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec">
+    <div class="feedbacklabel">School Name<span class="redstar">*</span> </div>
+    <div  class="feedback_reg_right">
+      <input type="text" name="schoolname" onkeyPress="subreg_feedback(event)" id="schoolname" value="" placeholder="Please enter the school name"  class="feedbackbigtxtbox">
+      <span class="validation-error"></span> <span class="validation-error" id="schoolname1"></span> </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec">
+    <div class="feedbacklabel">School Code </div>
+    <div  class="feedback_reg_right">
+      <input type="text" name="schoolcode" onkeyPress="subreg_feedback(event)" id="schoolcode" value=""  placeholder="Enter school code"  class="feedbackbigtxtbox">
+      <span class="validation-error"></span> </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec" style="margin-bottom:10px;">
+    <div class="feedbackcommentlabel feedbackcommentlabel-two">School Contact<br>
+      Person Details<span class="redstar">*</span> </div>
+    <div class="feedback_reg_right">
+      <p>
+        <input type="text" onkeyPress="subreg_feedback(event)" name="personname" id="feedbackname1" value="" placeholder="School contact name" class="feedbacktxtbox">
+        <span class="validation-error" id="feedbackname11"></span> <span class="validation-error" id="feedbackname12"></span> </p>
+      <p>
+        <input onkeyPress="subreg_feedback(event)" type="text" name="personcontact" id="feedbackcontact1" value="" placeholder="School contact number" class="feedbacktxtbox" maxlength="10">
+        <span class="validation-error" id="feedbackcontact11"></span> <span class="validation-error" id="feedbackcontact12"></span> </p>
+      <p style="margin-right:0px;">
+        <input onkeyPress="subreg_feedback(event)" type="text" name="feedbackemail1" id="feedbackemail1" value="" placeholder="School contact email" class="feedbacktxtbox">
+        <span class="validation-error" id="feedbackemail2"></span> <span class="validation-error" id="feedbackemail3"></span> </p>
+    </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec">
+    <div class="feedbackcommentlabel">Address<span class="redstar">*</span> </div>
+    <div  class="feedback_reg_right">
+      <textarea onkeyPress="subreg_feedback(event)" name="feedbackaddress" tabindex="7" id="feedbackaddress" class="feedbacktxtarea" placeholder="Enter your address"></textarea>
+      <span class="validation-error"></span> </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec" style="margin-top: 24px;">
+    <div class="feedbacklabel">Pincode<span class="redstar">*</span> </div>
+    <div  class="feedback_reg_right">
+      <input onkeyPress="subreg_feedback(event)" type="text" name="feedbackpincode" id="feedbackpincode" value=""  class="feedbackbigtxtbox" placeholder="Enter your pincode" maxlength="6">
+      <span class="validation-error" style="width:20%;" id="feedbackpincode1"></span> <span class="validation-error" style="width:20%;" id="feedbackpincode2"></span> </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+</div>
+<div style="border-bottom: 1px solid #d6d6d6;margin:10px 0;"></div>
+<div class="feedback_main">
+  <div class="trtdspec" style="margin-bottom:10px;">
+    <div class="feedbackcommentlabel feedbackcommentlabel-two">Created by <br>
+      Person Details <span class="redstar">*</span> </div>
+    <div  class="feedback_reg_right">
+      <p>
+        <input onkeyPress="subreg_feedback(event)" type="text" name="feedbackname" id="feedbackname" value="" placeholder="Enter your name" class="feedbacktxtbox">
+        <span class="validation-error" id="feedbackperson"></span> <span class="validation-error" id="feedbackperson1"></span> </p>
+      <p>
+        <input onkeyPress="subreg_feedback(event)" type="text" name="feedbackcontact" id="feedbackcontact" value="" placeholder="Enter your contact" maxlength="10" class="feedbacktxtbox">
+        <span class="validation-error" id="feedbackpersoncontact"></span> <span class="validation-error" id="feedbackpersoncontact1"></span> </p>
+      <p style="margin-right:0px;">
+        <input onkeyPress="subreg_feedback(event)" type="text" name="feedbackemail" id="feedbackemail" value="" placeholder="Enter your email" class="feedbacktxtbox">
+        <span class="validation-error" id="feedbackpersonemail"></span> <span class="validation-error" id="feedbackpersonemail1"></span> </p>
+    </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec">
+    <div class="feedbacklabel">Help Topic<span class="redstar">*</span> </div>
+    <div class="feedback_reg_right">
+      <select name="feedbacktopic"   id="feedbacktopic" class="feedbackselectbox" placeholder="Enter help topic">
+        <option value="">Select a topic</option>
+        <? if(isset($this->getalltopics) && count($this->getalltopics)>0){foreach($this->getalltopics as $alltopics){?>
+        <option value="<? echo $alltopics->topic_id?>"><? echo $alltopics->topic_name;?></option>
+        <?}}?>
+      </select>
+      <span class="validation-error" id="errorfeedbacktopic"></span> </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec">
+    <div class="feedbackcommentlabel">Comments<span class="redstar">*</span> </div>
+    <div class="feedback_reg_right">
+      <textarea onkeyPress="subreg_feedback(event)" name="feedbackcomment" tabindex='13' id="feedbackcomment" class="feedbacktxtarea" placeholder="Enter your comment"></textarea>
+      <span class="validation-error"id="errorfeedbackcomment"></span> </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec" style="margin-top:24px;">
+    <div class="feedbacklabel" name="feedbackscode" id="feedbackscode">Security Code<span class="redstar">*</span> </div>
+    <div class="security_input">
+      <input onkeyPress="subreg_feedback(event)" type="text" name="securitycode" id="securitycode" maxlength="5" class="feedbackscbox" placeholder="Enter security code">
+      <span class="validation-error" id="securitycodeid"></span> <span class="validation-error" id="checksecurity"></span> </div>
+    <div class="security_captcha">
+      <input onkeyPress="subreg_feedback(event)" type="hidden" id="hidcheckvalue" name="hidcheckvalue" value="<? if(isset($this->securityCode)){echo $this->securityCode;}else{?>43095<?}?>">
+      <input type="button" id="secrity_refreshcode" value="<? if(isset($this->securityCode)){echo $this->securityCode;}else{?>43095<?}?>"/>
+    </div>
+    <div class="security_refresh"> <a href='javascript:void(0);'  tabindex="15" onclick="refreshCaptcha();"><img src="<?php echo $this->cdn() ?>/images/website/after_school_study/refresh_image.png"></a> </div>
+    <span class="securitycode-error"></span> </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspec">
+    <div class="clear">&nbsp;</div>
+    <div class="feedbacklabel">File Upload </div>
+    <div  class="feedback_reg_right">
+      <!--<input type="file" name="feedbackfile" id="feedbackfile">-->
+      <div class="custom-upload">
+        <input type="file" name="feedbackfile" id="feedbackfile">
+        <div class="fake-file">
+          <input disabled="disabled" >
+        </div>
+      </div>
+    </div>
+    <input type="hidden" name="fileerror" id="fileerror" value="0"/>
+    <span class="validation-error" style="margin-left: 19%;margin-top: 3%;" id="errorimage"></span> </div>
+  <div class="clear">&nbsp;</div>
+  <div class="trtdspecsubmit">
+    <div class="clrfix"></div>
+    <div class="clrfix"></div>
+    <div class="feedbacklabel"></div>
+    <div class="feedback_buttons"> <a   tabindex="16" class="signin" onClick="return feedbackRegValidation();" href="javascript:void(0)">
+      <div class="singins">SUBMIT</div>
+      </a>
+      <button tabindex="17" type="reset" value="" class="reset_button">
+      <div class="singins">RESET</div>
+      </button>
+    </div>
+  </div>
+  <div class="clear">&nbsp;</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-5">
+  <div class="">
+    <div class="pdding5">
+      <h3 class="font18">Extramarks Educational Software</h3>
+    </div>
+    <div class="text1 scrollcontent">
+      <h2>Smart Learn Class</h2>
+      Extramarks 'Smart Learn Class' transforms traditional classrooms into futuristic technology-enabled learning environment.
+      <h2>Extramarks Live</h2>
+      Anytime, anywhere learning platform that maintains the continuity of learning from classroom to home.
+      <h2>Extramarks Classroom Tablet Program</h2>
+      Extramarks tablets along with technology enabled Smart Learn Class Devices - Whiteboard, transform the traditional classrooms into more efficient & collaborative learning environment, where teachers and learners engage with each other in real time, to achieve the most effective learning outcome.
+      <h2>Extramarks Test Centre</h2>
+      Based on layered, hierarchical and structured pedagogy, scientifically designed Test Centre that transforms the assessment scenario in schools with it's easy to implement, attempt and report functionalities significantly reducing paper correction and reporting efforts.
+      <h2>CCE Report Card</h2>
+      Extramarks CCE Report Card discharges teachers from clerical jobs of collating marks and their conversion into corresponding grades. It is an imperative tool for teachers with its abundant & customizable parameters to assess a student's performance.
+      <h2>School Management System</h2>
+      A User-friendly platform that automates and brings effective standardization and efficiency in school operations.  Significantly reduces paper trials, saves time and improves communication amongst different stake holders. </div>
+  </div>
+</div>
+<div class="col-sm-3">
+  <div class="font15"></div>
+  <ul class="feature">
+    <li class="feature1"><a href="<?php echo $this->Url('smart-learn-class')?>">&nbsp;</a></li>
+    <li class="feature3"><a href="<?php echo $this->Url('classroomtab')?>">&nbsp;</a></li>
+    <li class="feature4"><a href="<?php echo $this->Url('testcenter')?>">&nbsp;</a></li>
+    <li class="feature5"><a href="<?php echo $this->Url('ccereport')?>">&nbsp;</a></li>
+    <li class="feature6"><a href="<?php echo $this->Url('schoolmangement')?>">&nbsp;</a></li>
+  </ul>
+  <div style="clear:both"></div>
+</div>
+</div>
+<div style="clear:both"></div>
+</section>
+</div>
+</div>
+<style>
+.fancybox-margin{margin-right:17px;}
+.mCSB_container{ padding-right:10px;}
+</style>
+</div>
+</div>
+<script type='text/javascript'>//<![CDATA[
+$(window).load(function(){
+$('.custom-upload input[type=file]').change(function(){
+   $(this).next().find('input').val($(this).val());
+});
+});//]]>  
+
+</script>
+<script type="text/javascript" language="JavaScript">
+$( document ).ready(function() {
+    document.forms['feedbackstudy'].elements['cityname'].focus();
+	$('input,textarea').placeholder();
+});
+//$("#feedbackTrigger").click(function(){
+//$("#feedbackfile").click();
+//});
+</script>
+<script language='javascript' type='text/javascript'>
+function refreshCaptcha(){
+	$.ajax({
+		type:'POST',
+		url: BASE_URL+'/refresh-code',
+		data:{refresh:'true'},
+		success: function(data){ 
+			if(data.output=='success'){
+				$("#hidcheckvalue").val(data.securityCode);
+				$("#secrity_refreshcode").val(data.securityCode);
+			}
+		}
+	});
+}
+$(document).ready(function() {
+	$('#feedbackfile').bind('change', function() {
+		if(this.files[0].size > 2097152){
+			$("#fileerror").val(1);
+			alert("Image size should be below 2 mb");
+			return false;
+		}
+		else
+		{
+			$("#fileerror").val(0);
+		}
+	});
+	
+});
+
+</script>

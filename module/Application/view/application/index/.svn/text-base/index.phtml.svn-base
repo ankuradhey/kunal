@@ -1,0 +1,198 @@
+<!--Navratra Discount-->
+<!--<div id="basic-modal-content"><a href="<?php //echo $this->Url('package');?>"><img src="<?php echo $this->cdn() ?>/images/repository_images/double-surprise-1.jpg" alt="Extramarks Navratra Offers" width="700" /></a></div>
+<link type='text/css' href='<?php //echo $this->basePath() ?>/discount-popup/basic.css' rel='stylesheet' media='screen' />
+<script type='text/javascript' src='<?php //echo $this->basePath() ?>/discount-popup/jquery.simplemodal.js'></script>
+<script type='text/javascript' src='<?php //echo $this->basePath() ?>/discount-popup/basic.js'></script>-->
+<script type='text/javascript' src='<?php echo $this->basePath() ?>/js/snowstorm.js'></script>
+<!--Navratra Discount-->
+<!--news ticker-->
+
+<script src='<?php echo $this->basePath() ?>/news-ticker/jquery.marquee.min.js'></script>
+<script>
+    $( document ).ready(function() {
+    $('.marquee').marquee({
+ 	 pauseOnHover: true,
+});
+});
+  </script>
+
+
+ <!--<div class="marquee left-img" data-direction='left' data-duration='12000'>
+  <div class="marquee_bg"><img height="37" class="left-img" src="<?php //echo $this->basePath() ?>/images/diwali-img.jpg">Add sparkle to your Diwali with Extramarks, <a href="/diwali">click here for surprise gift.</a> | Extramarks introduces Fast - Track Package <a href="#"></a>- Happy Learning!<a href="/package"><img height="25" alt="buy now" src="<?php //echo $this->basePath() ?>/images/buy_Now.png" style="vertical-align:middle"></a> <img height="37" class="left-img" src="<?php //echo $this->basePath() ?>/images/diwali-img.jpg">
+  </div>
+  </div>-->
+<!--news ticker end-->
+
+
+<div id="banner">
+    <div style="position: absolute;left:0px; top:11px;width:100%">
+     <?php //echo $this->TickerWidget('text'); ?> 
+   </div>
+	<div class="banner_support" style="position:relative">
+             <?php //echo $this->TickerWidget(); ?>  
+	    <div id="image_banner">
+			<!--<img src="<?php //echo $this->basePath() ?>/images/My-Groups-View/color_code_map1.gif" width="758" height="389" />-->
+         <!-- <div class="video-player-Bg">
+		<iframe id="seniorVideo" style="width:100%; height:100%" src="/emplayer/emplayer.php?crsid=4211" webkitallowfullscreen='true' mozallowfullscreen='true' allowfullscreen='true' ></iframe>
+			
+	   </div>
+       <div class="marquee video-player-Btmbg" data-direction='left' data-duration='12000'>
+        <?php //echo $this->TickerWidget('text'); ?>
+       </div>-->
+         <!-- <h1 class="new-heading" style="margin: 0 0 0 6px; text-align: left;">Online Education</h1>-->
+        <?php if(!empty($this->maskdata)){?>
+        <div class="videoplayerA" id="videoplayerA">
+            <div class="video-player-Bg" id="videoplayerB">
+                
+                <?php  echo $this->MaskWidget('video');
+                //echo $this->TickerWidget('image');?>                
+            </div>
+        </div>
+                <?php }else{?>
+                <img src="<?php echo $this->cdn() ?>/images/My-Groups-View/small-map-yellow.png" width="758px" height="389px" alt="Map" />
+               <?php }?>
+            <?php if($this->tickerdata!=''){?>            
+           <div class="marquee video-player-Btmbg" data-direction='left' data-duration='12000'>
+               <?php echo $this->TickerWidget('text'); ?> 
+            </div>
+                <?php }?>
+                <?php if($this->maskdata=='' && $this->tickerdata==''){ ?>
+            <img src="<?php echo $this->cdn() ?>/images/My-Groups-View/small-map-yellow.png" width="758px" height="389px" alt="Map" />
+                <?php }?>
+       
+       
+       
+       
+            
+            
+		</div>
+		<div id="banner_contai">
+        	<div class="mapImg"><img src="<?php echo $this->cdn() ?>/images/My-Groups-View/small-map-yellow.png" alt="Map" /></div>
+            <div class="mapContent">
+			<div class="banner_lft_top">
+				<img src="<?php echo $this->cdn() ?>/images/banner_left-crismas.png" width="201" height="182" alt="Extramarks Live" />
+			</div>
+			<div class="clear"></div>
+			<section>
+				<div id="banner_lft">
+                <h1><img src="images/eassy-effectuve.png" alt="Easy and Effective" /></h1>
+					<!--<h1>Education made</h1>
+					<h2>Easy & Effective</h2>-->
+					<!--<h3>Serving K-12 students since 2009</h3>-->
+					<a href="<?php echo $this->Url('easy-effective') ?>" target="_blank" class="hlearn brand" title="Learn how"><img src="<?php echo $this->cdn() ?>/images/ban-mr.png" width="19" height="19" alt="Learn More" />LEARN HOW</a>
+                    <a href="<?php echo $this->basePath(); ?>/user/register" class="hlearn brand marginLeft10" title="Free Trial"><img src="<?php echo $this->cdn() ?>/images/ban-mr.png" width="19" height="19" alt="Learn More" />FREE TRIAL</a>
+				</div>
+			</section>
+            </div>
+            
+		</div>	
+        
+	</div>
+     <div id="santa"><img src="<?php echo $this->cdn() ?>/images/santa.png" alt="Santa"></div>	
+</div>
+<div id="banner_container" style="clear:both;">
+	<div class="clear">&nbsp;</div>
+</div>
+<div id="home-container">
+<section>
+	<div id="hcontainer">
+	<!--onclick="window.open('<?php //echo $this->Url('smart-learning-class') ?>','mywindow');"
+	onclick="window.open('http://beta.extramarks.com/sat-testprep/sat.html','mywindow');"
+	-->
+		<ul>				
+			<li style="cursor: pointer;" id="board_banner">
+				<p class="icons_sprite board" ></p><p class='hcontainer2'>SCHOOL&nbsp; <br/>SOLUTIONS</p>
+			</li>	
+			<li style="cursor: pointer;" id="learning_banner">
+				<p class="icons_sprite learning" ></p><p class='hcontainer2'>EXTRAMARKS&nbsp; <br/>LIVE TAB</p>
+			</li>	
+			<li style="cursor: pointer;" id="study_banner">
+				<p class="icons_sprite blog"></p><p class='hcontainer3'>SAT PREP &amp;<br/>OVERSEAS <br/>STUDY</p>
+			</li>
+              <li  style="cursor: pointer;" onclick="location.href='<?php echo $this->Url('caphome') ?>'">
+				<p class="icons_sprite CareerAssessment"></p><p class='hcontainer3'>CAREER <br/>ASSESSMENT PROGRAM</p>
+			</li>            
+			<li style="cursor: pointer;" class="hcontainer_last" id="skill_banner">
+				<p class="icons_sprite school"></p><p class='hcontainer4'>SKILL &nbsp;<br/>DEVELOPMENT</p>
+			</li>	
+           
+		</ul>
+	</div>
+</section>
+</div>
+<!-- container end-->
+
+
+
+
+<!--<div class="nursery-box" id="nursery-popup">
+	<form action="javascript:void(0);"  method="post">
+		<div class="close-img"><a href="javascript:void(0);"><img class="nursery_close" src="<?php //echo $this->basePath() ?>/images/close_button.png"></a></div>
+		<div class="head-txt">Notes</div>
+		<div class="prefer">
+			<div class="board-box">
+				<textarea id="notesText"></textarea>
+                 <span class="valid-error" id="errorText"></span>
+			</div>
+			<div style="clear:both;"></div>	
+			<?if(isset($_GET['container_id'])){?>
+			<div class="nursery-submit"><img src="<?php //echo $this->basePath() ?>/images/Container_Visitor/button_submit.png" class="nursery_close" name="nursery_submit" id="nursery_submit" value="Submit" onclick="saveNotes(<?echo $_GET['container_id']?>)" /></div>
+			<?}?>
+		</div>
+	</form>
+	<div class="clear">&nbsp;</div>
+</div>-->
+<!--End-->
+<script>
+
+$("#board_banner").click(function() {
+	$("#board_banner").addClass("hcontainer_active");
+	$("#learning_banner").removeClass("hcontainer_active");
+	$("#study_banner").removeClass("hcontainer_active");
+	$("#skill_banner").removeClass("hcontainer_active");
+	$("#banner_container").html('<div class="board_banner" style="display:block"><div class="banners_images"><img src="<?php echo $this->cdn() ?>/images/home_live_school_solutions.png" alt="school solutions" width="728px" height="422px" /></div><div class="banners_content_text"><p class="text_banner">SCHOOL SOLUTIONS</p><div id="text_left"><h1>Technology Enabled</h1><h2>Class Room</h2><a href="<?php echo $this->Url('school-solutions') ?>"  class="hlearn brand" title="Know More"><img src="<?php echo $this->cdn() ?>/images/ban-mr.png" width="19" height="19" alt="KNOW MORE" />KNOW MORE</a></div></div></div><div class="clear">&nbsp;</div>');
+	$("#banner").hide();
+	$("html").scrollTop("0px");
+	//alert("1")
+});
+$("#learning_banner").click(function() {	
+	$("#learning_banner").addClass("hcontainer_active");
+	$("#board_banner").removeClass("hcontainer_active");
+	$("#study_banner").removeClass("hcontainer_active");
+	$("#skill_banner").removeClass("hcontainer_active");
+	$("#banner_container").html('<div class="learning_banner" style="display:block"><div class="banners_images_livetab"><img src="<?php echo $this->cdn() ?>/images/home_live_tab.png" alt="live tab" width="728px" height="422px" /></div><div class="banners_content_text"><p class="text_banner">EXTRAMARKS LIVE TAB</p><div id="text_left"><h1>Education Made Accessible</h1><h2>Anytime, Anywhere</h2><a href="<?php echo $this->Url('extramarks-live-tab') ?>" class="hlearn brand" title="Know More"><img src="<?php echo $this->cdn() ?>/images/ban-mr.png" alt="KNOW MORE" width="19" height="19"/>KNOW MORE</a></div></div></div><div class="clear">&nbsp;</div>');
+	$("#banner").hide();
+	$("html").scrollTop("0px");
+	//alert("2")
+});
+$("#study_banner").click(function() {
+	$("#study_banner").addClass("hcontainer_active");
+	$("#learning_banner").removeClass("hcontainer_active");
+	$("#board_banner").removeClass("hcontainer_active");
+	$("#skill_banner").removeClass("hcontainer_active");
+	$("#banner_container").html('<div class="study_banner" style="display:block"><div class="banners_images"><img src="<?php echo $this->cdn() ?>/images/home_live_overseas_study.png" alt="live overseas study" width="728px" height="422px" /></div><div class="banners_content_text"><p class="text_banner"><span>OVERSEAS STUDY<span></p><div id="text_left"><h1>Education Abroad</h1><h2>Made Easy!</h2><a href="<?php echo $this->Url('sat') ?>" class="hlearn brand" title="SAT Test Prep"><img src="<?php echo $this->cdn() ?>/images/ban-mr.png" alt="SAT Prep" width="19" height="19"/>SAT Prep</a><a href="<?php echo $this->Url('studyabroad') ?>" class="hlearn brand" title="Study Abroad Services"><img src="<?php echo $this->cdn() ?>/images/ban-mr.png" alt="SAT Prep" width="19" height="19"/>Study Abroad Services</a></div></div></div><div class="clear">&nbsp;</div>');
+	$("#banner").hide();
+	$("html").scrollTop("0px");
+	//alert("3")
+});
+$("#skill_banner").click(function() {
+	$("#skill_banner").addClass("hcontainer_active");
+	$("#study_banner").removeClass("hcontainer_active");
+	$("#learning_banner").removeClass("hcontainer_active");
+	$("#board_banner").removeClass("hcontainer_active");
+	$("#banner_container").html('<div class="skill_banner" style="display:block"><div class="banners_images"><center><img src="<?php echo $this->cdn() ?>/images/home_skills.png" alt="home skills" width="728px" height="422px" /></center></div><div class="banners_img"><img src="<?php echo $this->cdn() ?>/images/praihar_image.jpg" alt="praihar image" width="353px" height="134px" /></br><p class="skills_knowmore"><a href="http://eprakhar.com" target="_blank" class="hlearn brand" title="KNOW MORE"><img src="<?php echo $this->cdn() ?>/images/ban-mr.png" alt="KNOW MORE" width="19" height="19"/>KNOW MORE</a></p></div></div><div class="clear">&nbsp;</div>');
+	$("#banner").hide();
+	$("html").scrollTop("0px");
+	//alert("4")
+});
+</script>
+
+<!-- sicial icon-->
+<ul class="SocialIconRight">
+<li><a href="http://www.facebook.com/ExtramarksDigitalEducation" target="_blank"><img src="<?php echo $this->cdn() ?>/images/facebookIcon.png" alt="facebook"/> <span>Facebook</span></a></li>
+<li><a href="http://www.youtube.com/channel/UC7t6bG2oCbKXBm2vyVwCdwQ" target="_blank"><img src="<?php echo $this->cdn() ?>/images/youtubeIcon.png" alt="youtube"/> <span>Youtube</span></a></li>
+<li><a href="http://twitter.com/extramarks" target="_blank"><img src="<?php echo $this->cdn() ?>/images/twitterIcon.png" alt="twitter"/> <span>Twitter</span></a></li>
+<li><a href="http://plus.google.com/109282015434825703624" target="_blank"><img src="<?php echo $this->cdn() ?>/images/googleIcon.png" alt="google"/> <span>Google Plus</span></a></li>
+<li><a href="http://www.linkedin.com/company/extramarks-education-pvt.-ltd." target="_blank"><img src="<?php echo $this->cdn() ?>/images/inIcon.png" alt="LinkedIn"/> <span>LinkedIn</span></a></li>
+</ul>
+<!-- sicial icon end-->

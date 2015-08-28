@@ -1,0 +1,328 @@
+<link rel="stylesheet" href="<?php echo $this->basePath("css/website/profile.css"); ?>" type="text/css" media="screen" />
+<!--Content section start here-->
+<div id="content" class="profile-pages">
+    <div class="container">
+        <div class="row">
+            <div class="myprofile-content">
+                <div class="profile-view globle-click clearfix">
+                    <strong>My Parent</strong>
+                    <i class="icons-ar"></i>
+                </div>
+                <?php echo $this->partial('user/index/profile-menu.phtml', array('page' => 'myparent', 'addedmentors' => count($this->addedMentors), 'addedStudents' => count($this->addedStudents))); ?>
+                <section class="profile-block">
+                    <div class="addChild_Container myparent">
+                        <h3>My Parent 
+                            <?php if (empty($this->ParentData) && (count($this->parentrequest) == 0 )) {
+                                ?>
+                                <a href="javascript:void(0);" class="gradient-btn" data-toggle="modal" data-target="#addChild" data-whatever="@mdo">Link Parent</a>
+                                <?php
+                            }
+                            ?>
+                        </h3>
+                        <div class="mentor-inner">
+                            <?php
+                            if (!empty($this->ParentData)) {
+                                ?>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th >Name</th>
+                                        <th>Email ID</th>
+                                    </tr>
+                                    <?php
+                                    foreach ($this->ParentData as $key => $parent) {
+                                        ?>
+                                        <tr>
+                                            <td id="data-row-<?php echo $key ?>-2"><?php echo $parent->firstName; ?></td>
+                                            <td id="data-row-<?php echo $key ?>-3"><?php echo $parent->emailId; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                </table>
+                                <?php
+                            } else {
+                                ?>
+                                <div class="center"><p>Parent Not Registered</p></div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="tab-block" role="tabpanel">
+                        <input type="hidden" value="nav_3" id="nav_find">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li id="requestsent" role="presentation"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Request to Parent</a></li>
+                            <li id="requestreceived" role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Request from parent</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="tab1">
+                                <?php if (count($this->parentrequest) != '0') {
+                                    ?>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="sub-first-td sub-pack-1">Name</td>
+                                            <td class="sub-pack-2">Email ID</td>
+                                            <td class="sub-pack-3">Status</td>
+                                        </tr>
+                                        <?php
+                                        foreach ($this->parentrequest as $key => $parentrequest) {
+                                            ?>
+                                            <tr>
+                                                <td id="data-row-<?php echo $key ?>-2"><?php echo $parentrequest->first_name; ?></td>
+                                                <td id="data-row-<?php echo $key ?>-3"><?php echo $parentrequest->email_id; ?></td>
+                                                <td id="data-row-<?php echo $key ?>-3"><?php if ($parentrequest->status == '0') { ?>
+                                                        Pending  
+                                                    <?php } ?></td>
+                                                <td id="data-row-<?php echo $key ?>-4"><a title="Delete" href="javascript:void(0);"  class="remove-link" onclick="changeparentstatus('<?php echo $parentrequest->id ?>', '2', '<?php echo $parentrequest->userid; ?>')">Delete</a></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </table>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <div class="no-record"><p>No records found</p></div>	
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="tab2">
+                                <?php if (count($this->childrequest) != '0') {
+                                    ?>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td class="sub-first-td sub-pack-1">Name</td>
+                                            <td class="sub-pack-2">Email ID</td>
+                                            <td class="sub-pack-3">Status</td>
+                                            <td class="sub-pack-3">Action</td>
+                                        </tr>
+                                        <?php
+                                        foreach ($this->childrequest as $key => $childrequest) {
+                                            ?>
+                                            <tr>
+                                                <td class="sub-pack-2" id="data-row-<?php echo $key ?>-2"><?php echo $childrequest->first_name; ?></td>
+                                                <td class="sub-pack-3" id="data-row-<?php echo $key ?>-3"><?php echo $childrequest->email_id; ?></td>
+                                                <td class="sub-pack-3" id="data-row-<?php echo $key ?>-3"><?php if ($childrequest->status == '0') { ?>
+                                                        Pending  
+                                                    <?php } ?></td>
+                                                <td class="sub-pack-2" id="data-row-<?php echo $key ?>-4"><a title="Add" href="javascript:void(0);"  class="remove-link" onclick="changeparentstatus('<?php echo $childrequest->id ?>', '1', '<?php echo $childrequest->userid; ?>', 'parent',<?php echo count($this->ParentData); ?>)">Add</a>/
+                                                    <a title="Delete" href="javascript:void(0);"  class="remove-link" onclick="changeparentstatus('<?php echo $childrequest->id ?>', '2', '<?php echo $childrequest->userid; ?>', 'parent')">Delete</a></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </table>
+
+                                    <?php
+                                } else {
+                                    ?>
+                                    <div class="no-record"><p>No records found</p></div> 
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+            </div>    
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade custom-lightbox" id="addChild" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Link Parent</h4>
+      </div>
+         <form class="form-horizontal"  name="linkparent" id="linkparent" method="post">
+    <div class="modal-body">
+
+  <div class="form-group successMessage" >
+    <label for="inputEmail3" class="col-sm-3 control-label">Parent Email<sup>*</sup></label>
+    <div class="col-sm-9 padd-right">
+       <input type="text" class="form-control" name="linkParentUserId" id="linkParentUserId"/>
+       <span class="valid-error" id="errorlinkParentUserId"></span>
+    </div>
+  </div>
+  
+      </div>
+        <div class="modal-footer clearfix">	
+      <button type="button" class="btn btn-primary" onClick="closeParentPopup()">SKIP</button>
+      <button type="button" class="btn btn-primary" onClick="return linkParentData('<?php echo $_SERVER['HTTP_HOST'] ?>', 'save');">SAVE &amp; Continue</button>
+      <span id="uploadImagesAjax" style="display:none; margin-left:5px;"><img src="<?php echo $this->cdn(); ?>/images/website/loader16.gif"></span>
+  </div>
+               </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        var tabId = '<?php echo $this->tabview; ?>';
+        if (tabId == '1')
+        {
+            $("#tab1").addClass('active');
+            $("#tab2").removeClass("active");
+            $("#requestsent").addClass('active');
+            $("#requestreceived").removeClass("active");
+
+        }
+        else if (tabId == '2')
+        {
+            $("#tab1").removeClass('active');
+            $("#tab2").addClass("active");
+            $("#requestsent").removeClass('active');
+            $("#requestreceived").addClass("active");
+
+        }else{
+            $("#tab1").addClass('active');
+            $("#tab2").removeClass("active");
+            $("#requestsent").addClass('active');
+            $("#requestreceived").removeClass("active");
+        }
+    });
+
+    $(document).ready(function() {
+        $(".main-bg").height($(".right-content").height() + 7);
+    });
+    $(window).resize(function() {
+        $(".main-bg").height($(".right-content").height() + 7);
+    });
+
+    function changeparentstatus(Id, Status, parentID, type, parentcount)
+    {
+        var Id = Id;
+        var Status = Status;
+        var parentID = parentID;
+        var type = type;
+
+        if (Status == '2')
+        {
+            var conf = confirm('Are you sure you want to delete?');
+        }
+        else if (Status == '1') {
+            if (parentcount > '0') {
+                var conf = confirm('Are you sure you want to update your parent');
+            } else {
+                var conf = true;
+            }
+
+        } else {
+            var conf = true;
+        }
+
+
+
+        if (conf == true) {
+            // return confirm('Are you sure you want to delete?');
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->Url('changeparentstatus'); ?>',
+                data: {Id: Id, Status: Status, parentID: parentID, type: type},
+                success: function(data) {
+                    $('#loaddingActivity').hide();
+                    if (data['output'] == 'sucusses') {
+                        location.reload();
+                    }
+                }
+            });
+        }
+
+    }
+
+    function openParentLinkPopup() {
+
+        $(".overlay").css("display", "none");
+        $("#addparent-popup").hide();
+        $(".parentlink-box,.overlay").css('display', 'block');
+        $(".overlay").css({'opacity': '0.65'});
+
+    }
+
+    function linkParentData(host, type) {
+        var flg = true;
+        if ($("#linkParentUserId").val() == '') {
+            //$("#errorlinkParentUserId").css('display', 'block');
+            $("#errorlinkParentUserId").show();
+            $("#errorlinkParentUserId").html("Please enter parent email");
+            flg = false;
+        } else {
+            //$("#errorlinkParentUserId").css('display', 'none');
+            //$('#errorlinkParentUserId').css('display','none');
+            $("#errorlinkParentUserId").show();
+            $("#errorlinkParentUserId").html("");
+        }
+ 
+        if (flg == false) {
+            return false;
+        } else {
+            $('#uploadImagesAjax').show();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: BASE_URL + '/linkparent',
+                data: $("#linkparent").serialize(),
+                success: function(data) {
+                    $('#uploadImagesAjax').hide();
+                    $('#errorlinkParentUserId').show();
+                    $('#errorlinkParentUserId').css('display','block');
+                    if (data.output == 'success') {
+                        if (type == 'save') {
+                            //redirect user to profile page
+                            $(".overlay").css("display", "none");
+                            $("#childlink-popup").hide();
+                            window.location.reload();
+                        } else if (type == 'add') {
+                            //blank add child form for more data
+                            $("#success_msg").html(data.message);
+                            $("#linkParentUserId").val('');
+                        }
+                    } else if (data.output == 'emailNotExists') {
+                        $("#errorlinkParentUserId").css('display', 'block');
+                        $("#errorlinkParentUserId").html("Parent Email does not exists in record");
+                        //window.location.href = BASE_URL;
+                    }
+                    else if (data.output == 'exists') {
+                        $("#errorlinkParentUserId").css('display', 'block');
+                        $("#errorlinkParentUserId").html("Request for this user is already pending");
+                        //window.location.href = BASE_URL;
+                    }
+
+                    else if (data.output == 'userstudent') {
+                        $("#errorlinkParentUserId").css('display', 'block');
+                        $("#errorlinkParentUserId").html("Requested user is a student can't be added as a parent");
+                        //window.location.href = BASE_URL;
+                    }
+                    else if (data.output == 'userself') {
+                        $("#errorlinkParentUserId").css('display', 'block');
+                        $("#errorlinkParentUserId").html("You can not add your email as Parent");
+                    } else if (data.output == 'EmailNotproper') {
+                        $("#errorlinkParentUserId").css('display', 'block');
+                        $("#errorlinkParentUserId").html("Please check your email.");
+                    }
+
+                }
+            });
+        }
+    }
+
+    function closeParentPopup(redirect) {
+        $(".packageconfirmation-box,.overlay").css('display', 'none');
+        $(".overlay").css("display", "none");
+        $("#addparent-popup").hide();
+        $("#parentlink-popup").hide();
+        $("#nursery-popup").hide();
+        $('#linkParentUserId').val('');
+        $('#errorlinkParentUserId').hide();
+        $('#addChild').modal('hide');
+        return true;
+
+    }
+</script>
+

@@ -1,0 +1,129 @@
+
+<?php if(count($this->get_comments)>0) { ?>
+
+<div class="tab-block" role="tabpanel">
+ <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+     <li><a href="#">Questions</a></li>
+   </ul>	<div class="tabcontents">
+		 <div class="tab-content">
+<?php 
+ foreach($this->get_comments as $key=>$comments){
+  $day='';
+  if($comments->added_date!='')
+  {
+    $loggeddate=$comments->added_date;
+    $timestamp = explode(" ",$loggeddate);
+    $date = explode('-', $timestamp[0]);
+    $year=$date[0];	
+    $month=$date[1];
+    $day=$date[2];
+    $mnth='';
+    if($month=='1'){$mnth='Jan';}else if($month=='2'){$mnth='Feb';}else if($month=='3'){$mnth='Mar';}
+    else if($month=='4'){$mnth='Apr';}else if($month=='5'){$mnth='May';}else if($month=='6'){$mnth='Jun';}
+    else if($month=='7'){$mnth='Jul';}else if($month=='8'){$mnth='Aug';}else if($month=='9'){$mnth='Sep';}
+    else if($month=='10'){$mnth='Oct';}else if($month=='11'){$mnth='Nov';}else if($month=='12'){$mnth='Dec';}
+ }
+?>
+<div class="comments-bg" style="width:100%">
+    <table class="cmnttable" style="display:none">
+        <tr>
+            <td>
+             <?php if($comments->c_status == '2'){?>
+                <div>This post was deleted by <?php  echo $comments->deleted_user;?></div>
+              <?php   }else{?>
+              <?php  echo $comments->question;?> <?php }?></td>
+        <td width="20%" style="font-weight:bold;"> <?php if($comments->question_asked_to == 'mentor'){?>
+            Asked to mentor 
+        <?php }?>
+       <?php if($comments->question_asked_to == 'group'){?>
+            Asked in Group
+       <?php }?></td>
+        </tr>        
+    </table>
+    <!--New Design Start Here-->
+ <div class="question-content">
+     <h5><span style="padding-left:10px"><?php  echo $comments->question;?></span>
+       <span style="margin-left:50px;"><a href='javascript:void(0)' onclick='downloadfile("<?php echo $comments->pdf_file_name; ?>","<?php echo $comments->up_down_id; ?>")' title='downloads this file'><?php echo ($comments->file_name !='')?$comments->file_name:$comments->pdf_file_name;  ?></a></span>
+     
+       </h5>
+         <ul class="post_author clearfix">
+        <li class="col-xs-5">By <strong><?php  echo ucfirst($comments->first_name);?></strong></li>
+        <li class="col-xs-3"><?php  echo $day;?>&nbsp;&nbsp;<?php  echo $mnth;?>&nbsp;&nbsp;<?php  echo $year;?></li>
+        <?php if($comments->countReplys!="0"){?>
+       <li class="col-xs-2">
+             <a href="#view<?php  echo $comments->question_id;?>"><a href="javascript:void(0)" id="hiddencl" onclick="replylptQuestion(<?php  echo $this->userId;?>,<?php  echo $comments->question_id;?>);">View(<span id="countReplys<?php  echo $comments->question_id;?>"><?php if($comments->countReplys!=""){ echo $comments->countReplys;}else{?>0<?php }?></span>)</a></a>
+       </li>
+       <?php }?>
+       <li class="col-xs-2">
+        <a href="#answer<?php  echo $comments->question_id;?>" onclick="replyAnswer(<?php  echo $comments->question_id;?>,<?php  echo $comments->countReplys;?>);">Answer</a>
+       </li>         
+       </ul>
+       <div class="reply-block common-block clearfix" id="answer<?php  echo $comments->question_id;?>">
+           <div class="clearfix">
+        <textarea id="replyAnswer<?php  echo $comments->question_id;?>" name="replyAnswer"></textarea>
+        <button class="btn btn-primary" type="submit" id="postReply" name="postReply" onclick="postCommentQuestion(<?php  echo $comments->question_id;?>,<?php  echo $this->userId;?>,<?php  echo $comments->countReplys;?>)">Reply</button>
+    </div>   
+        <div class="photobrowser clearfix">                                   
+         <div class="upload_File"><input type="file"  name="image_file" class="image_file" id="image_file<?php  echo $comments->question_id;?>"></div>                                     
+         <span id="loadingPostcom"><img src="<?php echo $this->basePath();?>/images/website/netLoader.gif"></span>
+        </div>
+            <span style="color:#f00; font-size: 13px;" id="errorimagef"></span>
+       </div>
+       
+       <div class="view-block common-block" id="replyAnswers<?php  echo $comments->question_id;?>">
+       	<div class="view-content">
+       	<h5>User Name</h5>
+       	<ul class="clearfix">
+       	  <li><?php  echo ucfirst($comments->first_name);?></li>
+       	  <li><?php  echo $comments->board_name;?></li>
+       	  <li><?php  echo $comments->class_name;?></li>
+       	</ul>
+       	</div>
+       </div>
+      </div>
+    <!--New Design Ends Here-->
+</div>
+<?php $key++;}?>
+</div>
+<input type="hidden" name="pageCount" id="pageCount" value="<?php  echo $this->countComments;?>">
+<input type="hidden" name="totPosts" id="totPosts" value="<?php  echo $this->countposts;?>">
+<div>
+<?php $totalpages=ceil(($this->countposts/$this->resultsPerPage));
+//echo "<pre />"; print_r($this->currentchapter_details); exit;
+ ?>
+<?php if($this->countposts>$this->resultsPerPage && $this->currentPage>1){?>
+	<a href="javascript:void(0)" id="prevPost" onclick="postsPrevious(<?php  echo $this->currentchapter_details['3']['rack_id'];?>,<?php  echo $this->currentchapter_details['2']['rack_id'];?>,'prev','<?php echo ($this->currentPage-1);?>','<?php echo ($this->resultsPerPage);?>')"><img src="<?php echo $this->cdn() ?>/images/btn_prev.png" alt="" title="" border="0"></a>
+	<?php }?>
+		&nbsp;&nbsp;
+	<?php 	if($totalpages!=$this->currentPage && $this->countposts>$this->resultsPerPage){?>
+		<a href="javascript:void(0)" onclick="postsNext(<?php  echo $this->currentchapter_details['3']['rack_id'];?>,<?php  echo $this->currentchapter_details['2']['rack_id'];?>,'next','<?php echo ($this->currentPage+1);?>','<?php echo ($this->resultsPerPage);?>')"  id="nextPost"><img src="<?php echo $this->cdn() ?>/images/btn_next.png" alt="" title="" border="0"></a>
+	<?php }?>
+</div>
+</div>
+			<div style="clear:both;"></div>
+		</div>
+		
+		<div style="clear:both;"></div>
+	</div>
+</div>
+</div>
+<?php  }?>
+
+
+<script>
+ $(document).ready(function(){	
+    $('.post_author a').click(function(e) {
+        e.preventDefault();
+        $('.common-block').hide();
+        var Postid = $(this).attr('href');
+        $(Postid).show();
+    });
+ });
+</script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/website/bootstrap-filestyle.js"></script>
+<script type="text/javascript">			
+    $('.image_file').filestyle({
+            icon : false
+    });
+</script>

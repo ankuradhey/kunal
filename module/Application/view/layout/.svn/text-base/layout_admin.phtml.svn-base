@@ -1,0 +1,9 @@
+<?php echo $this->doctype(); ?>
+    <body>
+        <?php  echo $this->render('layout/header_admin.phtml'); ?> 
+        <?php
+        echo $this->content;
+        //echo $this->render('layout/footer.phtml');
+        ?>
+    </body>
+</html>

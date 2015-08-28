@@ -1,0 +1,725 @@
+<link rel="stylesheet" href="<?php echo $this->basePath("css/website/profile.css"); ?>" type="text/css" media="screen" />
+<script>
+    function getUserdata(id) {
+        var htmlData = $('.groupact_popcont' + id).html();
+        $('.groupact_popcont').html(htmlData);
+    }
+</script>
+<script>
+<?php  if (isset($this->message) && $this->message == 1) { ?>
+        $(document).ready(function() {
+            $('#succussesMessageload').html('Your feedback successfully sent to student');
+            $('#succussesMessageload').show().delay(4000).fadeOut();
+        });
+<?php  } ?>
+</script>
+<?php if ($this->zfcUserIdentity() && $this->zfcUserIdentity() != "") { ?>
+
+<div class="profile-pages" id="content">
+  <div class="container">
+    <div class="row">
+      <div class="myprofile-content">
+        <div class="profile-view globle-click clearfix"> <strong>My Students</strong> <i class="icons-ar"></i> </div>
+        <?php
+                echo $this->partial('user/index/profile-menu.phtml', array('page' => 'myStudents', 'addedmentors' => count($this->addedMentors), 'addedStudents' => count($addedStudents)));
+        ?>
+        <section class="profile-block">
+          <input type="hidden" value="nav_5" id="nav_find">
+          <div class="right-content">
+            <div class="clear_spacer30">&nbsp;</div>
+            <span class="errorfrm_mentor" id="succussesMessageload"></span>
+            <div class="groupmembers_padd_right">
+              <div class="borderRadius stu_profile_table">
+                <div class="user_mem_groups_plr">
+                  <div id="user_my_students" class="stu_profile_table1">
+                    <div id="mentorsTable">
+                      <?php  if (isset($this->addedStudents) && count($this->addedStudents) != 0) { ?>
+                      <div class="data-row buydroupdown form-horizontal" style="padding:15px;">
+                      <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Students</label>
+                        <div class="col-sm-4">
+                          <select id="StudentsNames" name="StudentsNames" class="CostomSelect">
+                                <?php                                
+                                                                    $count = 0;
+                                                                    foreach ($this->addedStudents as $key => $addedStudents) {
+                                                                        
+                                                                        $nameAndId = explode('-', $key);
+                                                                        if ($this->studentNameId == $key) {
+                                                                            $selected = 'selected';
+                                                                        } else {
+                                                                            $selected = '';
+                                                                        }
+                                                                        ?>
+                                <option value="<?php  echo $key; ?>" <?php  echo $selected; ?>>
+                                <?php  echo $nameAndId[0] ?>
+                                </option>
+                                <?php  $count++;
+        } ?>
+                              </select>
+                        </div>
+                        
+                         <label for="inputEmail3" class="col-sm-2 control-label">Subjects</label>
+                        <div class="col-sm-4" id="selectedSubjectsNames">
+                        <select id="SubjectsNames" name="SubjectsNames" class="CostomSelect" onchange="getTads('<?php echo ($this->tabtype) == ''?'Feedback':$this->tabtype; ?>')">
+                             <?php  $selected = '';
+                                    foreach ($this->addedStudents[$this->studentNameId] as $addedStudents) {
+                                    $subjectIdName = explode('-/', $addedStudents);
+                                    if ($this->subjectId == $subjectIdName[1]) {
+                                        $selected = 'selected';
+                                       } else {
+                                        $selected = '';
+                                    }
+                                 ?>
+                               <option value="<?php  echo $addedStudents; ?>" <?php  echo $selected; ?>><?php  echo $subjectIdName[0]; ?></option>
+                        <?php  } ?>
+
+                           </select>
+                        </div>
+                        </div>
+                      </div>
+                       
+                      <div colspan="6">
+                        <div class="datarow_bottom_icons">
+                          <div class="BtnDiv" id="student_view"> <a href="javascript:void(0);" onclick="getTads('View')"><i class="icons-viewProgress"></i>
+                            <p class="icons_nav">View Progress</p>
+                            </a> </div>
+                          <div class="BtnDiv" id="student_query"> <a href="javascript:void(0);" onclick="getTads('Query')"><i class="icons-stuQues"></i>
+                            <p class="icons_nav">Student’s Queries</p>
+                            </a> </div>
+                          <div class="BtnDiv" id="student_feedback"> <a href="javascript:void(0);" onclick="getTads('Feedback')"><i class="icons-Feedback"></i>
+                            <p class="icons_nav">Feedback</p> 
+                            </a> </div>
+                          <div class="BtnDiv" id="student_upload"> <a href="javascript:void(0);" onclick="getTads('Upload')"><i class="icons-Upload"></i>
+                            <p class="icons_nav">Upload</p> 
+                            </a> </div>
+                          <div class="BtnDiv" id="student_download"> <a href="javascript:void(0);" onclick="getTads('Download')"><i class="icons-Download"></i>
+                            <p class="icons_nav">Download</p> 
+                            </a> </div>
+                          <div>
+                            <p style="display:none" class="student_upload_loader" id="loadTabs" href="javascript:void(0);"><img  src="<?php echo $this->cdn() ?>/images/website/loader16.gif" /></p>
+                          </div>
+                          <div style="clear:both;"></div>
+                        </div>
+                      </div>
+                         
+                      <?php  } else { ?>
+                      <div class="data-row">
+                        <p>There are no students</p>
+                      </div>
+                      <?php  } ?>
+                    </div>
+                  </div>
+                  <div class="datashow_popup">&nbsp;</div>
+                </div>
+             
+              </div>
+              <div class="students_graybg feedback1" style="display:none"></div>
+              <div class="students_graybg upload1" style="display:none" id="ajaxUploads"></div>
+              <div class="students_graybg upload1" style="display:none" id="ajaxquery"></div>
+              <div class="borderRadius stu_profile_table download1" style="display:none">
+              </div>
+              
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" id="hid_board_id" name="hid_board_id" value="<?php echo $this->boardId;?>">
+<input type="hidden" id="hid_student_id" name="hid_student_id">
+<input type="hidden" id="studentFeedbackName" name="studentFeedbackName">
+<?php  } else { ?>
+<script>
+    window.location = "<?php  echo $this->url('home'); ?>"
+    </script>
+<?php  } ?>
+
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->cdn(); ?>/css/website/jquery-ui.css"/>
+<script src="<?php echo $this->basePath(); ?>/js/website/jquery-ui.js"></script>
+<!--script src="<?//php echo $this->basePath(); ?>/js/jquery-ui.js"></script-->
+<!--link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script-->
+<script src="<?php echo $this->basePath(); ?>/js/website/jquery_form.js"></script>
+
+<script>
+    $(document).ready(function() {
+        /*$('#SubjectsNames').selectbox({
+            onChange:function(val,inst){
+              getTads('Feedback',val);
+            }
+        });*/
+        //$('#StudentsNames').selectbox();
+        return getTads('Feedback');
+          
+        $('#StudentsNames').change(function(){
+        var studentNameId = $(this).val().split('-');
+        var student_id = studentNameId[1];
+        $('#loadSubjectsStudents').show();
+        $.ajax({
+            type: 'POST',
+            url: BASE_URL + '/my-students-feedback',
+            data: {student_id: student_id},
+            success: function(data) {
+                $('#loadSubjectsStudents').hide();
+                var html='';
+                html += '<select id="SubjectsNames" class="CostomSelect" name="SubjectsNames" onchange="getTads(\'Feedback\')" style="display: none;">';
+                html += data;
+                html += '</select>';
+                //$("#SubjectsNames").html(data);
+                //$('#selectedSubjectsNames').html(html);
+                $('#selectedSubjectsNames').html(html).promise().done(function() {
+                        $("#SubjectsNames").selectbox({
+//                            onChange:function() {
+//                                return getTads('Feedback');
+//                            }
+                        });
+                        //$('#SubjectsNames').html(data); 
+                        
+                        });
+                      
+                        
+                      return getTads('Feedback');
+            }
+        });
+    });
+       
+    });
+    
+    $(document).on("click", function(e) {
+    var elem = $(e.target);
+    if(!elem.hasClass("hasDatepicker") && 
+        !elem.hasClass("ui-datepicker") && 
+        !elem.hasClass("ui-icon") && 
+        !elem.hasClass("ui-datepicker-next") && 
+        !elem.hasClass("ui-datepicker-prev") && 
+        !$(elem).parents(".ui-datepicker").length){
+            $('.hasDatepicker').datepicker('hide');
+    }
+});
+    
+    function getTads(type) {
+        $('#loadTabs').show();
+        var studentNameId = $('#StudentsNames').val().split('-');
+        
+        var studentName = studentNameId[0];
+        var student_id = studentNameId[1];
+        //console.log(studentName+' '+student_id);
+        var subjectIdValue = $('#SubjectsNames').val().split('-/');
+        //var subjectId_Value = $("#SubjectsNames option:selected").val();
+        //$('#SubjectsNames option').prop('selected', false).filter('[value="'+subjectId_Value+'"]').prop('selected', true);
+        var subjectName = subjectIdValue[0];
+        var subjectId = subjectIdValue[1];
+        
+        var class_id = subjectIdValue[2];
+        $('#hid_student_id').val(student_id);
+        $('#studentFeedbackName').val(studentName);
+        if (type == 'Feedback') {
+            //console.log('hiddenVal==='+hid_FeedCid);
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + '/account/ajaxfeedbackstudent',
+                data: {id: student_id, personType: 'mentor',className:'<?php echo $this->className;?>',boardId: '<?php echo $this->boardId;?>', page: 'myStudent', subjectId: subjectId, subjectName: subjectName, class_id: class_id},
+                success: function(data) {
+                    $('#loadTabs').hide();
+                    if (data.output == 'noRelation') {
+                        $('.upload1').hide();
+                        $('.download1').hide();
+                        $('.feedback1').hide();
+                        //alert('Not Activated');
+                    } else {
+                        $('.upload1').hide();
+                        $('.download1').hide();
+                        $('.feedback1').show();
+                        $('.feedback1').html(data);
+                        $('#studentFeedback').html(studentName);
+                        $('#hidstudent_id').val(student_id);
+                        var feedId = $('#studentComment').val();
+                        if (feedId != '') {
+                            $.ajax({
+                                type: 'POST',
+                                url: BASE_URL + '/account/ajax_feedback_student_comments',
+                                data: {personType: personType, feedId: feedId},
+                                success: function(data) {
+                                    var countN = $('#totalNotifications').html();
+                                    var newN = parseInt(countN) - 1;
+                                    if (newN != 0) {
+                                        $('#totalNotifications').html(newN);
+                                        $('#comment' + feedId).hide();
+                                    } else {
+                                        $('#notifiBox').hide();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
+        else if (type == 'Upload') {
+            var subjectIdValue = $('#SubjectsNames').val().split('-/');
+            var subjectName = subjectIdValue[0];
+            var subjectId = subjectIdValue[1];
+            var personType = 'mentor';
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + '/account/ajax-uploads-downloads',
+                data: {id: student_id, type: 'up', personType: personType, subjectId: subjectId, subjectName: subjectName, class_id: class_id},
+                success: function(data) {
+                    $('#loadTabs').hide();
+                    if (data.output == 'noRelation') {
+                        $('#hid_id').val(student_id);
+                        $('.feedback1').hide();
+                        $('.download1').hide();
+                        //alert('Not Activated');
+                    } else {
+                        $('.download1').hide();
+                        $('.feedback1').hide();
+                        $('.upload1').show();
+                        $('#ajaxquery').hide();
+                        $('#ajaxUploads').html(data);
+                        $('#uploadStudentName').html(studentName);
+                        $('#hid_id').val(student_id);
+                        $('#hidpersonType').val(personType);
+                        $('#studentUpload').html(studentName);
+                        $('#mainSubjectId').val(subjectId);
+                        $('#mainSubjectName').val(subjectName);
+                        $('#classIdHid').val(class_id);
+                        $('#boardId').val(<?php echo $this->boardId ?>);
+                    }
+                }
+            });
+
+        }
+        else if (type == 'Download') {
+            var subjectIdValue = $('#SubjectsNames').val().split('-/');
+            var subjectName = subjectIdValue[0];
+            var subjectId = subjectIdValue[1];
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + '/account/ajax-uploads-downloads',
+                data: {id: student_id, type: 'down', personType: 'mentor', subjectId: subjectId, subjectName: subjectName, class_id: class_id},
+                success: function(data) {
+                    $('#loadTabs').hide();
+                    if (data.output == 'noRelation') {
+                        $('.feedback1').hide();
+                        $('.upload1').hide();
+                        $('#ddhid_id').val(student_id);
+                        //alert('Not Activated');
+                    } else {
+                        $('.feedback1').hide();
+                        $('.upload1').hide();
+                        $('.download1').show();
+                         $('#ajaxquery').hide();
+                        $('.download1').html(data);
+                        $('#ddhid_id').val(student_id);
+                        $('#studentDownload').html(studentName);
+                        $('#mainSubjectId').val(subjectId);
+                        $('#mainSubjectName').val(subjectName);
+                        $('#classIdHid').val(class_id);
+                    }
+                }
+            });
+        } else if (type == 'Query') {
+             var subjectIdValue = $('#SubjectsNames').val().split('-/');
+            var subjectName = subjectIdValue[0];
+            var subjectId = subjectIdValue[1];
+             var relationId = '<?php  echo $this->relationId?>';
+            var personType = 'mentor';
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + '/account/ajax-student-mentor-query',
+                data: {id: student_id, type: 'up', personType: personType, subjectId: subjectId, subjectName: subjectName, class_id: class_id,relationId:relationId},
+                success: function(data) {
+                    $('#loadTabs').hide();
+                    if (data.output == 'noRelation') {
+                        $('#hid_id').val(student_id);
+                        $('.feedback1').hide();
+                        $('.download1').hide();
+                        //alert('Not Activated');
+                    } else {
+                        $('.download1').hide();
+                        $('.feedback1').hide();
+                        $('.upload1').show();
+                        $('#ajaxquery').html(data);
+                        $('#ajaxUploads').hide();
+                        $('#uploadStudentName').html(studentName);
+                        $('#hid_id').val(student_id);
+                        $('#hidpersonType').val(personType);
+                        $('#studentUpload').html(studentName);
+                        $('#mainSubjectId').val(subjectId);
+                        $('#mainSubjectName').val(subjectName);
+                        $('#classIdHid').val(class_id);
+                    }
+                }
+            });
+           // window.location = BASE_URL + '/my-groups?id=' + student_id;
+        } else if (type == 'View') {
+            var studparam  = "<?php echo $this->url?>";
+            var allparams = studparam.split("-");
+            var class_id  = allparams['3'];
+            window.location = BASE_URL + '/report/index/coverage-report#/coverage/'+student_id+'/'+class_id;
+        }
+    }
+   
+    function getChaptersBysubject(type, selectBoxId) {
+        if (type == 'upload') {
+            $('#loadTabsuploads').show();
+            var subject_id = $('#uploadsubject').val();
+        } else if (type == 'feedback') {
+            $('#loadTabs' + selectBoxId).show();
+            var subject_id = $('#feedbackSubject' + selectBoxId).val();
+        } else if (type == 'subjective') {
+            $('#loadTabssub' + selectBoxId).show();
+            var subject_id = $('#feedbackSubjectiveSubject' + selectBoxId).val();
+        }
+        var subjectIdValue = $('#SubjectsNames').val().split('-/');
+        var class_id = subjectIdValue[2];
+         $('#hiddenfeedbackSubjectiveChapter'+selectBoxId).val('');
+         $('#hiddenfeedbackChapter'+selectBoxId).val('');
+        $.ajax({
+            type: 'POST',
+            url: BASE_URL + '/account/getChapters',
+            data: {class_id: class_id, subject_id: subject_id, selectBoxId: selectBoxId},
+            success: function(data) {
+                if (type == 'upload') {
+                    $('#loadTabsuploads').hide();
+                    //$("#uploadchapters").html(data.chapters);
+                    var html =''; 
+                   html += '<select name="uploadchapters" id="uploadchapters" class="CostomSelect form-control" placeholder="Class">';
+                   html += data.chapters;
+                   html +='</select>';
+                    $('#uploadchapters_div').html(html).promise().done(function(){
+                         $("#uploadchapters").selectbox();  
+                    });
+                } else if (type == 'feedback') {
+                    $('#loadTabs' + selectBoxId).hide();
+                    //$("#feedbackChapter" + selectBoxId).html(data.chapters);
+                    console.log('feedback');
+                    var html =''; 
+                   html += '<select id="feedbackChapter'+selectBoxId+'"  name="feedbackChapter'+selectBoxId+'" class="CostomSelect form-control">';
+                   html += data.chapters;
+                   html +='</select>';
+                   // $("#feedbackSubjectiveChapter" + selectBoxId).html(data.chapters);
+                    $('#selectedClassMcq'+selectBoxId).html(html).promise().done(function(){
+                         $("#feedbackChapter"+selectBoxId).selectbox({
+                           onChange:function(val,inst){
+                               //alert(val);
+                               $('#hiddenfeedbackChapter'+selectBoxId).val(val);
+                          }   
+                         });
+                    });
+                } else if (type == 'subjective') {
+                    console.log('subjective');
+                    $('#loadTabssub' + selectBoxId).hide();
+                   
+                    var html =''; 
+                   html += '<select id="feedbackSubjectiveChapter'+selectBoxId+'" name="feedbackSubjectiveChapter'+selectBoxId+'" class="CostomSelect form-control">';
+                   html += data.chapters;
+                   html +='</select>';              
+                    // $("#feedbackSubjectiveChapter" + selectBoxId).html(data.chapters);
+                    $('#selectedClass'+selectBoxId).html(html).promise().done(function(){
+                        $("#feedbackSubjectiveChapter"+selectBoxId).selectbox({
+                            onChange:function(val,inst) {
+                                //alert(val);
+                               $('#hiddenfeedbackSubjectiveChapter'+selectBoxId).val(val);
+                            } 
+                        });
+                    });
+                }
+
+            }
+        });
+    }
+    function feedbackValidation() {
+        var flag = true;
+        if ($("#feedbackCoverage").val() == '' && $("#feedbackSchedule").val() == '' && $("#feedbackTests").text() == '' && $("#feedbackSubjective").text() == '') {
+            $("#errorfeedback").html("All fields are empty");
+            flag = false;
+        } else if($("#feedbackCoverage").val() == ''){
+            $("#errorfeedback").html("Coverage is empty");
+            flag = false;
+        } else if($("#feedbackSchedule").val() == ''){
+            $("#errorfeedback").html("Schedule is empty");
+            flag = false;
+        } else if($("#feedbackSubject0").val() == '0' && $("#feedbackSubjectiveSubject0").val() == '0') {
+            $("#errorfeedback").html("Neither MCQ Test Subject nor Mentor Administered Test Subject  is not selected");
+            flag = false;
+        } else if($("#feedbackChapter0").val() == '0' && $("#feedbackSubjectiveChapter0").val() == '0') {
+            $("#errorfeedback").html("Neither MCQ Test Chapter nor Subjective Test Chapter is not selected");
+            flag = false;
+            /*if($("#feedbackSubject0").val() != '0'){
+                $("#errorfeedback").html("MCQ Test Chapter is not selected");
+                flag = false;
+            } else if($("#feedbackSubjectiveSubject0").val() != '0') {
+                $("#errorfeedback").html("Subjective Test Chapter is not selected");
+                flag = false;
+            }*/
+        } else if($("#feedbackTests0").val() == '' && $("#feedbackSubjective0").val() == ''){
+            if($("#feedbackChapter0").val() != '0') {
+                $("#errorfeedback").html("MCQ Test first Comment is empty");
+                flag = false;
+            } else if($("#feedbackSubjectiveChapter0").val() != '0') {
+                $("#errorfeedback").html("Subjective Test first Comment is empty");
+                flag = false;
+            }
+        }/*else if($("#feedbackSubject0").val() == '0'){
+            $("#errorfeedback").html("MCQ Test Subject is not selected");
+            flag = false;
+        } else if($("#feedbackChapter0").val() == '0'){
+            $("#errorfeedback").html("MCQ Test Chapter is not selected");
+            flag = false;
+        } else if($("#feedbackTests0").val() == ''){
+            $("#errorfeedback").html("MCQ Test first Comment is empty");
+            flag = false;
+        } else if($("#feedbackSubjectiveSubject0").val() == '0'){
+            $("#errorfeedback").html("Subjective Test Subject is not selected");
+            flag = false;
+        } else if($("#feedbackSubjectiveChapter0").val() == '0'){
+            $("#errorfeedback").html("Subjective Test Chapter is not selected");
+            flag = false;
+        } else if($("#feedbackSubjective0").val() == ''){
+            $("#errorfeedback").html("Subjective Test first Comment is empty");
+            flag = false;
+        } */else if($("#overallfeedback").val() == ''){
+            $("#errorfeedback").html("Over All Feedback is empty");
+            flag = false;
+        } else {
+            $("#errorfeedback").html("");
+        }
+        if (flag == false) {
+            return false;
+        } else {
+            $("#feedbackForm").submit();
+        }
+    }
+    function getFilename() {
+        var imgVal = $('#myfile').val();
+        $('#fileNameUpload').val(imgVal);
+    }
+    function uploadValidation() {
+
+        var flag = true;
+        if ($("#uploadsubject").val() == "0") {
+            $("#erroruploadsubject").html("Select a subject");
+            flag = false;
+        } else {
+            $("#erroruploadsubject").html("");
+        }
+        if ($("#uploadchapters").val() == "") {
+            $("#erroruploadchapters").html("Select a chapter");
+            flag = false;
+        } else {
+            $("#erroruploadchapters").html("");
+        }
+
+        if (flag == false) {
+            return false;
+        } else {
+            $('#uploadAjaxSuccess').hide();
+            $('#uploadImagesAjax').show();
+            
+            $('#uploadForm').ajaxSubmit({
+                url: BASE_URL + "/ajax-uploads", 
+                type: 'post',
+                data: $(this).serialize(),
+                contentType: 'multipart/form-data',
+                dataType: 'html',
+                success: function(data) {
+                    if(data=='strlen') {
+                        $('#uploadAjaxSuccess').show();
+                        $('#fileNameUpload').val('');
+                        $('#uploadImagesAjax').hide();
+                        $("#uploadAjaxSuccess").html("File Name Length must be less than 100 characters.");
+                        setTimeout(function(){ $("#uploadAjaxSuccess").html("");},5000);
+                    } else if(data=='nofile'){
+                        $('#uploadAjaxSuccess').show();
+                        $('#fileNameUpload').val('');
+                        $('#uploadImagesAjax').hide();
+                        $("#uploadAjaxSuccess").html("Please upload file");
+                        setTimeout(function(){ $("#uploadAjaxSuccess").html("");},5000);
+                    } else if(data=='exist') {
+                        $('#uploadAjaxSuccess').show();
+                        $('#fileNameUpload').val('');
+                        $('#uploadImagesAjax').hide();
+                        $("#uploadAjaxSuccess").html("File already uploaded");
+                        setTimeout(function(){ $("#uploadAjaxSuccess").html("");},5000);
+                    } else {
+                            $('.upload_download_data').hide();
+                            $('#ajaxUploadsTable').html(data);
+                            $('#uploadImagesAjax').hide();
+                            $('#uploadAjaxSuccess').show();
+                            if ($("#fileNameUpload").val() != "") {
+                                var value = $('#uploadValueCheck').val();
+                                if (value == 1) {
+                                    $('#uploadAjaxSuccess').show();
+                                    $('#fileNameUpload').val('');
+                                    $("#uploadAjaxSuccess").html("File already uploaded");
+                                } else {
+                                    $('#uploadAjaxSuccess').show();
+                                     $('#fileNameUpload').val('');
+                                    $("#uploadAjaxSuccess").html("Successfully uploaded");
+                                }
+                            } else {
+                                $('#uploadAjaxSuccess').show();
+                                $("#uploadAjaxSuccess").html("Please upload file");
+                               
+                            }
+                            setTimeout(function(){ $("#uploadAjaxSuccess").html("");},5000);
+                        }
+                },
+            });
+            
+               
+        }
+    }
+    
+//    function getStudentSubjects() {
+//        
+//    }
+    
+//   $(document).click(function(e) { 
+//        $(".hasDatepicker").datepicker("hide");
+//    });
+    
+        $(document).on('click','#view_coverage',function() {
+            var href = $(this).attr('href');
+            var subStr = href.substring(1, href.length);
+            var newusersub = subStr;
+            var user_sub = newusersub.split("/");
+            //var user_id = user_sub[0];
+            //var subject_id = user_sub[1];
+            
+            var studentNameId = $('#StudentsNames').val().split('-');
+            //var studentName = studentNameId[0];
+            var user_id = studentNameId[1];
+            var subjectIdValue = $('#SubjectsNames').val().split('-/');
+            //var subjectName = subjectIdValue[0];
+            var subject_id = subjectIdValue[1];
+            //var class_id = subjectIdValue[2];
+            
+            $('#view_coverage_scroll').show();
+            $.ajax({
+                    type: 'POST',
+                    url: BASE_URL + '/report/index/view-feedback-list/'+user_id+'/'+subject_id+'/all/coverage',
+                    data: {userId: user_id, personType: 'mentor', feedback_type: 'all',show_type:'coverage' ,subjectId: subject_id},
+                    success: function(data) {
+                            $('#view_coverage_scroll').hide();
+                            $('.modal-title').html('Coverage Feedback');
+                            $('.modal-body').html(data);
+                            $("#myModal").modal('show');
+                    }
+            });
+        });
+        $(document).on('click','#view_schedule',function() {
+            var href = $(this).attr('href');
+            var subStr = href.substring(1, href.length);
+            var newusersub = subStr;
+            var user_sub = newusersub.split("/");
+            var user_id = user_sub[0];
+            var subject_id = user_sub[1];
+            $('#view_schedule_scroll').show();
+            $.ajax({
+                    type: 'POST',
+                    url: BASE_URL + '/report/index/view-feedback-list/'+user_id+'/'+subject_id+'/all/schedule',
+                    data: {userId: user_id, personType: 'mentor', feedback_type: 'all',show_type:'schedule' ,subjectId: subject_id},
+                    success: function(data) {
+                            $('#view_schedule_scroll').hide();
+                            $('.modal-title').html('Schedule Feedback');
+                            $('.modal-body').html(data);
+                            $("#myModal").modal('show');
+                    }
+            });
+        });
+        $(document).on('click','#view_overall',function() {
+            var href = $(this).attr('href');
+            var subStr = href.substring(1, href.length);
+            var newusersub = subStr;
+            var user_sub = newusersub.split("/");
+            var user_id = user_sub[0];
+            var subject_id = user_sub[1];
+            $('#view_overall_scroll').show();
+            $.ajax({
+                    type: 'POST',
+                    url: BASE_URL + '/report/index/view-feedback-list/'+user_id+'/'+subject_id+'/all/overall',
+                    data: {userId: user_id, personType: 'mentor', feedback_type: 'all',show_type:'overall' ,subjectId: subject_id},
+                    success: function(data) {
+                            $('#view_overall_scroll').hide();
+                            $('.modal-title').html('Over All Feedback');
+                            $('.modal-body').html(data);
+                            $("#myModal").modal('show');
+                    }
+            });
+        });
+        
+        $(document).on('click','#view_subjective',function() {
+            var href = $(this).attr('href');
+            var subStr = href.substring(1, href.length);
+            var newusersub = subStr;
+            var user_sub = newusersub.split("/");
+            var user_id = user_sub[0];
+            var subject_id = user_sub[1];
+            $('#view_subjective_scroll').show();
+            $.ajax({
+                    type: 'POST',
+                    url: BASE_URL + '/report/index/view-feedbacks-list/'+user_id+'/'+subject_id+'/all/subjective',
+                    data: {userId: user_id, personType: 'mentor', feedback_type: 'all',show_type:'coverage' ,subjectId: subject_id},
+                    success: function(data) {
+                            $('#view_subjective_scroll').hide();
+                            $('.modal-title').html('Subjective Feedback');
+                            $('.modal-body').html(data);
+                            $("#myModal").modal('show');
+                    }
+            });
+        });
+        $(document).on('click','#view_mcq',function() {
+            var href = $(this).attr('href');
+            var subStr = href.substring(1, href.length);
+            var newusersub = subStr;
+            var user_sub = newusersub.split("/");
+            var user_id = user_sub[0];
+            var subject_id = user_sub[1];
+            $('#view_mcq_scroll').show();
+            $.ajax({
+                    type: 'POST',
+                    url: BASE_URL + '/report/index/view-feedbacks-list/'+user_id+'/'+subject_id+'/all/mcq',
+                    data: {userId: user_id, personType: 'mentor', feedback_type: 'all',show_type:'mcq' ,subjectId: subject_id},
+                    success: function(data) {
+                            $('#view_mcq_scroll').hide();
+                            $('.modal-title').html('MCQ Feedback');
+                            $('.modal-body').html(data);
+                            $("#myModal").modal('show');
+                    }
+            });
+        });
+</script>
+ 
+<div class="modal fade custom-lightbox feedback-Popup" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+    <div class="modal-body">
+
+      <div class="subreport-block feedback-content">
+   	  <div class="table-responsive common-border">
+              <span id="viewcomment">
+
+	      </span>
+              </div>
+   	 </div>
+
+    </div>
+    </div>
+  </div>
+</div>
+<style>
+    .modal .modal-body {
+        max-height: 420px;
+        overflow-y: auto;
+    }
+    #myModal .modal-dialog  {width:60%;}
+</style>

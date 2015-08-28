@@ -1,0 +1,430 @@
+<link href="<?php echo $this->cdn("/css/website/profile.css"); ?>" rel="stylesheet">
+
+<!--Content section start here-->
+<div id="content" class="profile-pages">
+    <div class="container">
+        <div class="row">
+            <div class="myprofile-content">
+                <div class="profile-view globle-click clearfix">
+                    <strong>Student Profile</strong>
+                    <i class="icons-ar"></i>	
+                </div>
+                <!-- OLD DESIGN -->
+                <?php
+//                foreach ($userObj as $user) {
+//                    $userObj =  (object)$user;
+//                }
+                $userObj = (object)$userObj;
+                
+                    if ($this->zfcUserIdentity()) {
+                    /*if ($userLogCount <= 1 && ($social == '0') && $loggedinUserObj->getUserTypeId() != 3) {
+                        echo '<script>$(".overlay").show();</script>';
+                    }
+                    echo $this->partial('user/index/profile-menu.phtml', array('page' => 'myProfile', 'addedmentors' => count($addedMentors), 'addedStudents' => $addedStudents));
+                    */?>
+                    <nav class="myprofile-nav global-show clearfix">
+                        <ul>
+                            <li class="active container-nav-current"><a href="javascript:void(0);">Student Profile</a></li>
+                            <li class="" style="float:right;"><a href="<?php echo $this->Url('my-students'); ?>" class="btn btn-primary">Back</a></li>
+                        </ul>
+                    </nav>  
+                    <section class="profile-block">
+                        <div class="guest-info clearfix">
+                            <figure>
+                                <?php if ($userObj->user_photo != "") {
+                                    ?>
+                                    <img src="<?php echo $this->basePath() ?>/uploads/profileimages/<?php echo $userObj->user_photo . "?" . time(); ?>" id="userphoto" name="userphoto" style="height:55px;"/>
+                                <?php } else {
+                                    ?>
+                                    <img src="<?php echo $this->cdn() ?>/images/<?php if ($userObj->gender == 'Male') { ?>avatar_100_1x.png<?php } else if ($userObj->gender == 'Female') { ?>avatar_100_G.png<?php } else { ?>avatar_100_1x.png<?php } ?>"id="userphoto" name="userphoto" style="height:55px;" />
+                                <?php } ?>
+                            </figure>
+                            <strong><?php echo $userObj->display_name; ?> 
+                                <span>
+                                    (<?php
+                                    if ($userObj->user_type_id == '1') {
+                                        echo "student";
+                                    }if ($userObj->user_type_id == '2') {
+                                        echo "parent";
+                                    }if ($userObj->user_type_id == '3') {
+                                        echo "teacher";
+                                    }
+                                    ?>)
+                                </span>
+                            </strong>
+                        </div>
+                        <div class="tab-block" role="tabpanel">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">Personal Details</a></li>
+                                <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">Contact Details</a></li>
+                                <?php
+                                if ($this->zfcUserIdentity()->getUserTypeId() && $this->zfcUserIdentity()->getUserTypeId() != '2') {
+                                    ?>
+                                    <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">School Details</a></li>
+                                    <?php
+                                }
+                                if (isset($_SESSION['logintype']) && $_SESSION['logintype'] == 'tablet') {
+                                    ?>
+                                    <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">License Details</a></li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="tab1">
+                                    <div class="form-container clearfix">
+                                        <strong>Name</strong>
+                                        <div class="right-details"><span><?php echo $userObj->display_name; ?></span></div>	
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>Gender</strong>
+                                        <span><?php echo $userObj->gender ? $userObj->gender : 'NA'; ?></span>
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>Postal Code</strong>
+                                        <span><?php echo isset($userObj->postalcode) ? $userObj->postalcode : 'NA'; ?></span>
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>User Location</strong>
+                                        <span>
+                                            <?php
+                                            $stateName = $countryName = '';
+                                            $otherCity = $userObj->other_city;
+
+                                            if (is_object($userObj->state) && $userObj->state_id != '0')
+                                                $stateName = $userObj->state->state_name;
+
+                                            if (is_object($userObj->country))
+                                                $countryName = $userObj->country->country_name;
+
+                                            if ($otherCity != "" && $stateName != "") {
+                                                if (isset($stateName) && isset($countryName)) {
+                                                    echo ucfirst($otherCity) . ',&nbsp;' . $stateName . ',&nbsp;' . $countryName;
+                                                } else {
+                                                    echo "NA";
+                                                }
+                                            } elseif ($otherCity != "" && $stateName == "") {
+                                                echo ucfirst($otherCity);
+                                            } else if ($stateName != "" && $otherCity == "") {
+                                                if (isset($stateName) && isset($countryName)) {
+                                                    echo ucfirst($stateName) . ',&nbsp;' . $countryName;
+                                                } else {
+                                                    echo "NA";
+                                                }
+                                            } else {
+                                                echo "NA";
+                                            }
+                                            ?>
+                                        </span>
+                                    </div>	
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab2">
+                                    <div class="form-container clearfix">
+                                        <strong>Mobile</strong>
+                                        <span><?php echo $userObj->mobile; ?></span>	
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>Email</strong>
+                                        <span><?php echo $userObj->emailId; ?></span>	
+                                    </div>	
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab3">
+                                    <div class="form-container clearfix">
+                                        <strong>Board</strong>
+                                        <span><?php echo $this->boardList[$userObj->boardId];?><?//php echo $userObj->getBoardId() ? $userObj->getBoard()->getRackName()->getName() : "NA"; ?></span>	
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>Class</strong>
+                                        <span><?php echo !empty($userObj->class_name) ? $userObj->class_name : $this->className;?><?//php echo $this->boardList[$this->$userObj->classId];?><?//php echo $userObj->getClassId() ? $userObj->getClass()->getRackName()->getName() : "NA"; ?></span>	
+                                    </div>	
+                                    <div class="form-container clearfix">
+                                        <strong>School Name</strong>
+                                        <span><?php echo !empty($userObj->school_name) ? $userObj->school_name : "NA"; ?></span>	
+                                    </div>	
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab4">
+                                    <div class="form-container clearfix">
+                                        <strong>Project Name</strong>
+                                        <span><?php echo isset($_SESSION['user']['project_name']) ? $_SESSION['user']['project_name'] : "NA"; ?></span>	
+                                    </div>
+                                    <div class="form-container clearfix">
+                                        <strong>License Id</strong>
+                                        <span><?php echo isset($_SESSION['user']['license_id']) ? $_SESSION['user']['license_id'] : "NA"; ?></span>	
+                                    </div>
+                                    <div class="form-container clearfix">
+                                        <strong>License Start Date</strong>
+                                        <span><?php echo isset($_SESSION['user']['start_date']) ? $_SESSION['user']['start_date'] : "NA"; ?></span>	
+                                    </div>
+                                    <div class="form-container clearfix">
+                                        <strong>License End Date</strong>
+                                        <span><?php echo isset($_SESSION['user']['expiration_date']) ? $_SESSION['user']['expiration_date'] : "NA"; ?></span>	
+                                    </div>
+                                    <div class="form-container clearfix">
+                                        <strong>License Status</strong>
+                                        <span><?php echo isset($_SESSION['user']['activation_type']) ? $_SESSION['user']['activation_type'] : "NA"; ?></span>	
+                                    </div>
+                                </div>
+                            </div>
+                            <!--div class="edit-container">
+                                <button type="button" class="btn btn-primary" onclick="location.href = '<?php echo $this->Url("zfcuser/changeprofile"); ?>'">EDIT PROFILE</button>
+                                <?php if ($social == '0') {
+                                    ?>
+                                    <button type="button" class="btn btn-warning" onclick="location.href = '<?php echo $this->Url("zfcuser/changepassword"); ?>';">CHANGE PASSWORD</button>
+                                    <?php
+                                }
+                                if ($userObj->user_type_id == 1) {
+                                    ?>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" <?php if($userObj->allow_schedule == '1') echo "checked";else echo ""; ?>> <strong> Allow parent/mentor to manage schedule</strong>
+                                        </label>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+
+                            </div-->
+                        </div>
+
+                    </section>
+                <?php } else { ?>
+                    <script>
+                        window.location = "<?php echo $this->url('home'); ?>"
+                    </script>
+                    <?php
+                }
+                ?>
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php if ($userObj->user_type_id == 2 && $childDataCount > 0) { ?>
+    <script>
+        //        $(".AddChildPopupLogin").hide();
+        $("#overlay").hide();
+        //        $.cookie("adChildVar",null);
+    </script>
+<?php } else if (isset($userObj->board_id) && $userObj->board_id != NULL && $isClass) { ?>
+    <script>
+        $(".overlay").hide();
+    </script>
+<?php } ?>
+<script>
+    var selectedOption = $("#boardChild").find(":selected").text();
+    $("#boardChild").next(".holders").text(selectedOption);
+    var selectedOption = $("#classChild").find(":selected").text();
+    $("#classChild").next(".holders").text(selectedOption);
+    $("#board1").change(function() {
+        var optionString = '<option value="">Select Class</option>';
+        $("#class1").html(optionString);
+        $("#otherboardclass").hide();
+        if (($("#board1 :selected").text()) == "Other") {
+            $("#otherboardclass").show();
+        }
+
+        if ($(this).val()) {
+            $.ajax({type: 'POST',
+                url: BASE_URL + "/lms/index/containerlist/" + $(this).val(),
+                dataType: 'json',
+                success: function(data) {
+                    var optionString = '<option value="">Select Class</option>';
+                    $("#class1").html(optionString);
+
+                    $.each(data.options, function(key, obj)
+                    {
+                        optionString += '<option value="' + obj.rack_id + '">' + obj.rack_name + '</option>';
+
+                    })
+                    $("#class1").html(optionString);
+
+                }
+            });
+        }
+
+    });
+
+
+    $("#boardChild").change(function() {
+        var optionString = '<option value="">Select Class</option>';
+        $("#classChild").html(optionString);
+        $("#otherboardChildclass").hide();
+        if (($("#boardChild :selected").text()) == "Other") {
+            $("#otherboardChildclass").show();
+        }
+        if ($(this).val()) {
+            $.ajax({type: 'POST',
+                url: BASE_URL + "/lms/index/containerlist/" + $(this).val(),
+                dataType: 'json',
+                success: function(data) {
+                    var optionString = '<option value="">Select Class</option>';
+                    $("#classChild").html(optionString);
+
+                    $.each(data.options, function(key, obj)
+                    {
+                        optionString += '<option value="' + obj.rack_id + '">' + obj.rack_name + '</option>';
+
+                    })
+                    $("#classChild").html(optionString);
+
+                }
+            });
+        }
+
+    });
+
+
+
+    $("#ucountriesChild").change(function() {
+        $("#stateChild").parent().find(".holders").text("");
+        $("#stateChild").parent().find(".holders").text("Select a state");
+        var countryid = $("#ucountriesChild").val();
+        $.ajax({
+            type: 'POST',
+            url: BASE_URL + '/user/getstates',
+            data: {countryid: countryid},
+            success: function(data) {
+                $("#stateChild").html(data.statenames);
+            }
+        });
+    });
+
+</script>
+
+
+<!-- Student pop-up ends -->
+<script>
+    $(document).ready(function() {
+        $(".dropdown_reg_custom select").msDropDown();
+        $(".main-bg").height($(".right-content").height() + 7);
+
+        $(".agebar").hide();
+        $('.usertype').click(function() {
+            var usertype = $(this).prop('id');
+            if (usertype == 'radio1') {
+                $(".agebar").show();
+            } else {
+                $(".agebar").hide();
+            }
+        });
+
+        $('input[name="age_bar"]').click(function(e) {
+            var agval = $(this).val();
+            if (agval == 'Y') {
+                $('#age_msg').html('');
+                $('.join-butbg').show();
+            } else if (agval == 'N') {
+                $('#age_msg').html('Persons below the age of thirteen are advised to take the help of an older acquaintance in order to log in. Legally they are not allowed to have an e-mail account.');
+                $('.join-butbg').hide();
+                $('#errorage_bar').hide();
+            }
+
+        });
+
+        $('input[name="usertype"]').click(function(e) {
+            $('.join-butbg').show();
+        });
+    });
+    $(window).resize(function() {
+        $(".main-bg").height($(".right-content").height() + 7);
+    });
+</script>
+<script>
+    function resetTabs() {
+        $("#perofileTabcontent > div").hide(); //Hide all content
+        $("#perofiletabs a").attr("id", ""); //Reset id's      
+    }
+
+    var myUrl = window.location.href; //get URL
+    var myUrlTab = myUrl.substring(myUrl.indexOf("#")); // For localhost/tabs.html#tab2, myUrlTab = #tab2     
+    var myUrlTabName = myUrlTab.substring(0, 4); // For the above example, myUrlTabName = #tab
+
+    (function() {
+        $("#addChildPopup").hide();
+        $("#perofileTabcontent > div").hide(); // Initially hide all content
+        $("#perofiletabs li:first a").attr("id", "current"); // Activate first tab
+        $("#perofileTabcontent > div:first").fadeIn(); // Show first tab content
+
+        $("#perofiletabs a").on("click", function(e) {
+            e.preventDefault();
+            if ($(this).attr("id") == "current") { //detection for current tab
+                return
+            }
+            else {
+                resetTabs();
+                $(this).attr("id", "current"); // Activate this
+                $($(this).attr('name')).fadeIn(); // Show content for current tab
+            }
+        });
+        for (i = 1; i <= $("#perofiletabs li").length; i++) {
+            if (myUrlTab == myUrlTabName + i) {
+                resetTabs();
+                $("a[name='" + myUrlTab + "']").attr("id", "current"); // Activate url tab
+                $(myUrlTab).fadeIn(); // Show url tab content        
+            }
+        }
+
+        if ($.cookie("adChildVar_<?php echo $userObj->user_id; ?>") == 'true') {
+            $(".AddChildPopupLogin").hide();
+            $(".overlay").hide();
+            $("#nursery-popup").hide();
+
+            //            $.cookie("adChildVar_<?//php  echo $userObj->getId();           ?>",null);
+        }
+    })()
+
+    function addPopup(id) {
+        if (id == '1') {
+            $('#redirect').css('display', 'block');
+            $('#redirecthere').css('display', 'block');
+        } else {
+            $('#noredirect').css('display', 'block');
+            $('#noredirecthere').css('display', 'block');
+        }
+        $("#addChildPopup").show();
+        $("#addchild-popup").show();
+
+        $("#addchild-popup").css("height", "auto");
+        $("#ChildDetailPopup").hide();
+        $(".register_conf_button").hide();
+
+    }
+
+    function updateBoardClassSocial(host) {
+        var classId = $('#class1').val();
+        var boardId = $('#board1').val();
+        $("#errormessageBoard").html("");
+        $("#errormessageClass").html("");
+        var otherboardname = null;
+        if ($("#board1 :selected").text() == 'Other') {
+            var otherboardname = $("#otherboard").val();
+            if ($("#otherboard").val() == '') {
+                $("#errorotherboard").html("Please enter other board");
+                return false;
+            } else {
+                $("#errorotherboard").html("");
+            }
+        } else {
+            $("#errorotherboard").html("");
+        }
+        if (boardId == '') {
+            $("#errormessageBoard").html("Please select board");
+            return false;
+        } else if (classId == '') {
+            $("#errormessageClass").html("Please select class");
+            return false;
+        } else {
+            $("#loadding").show();
+            $.ajax({
+                type: 'POST',
+                url: BASE_URL + '/user/updateboardclass',
+                data: {classId: classId, boardId: boardId, otherboardname: otherboardname},
+                success: function(data) {
+                    location.href = BASE_URL + "/user/user-dashboard/1/welcome";
+                }
+            });
+        }
+    }
+</script>

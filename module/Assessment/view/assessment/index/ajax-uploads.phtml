@@ -1,0 +1,21 @@
+<input type="hidden" id="uploadValueCheck" name="uploadValueCheck" value="<?php echo $this->uploadcount;?> >
+
+<?php if(count($this->allUploads)!=0){foreach($this->allUploads as $key=>$allUploads){
+	$date=explode('-',$allUploads->posted_date);
+	$newDate=$date[2].'/'.$date[1].'/'.$date[0];
+?>										
+<tr class="data-row">													
+	<td id="upd-row-<?php echo  $key?>-1" class="upd-row-1">
+	<?php echo $newDate;?>
+	</td>
+	<td id="upd-row-<?php echo  $key?>-2" class="upd-row-2"><?php echo $allUploads->pdf_file_name;?></td>
+	<?php if(isset($allUploads->board_class_parent_subject_id) && @$allUploads->board_class_parent_subject_id!=0){?>
+		<td id="upd-row-<?php echo  $key?>-3" class="upd-row-3"><?php echo $allUploads->parent_subject_name;?></td>
+	<?php }else{?>
+		<td id="upd-row-<?php echo  $key?>-3" class="upd-row-3"><?php echo $allUploads->subject_name;?></td>
+	<?php }?>
+	<td id="upd-row-<?php echo  $key?>-4" class="upd-row-4"><?php echo $allUploads->chepter_name;?></td>
+	<td id="upd-row-<?php echo  $key?>-5" class="upd-row-5">Uploaded</td>
+	<td id="#<?php echo "mobile".$key?>" class="view_details"><img onclick="showPopup('<?php echo  $key?>')" src="<?php echo $this->cdn() ?>/images/website/view_details.png" width="30px"/></td>
+</tr>
+<?php }}?>

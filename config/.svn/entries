@@ -1,0 +1,46 @@
+10
+
+dir
+4625
+svn://10.0.3.32/opt/lampp/htdocs/sub/repos/school_lms/config
+svn://10.0.3.32/opt/lampp/htdocs/sub/repos/school_lms
+
+
+
+2015-04-03T10:00:35.505356Z
+4619
+ankit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+05c1d3f1-057c-40a7-86f3-ec4d3005ec7b
+
+application.config.php
+file
+12223
+
+
+
+
+155f791a2c6d15b728c71769133f2852
+2015-04-23T12:25:39.168184Z
+5593
+rinku
+
+
+svn:special svn:externals svn:needs-lock
+
+autoload
+dir
+

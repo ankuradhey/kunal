@@ -1,0 +1,97 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <?php $filepath = explode("module", __FILE__);
+    $extramarkcss = $filepath[0] . "public/css_admin/extramark.css";
+    $extramarkjs = $filepath[0] . "public/js_admin/extramark.js";
+    ?>
+
+    <!-- <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" /> -->
+    <title>Extramarks</title>   
+    <link rel="shortcut icon" href="<?php echo $this->cdn() ?>/images/website/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo $this->cdn() ?>/images/website/favicon.ico" type="image/x-icon">	
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() ?>/css_admin/extramark.css?<?php echo filemtime($extramarkcss); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() ?>/css_admin/responsive.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() ?>/css_admin/admincss.css">
+     <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() ?>/css_admin/login.css">
+    <script src="<?php echo $this->basePath() ?>/js_admin/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="<?php echo $this->basePath() ?>/js_admin/jquery.cookie.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() ?>/css_admin/ui.datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() ?>/css_admin/validationEngine.jquery.css" />    
+    <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
+    <script type="text/javascript" src="<?php echo $this->basePath() ?>/js_admin/jquery_date.js"></script>
+    <script src="<?php echo $this->basePath() ?>/js_admin/datepicker.js" type="text/javascript"></script>
+    <script> var BASE_URL = '<?php echo $this->basePath(); ?>';</script>
+    <script src="<?php echo $this->basePath() ?>/js_admin/extramark.js?<?php echo filemtime($extramarkjs); ?>" type="text/javascript"></script>
+    <script src="<?php echo $this->basePath() ?>/js_admin/jquery.validationEngine.js" type="text/javascript"></script>
+    <script src="<?php echo $this->basePath() ?>/js_admin/jquery.validationEngine-en.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath() ?>/js_admin/datagrid/css/jquery-ui-1.8.4.custom.css" />  
+</head>
+<div style="border:1px solid #ccc;" id="header-wrapper">
+    <header id="header">	
+        <div id="mview">
+            <!--<div class="hdtop_nos"><a href="callto:1800-102-5301"><img src="<?php echo $this->cdn() ?>/images/call_icon_image.png" /></a> </div>-->                
+            <div class="headerTopleft">
+                <div class="headerCountry">
+                    <div class="itemNameHead callusTxt">Toll free: 1800-102-5301</div>
+                </div>
+            </div>
+
+        </div>
+        <a href="<?php echo $this->url('admin') ?>" class="logo" title="Extramarks" style="background:none;"><img src="<?php echo $this->cdn() ?>/images/extramarks-logo.png" /></a>
+        <div class="mobile_icons">
+            <p class="icons_sprite call_icon">
+                &nbsp;
+            </p>
+            <p class="icons_sprite menu_icon">
+                &nbsp;
+            </p>
+        </div>
+
+    </header>
+    <nav style="margin-top:30px;">
+        <div style="float:right; margin:2px 2px 0 0;">
+            <?php if ($this->zfcUserIdentity()) { ?>
+                <a id="logout" class="signin" href="javascript:void(0);" onclick="sessionOut()">Logout</a>
+            <?php } else { ?>
+                <a id="login" class="signin " href="<?php echo $this->Url('admin'); ?>" >Login</a>
+<?php } ?>
+        </div>
+        <?php if ($this->zfcUserIdentity()) { ?>
+        <div style="float:right; margin:2px 2px 0 0;">
+            <?php
+//                ini_set('display_errors', E_ALL);
+//             $currencyAdminSession = new Container('currencyAdmin');
+//             echo '<pre>';print_r ($currencyAdminSession->currencyTypeAdmin);echo '</pre>';die('Vikash');
+        
+            ?>
+<!--         <select name="choosecountry" id="choosecountry" onchange="changeCurrency()">
+            <option value="INR">India</option>
+            <option value="USD">United States</option>
+            <option value="SGD">Singapore</option>
+        </select>-->
+        </div>
+        <?php } ?>
+    </nav>
+    <div style="clear:both;"></div>
+
+</div>
+
+
+
+
+<script>
+        function sessionOut() {
+            $.ajax({
+                url: BASE_URL + '/admin/adminlogout',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.output == 'success') {
+                        window.location = '<?php echo $this->Url('admin'); ?>';
+                    }
+                }
+            });
+        }
+        
+</script>

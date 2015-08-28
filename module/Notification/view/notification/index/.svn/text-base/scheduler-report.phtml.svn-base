@@ -1,0 +1,518 @@
+<script src="<?php echo $this->basePath() ?>/js/website/jquery-ui.js"></script>
+<link href="<?php echo $this->cdn() ?>/css/website/jquery-ui.css" type="text/css" rel="stylesheet"/>
+<?php
+$todayDate=explode(' ',date("F j Y"));
+?>
+
+<?php  
+    $subjectsNames = array();
+    $chapterNames = array();
+    $planIds = array();
+    $dataArr = array();
+    $tableHtml = '<table class="table table-bordered">';
+    if(count($this->eventss) != 0) {
+        $tableHtml.="<tr><td colspan='3' bgcolor='#E6E6FA'><center><strong>Today's Schedule</strong></center></td><tr>";
+       foreach ($this->eventss as $key => $events) {
+         if($events->is_completed != 1 && $events->type != 'custom') {
+             $tableHtml .= '<tr><td><input type="radio" name="subject_id" value="'.$events->board_class_subject_id.'-'.$events->board_class_subject_chapter_id.'"></td><td>'.$events->subject_name.'</td><td>'.$events->chapter_name.'</td><tr>';
+               $subjectsNames[$key] = $events->subject_name;
+               $chapterNames[$key] = $events->chapter_name;
+               $planIds[$key] = $events->plan_id . '-/' . $events->board_class_subject_id . '-/' . $events->board_class_subject_chapter_id;
+               $dataArr[$key]['subjectName'] = $events->subject_name;
+               $dataArr[$key]['chapterName'] = $events->chapter_name;
+               $dataArr[$key]['type'] = $events->type;
+               $class_id   = ($events->alt_class_id !='')?$events->alt_class_id:$events->class_id;
+               $dataArr[$key]['planId'] = $events->plan_id . '-/' . $events->board_class_subject_id . '-/' . $events->board_class_subject_chapter_id.'-/'.$class_id;                                                                                           
+                }
+            }
+        }
+   ?>
+  <?php 
+    $osubjectsNames = array();
+    $ochapterNames = array();
+    $oplanIds = array();
+    $dataArr1 = array();
+
+    if(count($this->overdue) != 0) {
+         $tableHtml.="<tr><td colspan='3' bgcolor='#E6E6FA'><center><strong>Overdue Schedule</strong></center></td><tr>";
+      foreach ($this->overdue as $key => $events) {
+        if ($events->is_completed != 1 && $events->type != 'custom') {
+            $tableHtml .= '<tr><td><input type="radio" name="subject_id" value="'.$events->board_class_subject_id.'-'.$events->board_class_subject_chapter_id.'"></td><td>'.$events->subject_name.'</td><td>'.$events->chapter_name.'</td><tr>';
+            $osubjectsNames[$key] = $events->subject_name;
+            $ochapterNames[$key] = $events->chapter_name;
+            $oplanIds[$key] = $events->plan_id . '-/' . $events->board_class_subject_id . '-/' . $events->board_class_subject_chapter_id;
+            $dataArr1[$key]['subjectName'] = $events->subject_name;
+            $dataArr1[$key]['chapterName'] = $events->chapter_name;
+            $dataArr1[$key]['type'] = $events->type;
+            $class_id   = ($events->alt_class_id !='')?$events->alt_class_id:$events->class_id;
+            $dataArr1[$key]['planId'] = $events->plan_id . '-/' . $events->board_class_subject_id . '-/' . $events->board_class_subject_chapter_id.'-/'.$class_id;
+          }
+      }
+  }
+ ?>
+<?php 
+    $usubjectsNames = array();
+    $uchapterNames = array();
+    $uplanIds = array();
+    $udataArr1 = array();
+    if(count($this->leftdue) != 0) {
+         $tableHtml.="<tr><td colspan='3' bgcolor='#E6E6FA'><center><strong>Upcoming Schedule</strong></center></td><tr>";
+        foreach ($this->leftdue as $key => $events) {
+            if ($events->is_completed != 1 && $events->type != 'custom') {
+              $tableHtml .= '<tr><td><input type="radio" name="subject_id" value="'.$events->board_class_subject_id.'-'.$events->board_class_subject_chapter_id.'"></td><td>'.$events->subject_name.'</td><td>'.$events->chapter_name.'</td><tr>';  
+              $usubjectsNames[$key] = $events->subject_name;
+              $uchapterNames[$key] = $events->chapter_name;
+              $uplanIds[$key] = $events->plan_id . '-/' . $events->board_class_subject_id . '-/' . $events->board_class_subject_chapter_id;
+              $udataArr1[$key]['subjectName'] = $events->subject_name;
+              $udataArr1[$key]['chapterName'] = $events->chapter_name;
+              $udataArr1[$key]['type'] = $events->type;
+              $class_id   = ($events->alt_class_id !='')?$events->alt_class_id:$events->class_id;
+              $udataArr1[$key]['planId'] = $events->plan_id . '-/' . $events->board_class_subject_id . '-/' . $events->board_class_subject_chapter_id.'-/'.$class_id;
+            }
+        }
+    }
+    $tableHtml.="</table>";
+ ?>
+<div class="subreport-block moredetails-popup">
+   	  <div class="common-border">
+        <ul class="reminder-popup">
+          <li class="colsw-1">&nbsp;</li>
+          <li class="colsw-2">SUBJECT</li>
+          <li class="colsw-3">CHAPTER NAME</li>
+          <li class="colsw-4">Select</li>
+          <li class="colsw-5">ACTION</li>
+        </ul> 
+        <div class="reminder-content">
+         <ul>
+         	<li class="colsw-1">
+         	 <div class="LeftSchedule">	
+         	 <div class="schedule-row">
+         	  <span>SCHEDULE <br> FOR <br> TODAY</span>
+         	  <strong><?php echo $todayDate[1];?> <sup>th</sup> <br> <?php echo ' '.$todayDate[0];?> <br> <?php echo $todayDate[2];?></strong>	
+         	 </div>	
+          <table class="table table-bordered">
+         	<?php  
+                    foreach($dataArr as $key=>$value){
+                            $type = '';
+                            if($value['type'] == 'tests')
+                               $type = ' (Test)';
+                               if($key % 2 ==0)
+                                  $key1 = 0;
+                                else
+                             $key1 = 1;  
+             ?>
+              <tr>	
+         	<td><?php  echo $value['subjectName'];?> </td>
+                <td><?php  echo $value['chapterName'].$type;?></td>
+                <td class="cell-33"><div class="checkbox" id="today-check<?php echo $key;?>"><label>
+		  <input type="checkbox" name="today-check" id="today-check" value="<?php echo $value['planId'] .'-/'.$key.'-/'.$value['type'];?>"> <strong>&nbsp;</strong></label></div>
+		</td>
+	     </tr>	
+         <?php  $key1++; }  ?>
+        </table>
+       </div>
+       <div class="LeftSchedule">	
+         	 
+         	 <div class="schedule-row yellow-bg">
+         	  <span>SCHEDULE <br> MISSED  <br> OUT</span>
+         	  <strong>Tasks</strong>	
+         	 </div>
+         	 
+         	 <table class="table table-bordered">
+                 
+                <?php  
+                   foreach($dataArr1 as $k=>$value){
+                       $typeo = '';
+                       if($value['type'] == 'tests')
+                           $typeo = ' (Test)';
+                         if($k % 2 ==0)
+                           $keyo = 0;
+                              else
+                           $keyo = 1;                                       
+                   ?>     
+         	  <tr>	
+         	   <td><?php  echo $value['subjectName'];?> </td>
+         	   <td><?php  echo $value['chapterName'].$typeo;?></td>
+         	   <td class="cell-33">
+         	   	<div class="checkbox" id="today-check<?php echo 'o'.$k;?>">
+			        <label>
+			          <input type="checkbox" name="today-check" id="today-check" value="<?php echo $value['planId'] .'-/'.'o'.$k.'-/'.$value['type'];?>"> <strong>&nbsp;</strong>
+			        </label>
+			      </div>
+			    </td>
+			    </tr>
+                     
+                     <?php  $keyo++; } ?>
+         	  </table>
+         	  </div>
+                    
+                <div class="LeftSchedule">	
+         	 
+         	 <div class="schedule-row green-bg">
+         	  <span>SCHEDULE <br> UPCOMING</span>
+         	  <strong>Tasks</strong>	
+         	 </div>
+         	 
+         	 <table class="table table-bordered">
+                 
+                <?php  
+                   foreach($udataArr1 as $k=>$value){
+                       $typeo = '';
+                       if($value['type'] == 'tests')
+                           $typeo = ' (Test)';
+                         if($k % 2 ==0)
+                           $keyo = 0;
+                              else
+                           $keyo = 1;                                       
+                   ?>     
+         	  <tr>	
+         	   <td><?php  echo $value['subjectName'];?> </td>
+         	   <td><?php  echo $value['chapterName'].$typeo;?></td>
+         	   <td class="cell-33">
+         	   	<div class="checkbox" id="today-check<?php echo 'o'.$k;?>">
+			        <label>
+			          <input type="checkbox" name="today-check" id="today-check" value="<?php echo $value['planId'] .'-/'.'o'.$k.'-/'.$value['type'];?>"> <strong>&nbsp;</strong>
+			        </label>
+			      </div>
+			    </td>
+			    </tr>
+                     
+                     <?php  $keyo++; } ?>
+         	  </table>
+         	  </div>
+         	  <div class="colsw-3">
+                    <a class="btn btn-primary" href="javascript:void(0);" onclick="lessonActions('doItNow')">Do It Now</a>
+                    <a class="btn btn-primary" href="javascript:void(0);" onclick="lessonActions('Completed')">Completed</a>
+                    <a class="btn btn-primary" id="endateee" href="javascript:void(0);" onclick="lessonActions('Reschedule')">Reschedule</a>
+                    <!--data-toggle="modal" data-target="#schedule_history"-->
+                    <?php if($this->userTypeId==3){?><a class="btn btn-primary" id="feedback" href="javascript:void(0);">Feedback</a><?php }?>
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#schedule_history" id="view-feedback" href="javascript:void(0);">View Feedback</a>
+                    <div id="fromToCal" class="fromToCal">
+                       <div class="sch_left_text_progress" style="margin-left:10px;">
+                          <div class="sch_lftxt_cnt_progress" style="font-size:12px; width:60px;padding-top:5px;">Start date </div>
+                           <div class="le"><input type='text' readonly id='sstdate' class="sch_rttxt_input"/></div>
+                        </div>
+                         <div class="clear"></div>
+                         <div class="sch_left_text_progress" style="margin-left:10px;">
+                           <div class="sch_lftxt_cnt_progress" style="font-size:12px; width:60px;padding-top:5px;">End date </div>
+                           <div class="le"><input type='text' readonly id='eendate' class="sch_rttxt_input"/></div>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="sch_bt_margin">
+                         <input type="button" value="SCHEDULE" class="sch_btn btn btn-primary"  onclick="lessonActions('schedule')"/>
+                        </div><span id="msgProgress"></span>
+                        </div>                    
+         	 </div>         	
+            </li>      
+         </ul>	
+        </div>
+       </div>	
+   	 </div>
+
+<div class="modal fade" id="schedule_history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+                                <button type="button" id="close_schedule_history" style='float:right;'><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Scheduler Feedback</h4>
+			      </div>
+			      <div class="modal-body" id="scheduler_feedback_listing">
+				<?//php echo $tableHtml;?>
+			      </div>
+			      <div class="modal-footer">
+				
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+<div class="modal fade" id="myFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+                                  <button type="button" id="close_feedback" style='float:right;'><span aria-hidden="true">&times;</span></button>
+				<!--button type="button" class="close_feedback"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button-->
+				<h4 class="modal-title" id="myModalLabel">Latest Feedback</h4>
+			      </div>
+			      <div class="modal-body">
+				<input type="hidden" name="hidFeedCId" id="hidFeedCId" value="0" />
+                            <input type="hidden" name="studentId" id="studentId" value="<?php echo $this->userId; ?>" />
+                            <input type="hidden" name="subjectId" id="subjectId" value="<?//php echo $subjectId;?>" />
+                    <a id='close_button' class='close_button' href="javascript:void(0);"></a>                                                        
+                            <div>
+                                <textarea id="coverageFeedback" class="form-control" rows="8"></textarea>
+				<input type="hidden" name="commenttype" value="2">
+                            </div>
+			      </div>
+			      <div class="modal-footer">
+				<input type="button" class="btn btn-primary" value="Send" id="send_schedule_feedback" />
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $( "#close_button" ).click(function() {
+  });
+  
+  $("#feedback").click(function(){
+        var subject_ids = '';
+        var chapter_ids = '';
+        var checkboxVal = $('input[name="today-check"]:checked').each(function() {
+            var checkVal = this.value;
+            var checkValArr = checkVal.split('-/')
+            //console.log(checkValArr);
+           subject_ids += checkValArr[1]+'_';
+           chapter_ids += checkValArr[2]+'_';
+        });
+        
+        if(subject_ids) {
+            var subjectChapter = subject_ids+'-'+chapter_ids;
+            $('#subjectId').val(subjectChapter);
+            $('#myFeedbackModal').modal('show');
+            
+        } else {
+            alert("Please select one row");
+        }
+        //console.log(checkboxVal);
+  });
+  
+  $('input[type="radio"]').click(function(){
+      var checkboxVal = $(this).val();
+      $('#subjectId').val(checkboxVal);
+      $('#myFeedbackModal').modal('show');
+  });
+  
+  $("#send_schedule_feedback").click(function() {
+        var hidFeedCId = $('#hidFeedCId').val();
+        $('#errorMessage').html('');
+        var coverageFeedback = $('#coverageFeedback').val();
+        if (coverageFeedback == '') {
+            $('#errorMessage').html('Please write feedback');
+        } else {
+            var studentId = $('#studentId').val();
+            var subjectchapter = $('#subjectId').val();
+            var subCapArr = subjectchapter.split('-');
+            var subjectId = subCapArr[0];
+            var chapterId = subCapArr[1];
+            var customBoardRackId = '';
+            var type = 'mentor';
+            $.ajax({
+                type: 'POST',
+                dataType:'json',
+                url: BASE_URL + '/report/json/add-feedback',
+                data: {hidstudent_id: studentId,feedback_type: 'schedule',chapterId:chapterId,customBoardRackId: customBoardRackId,hidsubject_id: subjectId, feedbackCoverage: coverageFeedback, hidFeedCId: hidFeedCId, type: type, selectDate: '<?php echo date('Y-m-d'); ?>', subjectId: subjectId, getCoverage: 0},
+                success: function(data) {
+                    if (data.output == 'success') {
+                        alert('Feedback send successfully');
+                        //$('#myFeedbackModal').modal('close');
+                        $('#myFeedbackModal').modal('hide');
+                        $(".close").trigger('click');
+                    } else {
+                        $('#errorMessage').html('<p style="color:red">You are not mentor of selected subject</p>');
+                    }
+                }
+            });
+        }
+  });
+  
+  $('#view-feedback').click(function() {
+            var subject_ids = '';
+            var chapter_ids = '';
+            var checkboxVal = $('input[name="today-check"]:checked').each(function() {
+                var checkVal = this.value;
+                var checkValArr = checkVal.split('-/')
+               subject_ids += checkValArr[1]+'_';
+               chapter_ids += checkValArr[2]+'_';
+            });
+
+            if(subject_ids) {
+                var hashUrl = location.hash;
+                var user_sub = hashUrl.split("/");
+                var user_id = user_sub[2];
+                //var class_id = user_sub[3];
+                $.ajax({
+                    type: 'POST',
+                    url: BASE_URL + '/report/index/view-feedback-list/'+user_id+'/0'+'/schedule',
+                    data: {userId: user_id, personType: 'mentor',chapterId:chapter_ids,subjectId:subject_ids,feedback_type: 'schedule',show_type:'schedule'},
+                    dataType:'html',
+                    success: function(data) {
+                        $('#scheduler_feedback_listing').html(data);
+                        $('#schedule_history').find('#scheduler_feedback_listing').html(data);
+                        $("#schedule_history").modal('show');
+                    }
+                });
+            } else {
+                alert("Please select one row.");
+                return false;
+            }
+        });
+  
+ }); 
+ 
+ /*function feedbackPopup() {
+     alert('feedbackPopup()');
+        var hidFeedCId = $('#hidFeedCId').val();
+        $('#errorMessage').html('');
+
+        var coverageFeedback = $('#coverageFeedback').val();
+        if (coverageFeedback == '') {
+            $('#errorMessage').html('Please write feedback');
+        } else {
+            if ($('#studentId').val()) {
+                var studentId = $('#studentId').val();
+                var subjectId = $('#subjectId').val();
+                var type = 'mentor';
+            } else {
+                var studentId = <?//php echo $this->userId; ?>;
+                var studentId = <?//php echo $this->subjectId; ?>;
+                var type = 'student';
+            }
+            if (sendRequest == 1) {
+                $.ajax({
+                    type: 'POST',
+                    dataType:'json',
+                    url: BASE_URL + '/report/json/add-feedback',
+                    data: {hidstudent_id: studentId,feedback_type: 'schedule',hidsubject_id: subjectId, feedbackCoverage: coverageFeedback, feedback: 'coverage', hidFeedCId: hidFeedCId, type: type, selectDate: '<?php echo date('Y-m-d'); ?>', subjectId: subjectId, getCoverage: 0},
+                    success: function(data) {
+                        if (data.output == 'success') {
+                            sendRequest = 2;
+                            alert('Send successfully');
+                            $('#myFeedbackModal').modal('close');
+                            //window.location.reload();
+                        } else {
+                            $('#errorMessage').html('<p style="color:red">You are not mentor of selected subject</p>');
+                        }
+                    }
+                });
+            }
+        }
+    }*/
+    
+    function lessonActions(type){
+	var chapterIds="";
+	var che=document.getElementsByTagName("INPUT");
+	var len=che.length;
+	var cnt = 0;
+	for(var i=0;i<len;i++)
+	{
+		if(che[i].name=="today-check")
+		{
+			if(che[i].checked)
+			{
+				chapterIds+=che[i].value;
+				cnt++;
+				
+			}
+		}
+	}
+	if(cnt == 0) {
+		alert('Please select one row');
+		return false;
+	}
+	if(cnt>1) {
+		alert('Please select only one Lesson');
+		return false;
+	}
+	var ids=chapterIds.split('-/'); 
+	var planId=ids[0];
+	var subjectId=ids[1];
+	var chapterId=ids[2];
+         var class_id=ids[3];
+	var incrId=ids[4];
+	var ctype=ids[5];
+       
+         var pathurl ="<?php echo $this->URL('website/default', array('controller' => 'index', 'action' => 'dashboard'))?>";
+           //alert(pathurl); 
+	    //alert(class_id);
+        
+	if(type=='doItNow'){
+	$('#fromToCal').hide();
+	//window.location=pathurl+'/'+class_id+'#/chapterDetails/'+chapterId;
+        parent.document.location=pathurl+'/'+class_id+'#/chapterDetails/'+chapterId;
+	}else if(type=='Completed'){
+		$('#fromToCal').hide();
+		$.ajax({
+			type:'POST',
+			url:'<?php echo $this->Url('calender-operations');?>',
+			data:{type:'1',lessionId:planId,chapterId:chapterId},
+			success: function(data){
+				var path='<img  src="<?php echo $this->cdn() ?>/images/website/tickmark.png"/>';
+				$('#today-check'+incrId).html(path);
+			}
+		});			
+	}else if(type=='Reschedule'){
+		$('#fromToCal').show();
+    }else if(type=='schedule'){
+		var flag=true;
+		var plancdate=$("#sstdate").val();
+		var endDate=$("#eendate").val();
+		if(plancdate==''){
+			$('#msgProgress').html('Please select dates');
+			flag=false;
+		}else{
+			$('#msgProgress').html('');
+		}if(endDate==''){
+			$('#msgProgress').html('Please select dates');
+			flag=false;
+		}else{
+			$('#msgProgress').html('');
+		}
+		if(flag==false){
+			return false;
+		}else{
+                       if(ctype == 'tests' && plancdate != endDate){
+                           alert('Tests can be scheduled for a single session only');
+                           return  false;                          
+                       } 
+			$.ajax({
+				type:'POST',
+				url: '<?php echo $this->Url('add-lessons');?>',
+				data:{date:plancdate,title:chapterId,endDate:endDate,type:'2',page:'progress',lessionId:planId},
+				success: function(data){
+					$('#msgProgress').html('Schedule changed');
+                                        window.location.reload();
+				}
+			});
+		}
+	}
+}
+
+
+$(document).ready(function() {
+   // coverageReport();
+    MakeStartEndPicker("#sstdate", "#eendate");    
+    });
+    
+    function MakeStartEndPicker(startElement, endElement){
+		$(startElement).datepicker({
+			minDate: 0, 
+			dateFormat: 'dd/mm/y', 
+			showOn: 'button',
+			buttonText: 'Show Date',
+			buttonImageOnly: true,
+			buttonImage: '<?php echo $this->cdn() ?>/images/website/calender_icon.png',
+			duration: 0 ,
+			beforeShow: function(input){
+				var date2 =  $(endElement).datepicker('getDate');
+				if(date2 != undefined) return { maxDate: date2 };
+				}
+		});
+		$(endElement).datepicker({
+			minDate: 0, 
+			dateFormat: 'dd/mm/y', 
+			showOn: 'button',
+			buttonText: 'Show Date',
+			buttonImageOnly: true,
+			buttonImage: '<?php echo $this->cdn() ?>/images/website/calender_icon.png',
+			
+			duration: 0 ,
+			beforeShow: function(input)
+			{
+			var date1 =  $(startElement).datepicker('getDate');
+			if(date1 != undefined) return { minDate: date1 };
+			}
+		});
+      }
+</script>    

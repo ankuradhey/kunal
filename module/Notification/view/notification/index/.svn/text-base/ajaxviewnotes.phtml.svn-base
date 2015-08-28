@@ -1,0 +1,26 @@
+<div class="prog-rep-conbox">
+	<div class="container">
+            <?php $count =0;if(isset($this->notes) && count($this->notes)!=0){ ?>
+		<div class="heading" style="text-align:left;">
+		  <div class="ram" style="padding-left:0.8em">S No.</div>
+                  <div  style="padding-left:0.8em"> Notes </div>
+		</div>						
+		<?php foreach($this->notes as $key=>$notes){ 
+		  $nottextt_id=explode('-/',$notes[1]);?>
+                <?php  for ($i = 1; $i <=  $notes['totalNotes']; $i++) {$count +=1;?>
+            <div class="table-row" style='text-align: left;'>
+		  <div class="check"><?php echo $count;?></div>
+                    <div class="check"> <?php $note=explode('-/',$notes[$i]); echo $note['1'];  ?> </div>
+            </div>
+              <?php } ?>
+		<?php }}else{ ?>		
+		<div style="clear:both;"></div>									
+		<div class="table-row">
+		  <p style="height:20px">No records found</p>
+		</div>
+		<?php } ?>		
+	</div>
+</div>
+
+<div id="overlay" class="overlay"></div>
+<div class="cl"></div>

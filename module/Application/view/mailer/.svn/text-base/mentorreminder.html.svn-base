@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>:: Extramarks Education Pvt. Ltd. ::</title>
+</head>
+
+<body>
+<table width="800" border="0" align="center" cellpadding="0" cellspacing="0" style="border:25px solid #f8ecca; font-family:verdana">
+  <tr>
+    <td width="543" style="padding:10px 20px;"><a href="http://www.extramarks.com" target="_blank"><img src="{SITE_URL}/images/website/logo.jpg"></a></td>
+    <td width="207" style="padding:10px 20px; text-align:right; color:#000066; font-family:verdana; line-height:22px; font-size:13px; font-weight:bold;">1800-102-5301<br>
+      <a href="http://www.extramarks.com" target="_blank" style="text-decoration:none; color:#000066;">www.extramarks.com</a><br>
+    <a href="mailto:live@extramarks.com" style="text-decoration:none; color:#000066;">live@extramarks.com</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding:10px 20px; font-family:verdana; font-size:16px; line-height:26px; color:#333333;">Dear {USER_NAME},
+      <p>Thank you for visiting <strong>Extramarks LIVE</strong> &dash; the anytime, anywhere classroom!<br>
+      You seem to have missed out on the <a href="http://www.extramarks.com/website/index/dashboard/5557#/chapterDetails/6759" target="_blank" style="text-decoration:none;"><strong>free trial of our online class</strong></a> which gives you access to: </p>
+      <ul>
+      	<li>Smart Learning Modules that provide highly engaging, visually appealing and curriculum-mapped lessons </li>
+      	<li> Virtual lab experiments</li>
+      	<li> Innumerable tests and quizzes</li>
+      	<li> Solved papers, MCQs, High Order Thinking Skills based exercises, Value based questions, CCE based questions and much more!</li>
+      </ul>
+      <p><a href="http://www.extramarks.com/website/index/dashboard/5557#/chapterDetails/6759" target="_blank" style="text-decoration:none;"><strong>Visit your free trial</strong></a> to see our three-way approach of <strong>Learn</strong>, <strong>Practice</strong> and <strong>Test</strong> which helps students comprehend, analyse and evaluate their learning. And <strong>Extramarks LIVE </strong>allows you, as a Mentor, to track, monitor and supervise a student&#39;s performance.  As a Mentor, you can access the learner&#39;s schedule, progress and the entire Extramarks range of products.</p>
+      <p>Visit the trial page <a href="http://www.extramarks.com/website/index/dashboard/5557#/chapterDetails/6759" target="_blank" style="text-decoration:none;"><strong>here</strong></a> to start using <strong>Extramarks LIVE</strong> as a Mentor.</p>
+      <p>Happy Learning &amp; High Scoring,</p>
+    <p style="color:#ff0000; font-weight:bold; font-size:15px; font-family:verdana;">Team Extramarks LIVE</p></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center" valign="middle" style="padding:5px 0px; color:#333; font-size:16px; font-family:verdana;"><strong>Questions?</strong> Ask us on <strong>1800-102-5301</strong></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding:10px; font-family:verdana; color:#ff0000; text-align:center; font-weight:bold;" valign="middle"><a href="http://www.extramarks.com/product-tour" target="_blank"><img src="{SITE_URL}/images/website/emvideotour.gif"></a> &nbsp; <a href="http://www.extramarks.com/easy-effective" target="_blank"><img src="{SITE_URL}/images/website/learnmore.gif"></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center" valign="middle" style="padding:5px 0px; color:#ff0000; font-size:25px; font-style:italic; font-family:verdana;"><strong>Extramarks LIVE &#8211; Your Class With You</strong></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><table width="0%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <tr>
+        <td style="padding:0px 10px;"><a href="https://www.facebook.com/ExtramarksDigitalEducation" target="_blank"><img src="{SITE_URL}/images/website/facebook.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="https://plus.google.com/+extramarks" target="_blank"><img src="{SITE_URL}/images/website/google.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="https://twitter.com/extramarks" target="_blank"><img src="{SITE_URL}/images/website/twitter.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="https://www.youtube.com/channel/UC7t6bG2oCbKXBm2vyVwCdwQ" target="_blank"><img src="{SITE_URL}/images/website/youtube.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="mailto:live@extramarks.com"><img src="{SITE_URL}/images/website/mail.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="https://www.pinterest.com/extramarksedu/" target="_blank"><img src="{SITE_URL}/images/website/pinintrest.jpg"></a></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding-bottom:5px; font-family:verdana; font-size:25px; line-height:22px; color:#ff0000; text-align:center; font-weight:bold;"><a href="http://www.extramarks.com" target="_blank" style="text-decoration:none;color:#FF0000">www.extramarks.com</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding:10px 20px; font-family:verdana; font-size:14px; line-height:22px; color:#333333;">You have received this mail because you are a registered user of <a href="http://www.extramarks.com/" target="_blank" style="text-decoration:none">www.extramarks.com</a>. If you do not wish to receive such mails from us <a href="mailto:unsubscribe@extramarks.com" title="unsubscribe@extramarks.com" style="text-decoration:none;">click here</a> to unsubscribe. </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<?php
+$userObj = $this->zfcUserIdentity();
+$activemp = $activemg = $activemm = $activems = $activema = $activemms = $addmentor = $addstudent = $activemc = '';
+if (isset($page) && $page == 'myProfile') {
+    $activemp = 'active container-nav-current';
+} else if (isset($page) && $page == 'myGroups') {
+    $activemg = 'active';
+} else if (isset($page) && ($page == 'myMentor' || $page == 'myassignedpaper')) {
+    $activemm = 'active container-nav-current';
+} else if (isset($page) && $page == 'mySubscriptions') {
+    $activems = 'active container-nav-current';
+} else if (isset($page) && $page == 'myAwards') {
+    $activema = 'active';
+} else if (isset($page) && $page == 'change-profile') {
+    $activemp = 'active';
+} else if (isset($page) && ($page == 'myStudents' || $page == 'mypaper')) {
+    $activemms = 'active container-nav-current';
+} else if (isset($page) && $page == 'mychild') {
+    $activemc = 'active container-nav-current';
+} else if (isset($page) && $page == 'myparent') {
+    $activemc = 'active container-nav-current';
+}
+if (isset($addedmentors) && $addedmentors == '0') {
+    $addmentor = 'Add';
+} else {
+    $addmentor = 'My';
+}
+if (isset($addedStudents) && $addedStudents != '0') {
+    $addstudent = 'Inactive';
+}
+$url = $this->URL('home');
+?>
+<nav class="myprofile-nav global-show clearfix">
+    <ul class="pull-left">
+        <li class="<?php echo $activemp; ?>"><a href="<?php echo $this->Url('zfcuser/myprofile') ?>">My Profile</a></li>
+        <li class="<?php echo $activemg; ?>"><a href="<?php echo $this->Url('my-groups') ?>">My Groups</a></li>
+        <li class="<?php echo $activems; ?>"><a href="<?php echo $this->Url('my-subscriptions') ?>">My Subscriptions</a></li>
+        <li class="<?php echo $activemm; ?>"><a href="<?php echo $this->Url('mymentor') ?>"><?php echo $addmentor; ?> Mentor</a></li>
+        <?php if ($userObj->getUserTypeId() == '3' || $userObj->getUserTypeId() == '2') {
+            ?>
+            <li class="<?php echo $activemc; ?>"><a href="<?php echo $this->Url('myChild') ?>">My Child</a></li>
+            <?php
+        }
+        if ($userObj->getUserTypeID() == '1') {
+            ?>
+            <li class="<?php echo $activemc; ?>"><a href="<?php echo $this->Url('my-parent') ?>">My Parent</a></li>
+            <?php
+        }
+        ?>
+        <?php if(array_key_exists('user_role', $_SESSION)){
+                if($_SESSION['user_role'] != '1'){?>    
+                <li class="<?php echo $activemms; ?>"><a href="<?php echo $this->Url('my-students') ?>">My Students</a></li>
+        <?php 
+                }
+            }else if ($userObj->getUserTypeID() != '1'){
+                ?>
+                <li class="<?php echo $activemms; ?>"><a href="<?php echo $this->Url('my-students') ?>">My Students</a></li>
+                <?php
+            }
+         ?>
+               
+    </ul>	
+    <?php if($userObj->getUserTypeId() == '3'){ ?>
+    <div class="pull-right" style="padding:8px 10px 0 0;">
+    <input type="text" class="form-control" id="coupon" style="width:180px; height:35px; display:inline-block; vertical-align:middle;" placeholder="Apply Gift Card Code"> 
+    <button class="btn btn-primary" data-toggle="modal" onclick="TestcouponType()"  data-whatever="@mdo">Submit</button>
+    <span id="errormessageClass" style="color:red;padding:5px 0 5px 0px;"></span>
+    </div>
+    <?php } ?>
+</nav> 
+<!--<div id="logout" class="logout_pop">
+    <a class="sroupact_close" href="javascript:void(0);" onclick="$.fancybox.close();"></a>
+    <h2>Logging Out</h2>
+    <center>
+        <div class="logpop_botsp">Do you want to save this session as a record for your further review and reports.</div>
+        <div>
+            <a class="groupact_fsub1" href="<?php echo $this->Url('zfcuser/logout') ?>">Yes</a>
+            <a class="groupact_fres1" href="<?php //echo $this->Url('zfcuser/no-logout')      ?>">No</a>
+        </div>
+    </center>
+</div>-->
+
+<script> 
+    $("#user-cont-nav-myprof").click(function() {
+        $("#user-container-nav").toggle();
+        $("#user-cont-nav-myprof p").toggleClass("profile_toggle_active");
+    });
+</script>

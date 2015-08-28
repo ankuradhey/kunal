@@ -1,0 +1,308 @@
+<script>
+    $('#hide').click(function() {
+        $.fancybox.close();
+
+    });
+    function setclickid(clickid) {
+        $('#clickedid').val(clickid);
+    }
+    function showalert()
+    {
+        if (confirm('Please be informed that on switching the class you will not be able to switch it back'))
+        {
+            switchclass();
+        }
+        else
+        {
+            return false;
+        }
+    }
+    function switchclass() {
+        var user_package_id = '<?php echo $this->user_package_id ?>';
+        var package_id = $("#pkgId").val();
+        var actual_package_id = $("#actual_pkg_id").val();
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->Url("package/switchclass") ?>',
+            data: {syllabus_id: package_id, user_package_id: user_package_id, actual_package_id: actual_package_id},
+            success: function(data) {
+                alert('Your class has been switched now');
+                location.reload();
+                // $('#notswitched').html('Switched');
+            }
+        });
+    }
+
+</script>
+
+<?php
+if (isset($this->ordersDetailes) && count($this->ordersDetailes) != 0) {
+    ?>
+<div class="packages">
+<?php //echo date('Y-m-d H:i:s');die;
+
+    foreach ($this->ordersDetailes as $ordersDetailes) {
+        if ($ordersDetailes->currency_type == "USD") {
+            $order_currency = "$ ";
+        } else {
+            $order_currency = "Rs ";
+        }//echo '<pre>';print_r($ordersDetailes);echo '</pre>';die('Macro Die');
+        $purchase1 = explode(' ', $ordersDetailes->purchase_date);
+        $purchase = explode(' ', date('F j Y', strtotime($purchase1[0])));
+        ?>
+        <input type='hidden' name='pkgId' id="pkgId" value="<?php echo $ordersDetailes->package_id; ?>" />
+        <input type='hidden' name='actual_pkg_id' id="actual_pkg_id" value="<?php echo $ordersDetailes->actual_package_id; ?>" />
+        <input type='hidden' name='subject_added' id="subject_added" value="<?php echo $ordersDetailes->subject_added; ?>" />
+        <input type='hidden' name='class_id' id="class_id" value="<?php echo $nextclassDetails->class_id; ?>" />
+            <button class="close" type="button" onclick="closeorderdetail('<?php echo $ordersDetailes->user_package_id; ?>');"><span aria-hidden="true">×</span></button>	
+            <div class="row">
+            <div class="col-sm-5">
+            	<ul class="package-info">
+                <li><strong>Order Date</strong><span><?php echo $purchase[1] . ' ' . $purchase[0] . ',' . $purchase[2]; ?></span></li>	
+                <li><strong>Class</strong><span><?php
+                        if ($ordersDetailes->is_switched == 'yes' && $ordersDetailes->package_category == '1') {
+                            echo $this->nextclassname;
+                        } else {
+                            echo $ordersDetailes->class;
+                        }
+                        ?></span></li>	
+                <li><strong>Payment mode</strong>
+                      <span>
+                        <?php
+                        
+                           if ($ordersDetailes->pkg_payment_type == 'offline') {
+                                echo 'Offline';
+                            } else if ($ordersDetailes->pkg_payment_type == 'ebs') {
+                                echo 'Netbanking(ebs)';
+                            } else if ($ordersDetailes->pkg_payment_type == 'migs') {
+                                echo 'Credit Card(migs)';
+                            } else if ($ordersDetailes->pkg_payment_type == 'paytm') {
+                                echo 'Paytm';
+                            } else if ($ordersDetailes->pkg_payment_type == 'FREE USER') {
+                                echo 'Free User';
+                            } else if ($ordersDetailes->pkg_payment_type == 'paytm') {
+                                echo 'Paytm';
+                            }else if ($ordersDetailes->pkg_payment_type == 'campaign online') {
+                                echo 'campaign online';
+                            } else if ($ordersDetailes->pkg_payment_type == 'cod') {
+                                echo 'COD';
+                            }
+                        ?>
+                    </span>
+                </li>	
+                <li>
+                    <strong>Reference number</strong>
+                    <span>
+                        <?php echo $ordersDetailes->order_id; ?>
+                        <?php if ($ordersDetailes->status == 9) { ?>
+
+                            &nbsp;&nbsp; <font color="red">(Package Subscription deactivated due to payment collection failure) </font>
+
+                        <?php } ?>
+                    </span>
+                </li>	
+              
+                <?php
+                // echo $this->serverUrl();
+               // echo '==================='.$invoiceFilePth = $_SERVER['DOCUMENT_ROOT'] . $this->basepath() . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "invoice" . DIRECTORY_SEPARATOR . $ordersDetailes->order_id . ".pdf";?>
+<!--                <li>
+                    <strong>Amount Received</strong>
+                    <span>
+                        <?php
+                        echo $order_currency; //echo $ordersDetailes->discount_amount.'-----'.$ordersDetailes->discount_amount;
+                        echo $ordersDetailes->package_price - $ordersDetailes->discount_amount;
+                        ?><?php
+                        echo $this->serverUrl();
+                       //echo '==================='.$invoiceFilePth = $_SERVER['DOCUMENT_ROOT'] . $this->basepath() . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "invoice" . DIRECTORY_SEPARATOR . $ordersDetailes->order_id . ".pdf";
+                        //echo $this->url('invoice')
+                        ?><?php
+                        //echo $ordersDetailes->order_id;
+                        if (file_exists($invoiceFilePth)) {
+                            ?>
+                            <div class="user-sub-order-row"><a href="<?php echo $this->serverUrl($this->url('invoice')) ?>/<?php echo $ordersDetailes->order_id; ?>">Click here to Download Invoice</a></div>
+                            <?php
+                        }
+                        ?>
+                    </span>
+                </li>-->
+            </ul>
+            </div>
+          
+            <?php if($ordersDetailes->transaction_product_type=='tablet'){?>
+            <div class="col-sm-3 text-left manualPdf" style="padding-top:30px;">
+            <a href="<?php echo $this->basepath();?>/website/index/usermanual" target="blank" >
+            <img src="<?php echo $this->cdn() ?>/images/website/pdf-icon.png" alt="pdf" />
+           Activation Manual
+            </a></div>
+             <div class="col-sm-4 text-left manualPdf" style="padding-top:30px;"> <a href="javascript:void();" target="blank" >
+             <img src="<?php echo $this->cdn() ?>/images/website/pdf-icon.png" alt="pdf" />
+             User Manual
+             </a></div>
+               <div class="clearfix"></div>
+            <?php }else{?>
+              <div class="clearfix"></div>
+            <?php }
+            $key = $ordersDetailes->actual_package_id;
+            $key1 = $ordersDetailes->package_syllabi_id;
+            echo $this->SubjectchapterWidget($key, 'subscription', $key1);
+    } ?>
+  
+    </div>
+         <div class="text-left"><a href="<?php echo $this->basePath() ?>/termsandcondition" target="blank">Read T&C </a></div>
+            </div>
+<?php
+} else {
+    echo 'nodataFound';
+}
+?>
+<br />
+<div id="notswitched" style="text-align: left">
+    <?php 
+    if ($ordersDetailes->package_category == '1') {
+        if ($ordersDetailes->is_switched != 'yes') {  
+            if ($nextclassDetails->package_syllabi_id != '' && $nextclassDetails->allowed_package_count == 0) {
+                ?>
+                <a class="btn btn-primary" href="javascript:;" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="setclickid('allsubject');">Switch Class</a
+            ><?php } else { ?>
+                <a class="btn btn-primary" href="javascript:;" data-toggle="modal" data-target=".bs-example-modal-lg" onclick="setclickid('count');">Switch Class</a>
+            
+            <?php
+        }
+    } else {
+        ?>
+        <div class="packages clearfix">
+           
+                    <h4 class="switch-Head">Switched Class Details</h4>
+               <div class="border-t">
+            <?php
+            if (isset($this->nextClassOrdersDetailes) && count($this->nextClassOrdersDetailes) != 0) {
+                foreach ($this->nextClassOrdersDetailes as $nextClassOrdersDetailes) {
+                    if ($nextClassOrdersDetailes->currency_type == "USD") {
+                        $order_currency = "$ ";
+                    } else if ($nextClassOrdersDetailes->currency_type == "SGD") {
+                        $order_currency = "S$ ";
+                    } else {
+                        $order_currency = "Rs ";
+                    }
+                    $purchase1 = explode(' ', $nextClassOrdersDetailes->purchase_date);
+                    $purchase = explode(' ', date('F j Y', strtotime($purchase1[0])));
+                    ?>
+                    <input type='hidden' name='pkgId' id="pkgId" value="<?php echo $nextClassOrdersDetailes->package_id; ?>" />
+                    <input type='hidden' name='actual_pkg_id' id="actual_pkg_id" value="<?php echo $nextClassOrdersDetailes->actual_package_id; ?>" />
+                    <input type='hidden' name='subject_added' id="subject_added" value="<?php echo $nextClassOrdersDetailes->subject_added; ?>" />
+                    <!--<input type='hidden' name='class_id' id="class_id" value="<?php echo $nextClassIdArray[$nextClassOrdersDetailes->class_id]; ?>" />-->
+                    <ul class="package-info">
+                        <li><strong>Order Date</strong><span><?php echo $purchase[1] . ' ' . $purchase[0] . ',' . $purchase[2]; ?></span></li>
+                        <li><strong>Class</strong><span><?php echo $nextClassOrdersDetailes->class; ?></span></li>
+                        <li><strong>Payment mode</strong>
+                            <span>
+                            <?php if ($nextClassOrdersDetailes->pkg_payment_type == 'offline') {
+                                echo 'Offline';
+                            } else if ($nextClassOrdersDetailes->pkg_payment_type == 'ebs') {
+                                echo 'Netbanking(ebs)';
+                            } else if ($nextClassOrdersDetailes->pkg_payment_type == 'migs') {
+                                echo 'Credit Card(migs)';
+                            } else if ($nextClassOrdersDetailes->pkg_payment_type == 'paytm') {
+                                echo 'Paytm';
+                            } else if ($nextClassOrdersDetailes->pkg_payment_type == 'FREE USER') {
+                                echo 'Free User';
+                            } else if ($nextClassOrdersDetailes->pkg_payment_type == 'paytm') {
+                                echo 'Paytm';
+                            } else if ($nextClassOrdersDetailes->pkg_payment_type == 'cod') {
+                                echo 'COD';
+                            }
+                            ?>
+                            </span>
+                        </li>
+                        <li><strong>Reference number</strong><span><?php echo $nextClassOrdersDetailes->order_id; ?></span></li>
+<!--                        <li><strong>Amount Received</strong><span><?php
+                                echo $order_currency;
+                                echo $ordersDetailes->paid_amount;
+                                ?></span></li>-->
+                        <li><strong>Selected Subjects:</strong></li>
+
+                    </ul> <?php
+                $key = $nextClassOrdersDetailes->actual_package_id;
+                $key1 = $nextClassOrdersDetailes->package_syllabi_id;
+                echo $this->SubjectchapterWidget($key, 'subscription', $key1);
+                   
+                }
+                ?>
+        </div>
+<?php
+            } else {
+                echo 'no data Found';
+            }
+        }
+    }
+    ?>
+   </div>
+   </div>
+     <input type="hidden" value="" id="clickedid" name="clickedid" />
+    <!-- bootsrtrap lightbox start here -->
+   
+        <div id="confirm" class="modal fade bs-example-modal-lg mysubscription-Popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	    <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true"></span></button>
+	     <h4>Are you sure you want to switch class ?</h4>
+	     <p>By switching your access shall shift to next Class. You shall not be able to view this Class content any more.</p>
+	     <a href="#" class="btn btn-primary" aria-label="Close" data-dismiss="modal" data-toggle="modal" data-target=".bs-example-modal-sm">I want to switch</a>
+	     <a href="#" class="btn btn-primary" aria-label="Close" data-dismiss="modal">I do not want to switch now</a>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade bs-example-modal-sm mysubscription-Popup" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="passwordpopup">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content model-content2">
+	    	<button aria-label="Close" data-dismiss="modal"  class="close" type="button"><span aria-hidden="true"></span></button>
+	     <span>Please Enter your password: </span>
+	     <input type="password" name="password" id="password" placeholder="Enter Password" class="form-control" />
+	     <a href="javascript:void(0);" onclick="validate();" class="btn btn-primary">Validate</a>
+	    </div>
+	  </div>
+	</div>
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" role="dialog" tabindex="-1" id="subject_box"  style="display: none;" class="modal custom-lightbox">
+        
+    </div>
+    <!--<div class="overlay" id="overlay" style="display: block; background: none repeat scroll 0% 0% rgb(0, 0, 0);"></div>-->
+    <!-- bootsrtrap lightbox end here -->
+    <script>
+        function validate() {
+            var user_password = $("#password").val();
+            var clickedid = $("#clickedid").val();
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->Url("package/validateuser") ?>',
+                data: {user_password: user_password},
+                success: function(response) {
+                    if (response == 1) {
+                        //$.fancybox.close();
+                        $("#passwordpopup").hide();
+                        if (clickedid == 'count') {
+                            openSubjectBoxForswitch('<?php echo $ordersDetailes->actual_package_id; ?>',
+                                <?php echo $ordersDetailes->user_package_id; ?>, 
+                                    '<?php echo $ordersDetailes->price; ?>', 
+                                    '<?php echo $ordersDetailes->package_name; ?>', 
+                                    '<?php echo $ordersDetailes->days ?>', 
+                                    '<?php echo $ordersDetailes->package_image; ?>', 
+                                    '<?php echo $ordersDetailes->board ?>', 
+                                    '<?php echo $ordersDetailes->class ?>', 
+                                    '<?php echo @$nextclassDetails->allowed_package_count; ?>', 
+                                    '',
+                                    '<?php echo $ordersDetailes->package_type; ?>', 
+                                    '<?php echo $ordersDetailes->valid_till; ?>', 
+                                    '<?php echo $ordersDetailes->display_validity_date; ?>', 
+                                    '<?php echo $ordersDetailes->package_category; ?>');
+                        } else {
+                            switchclass();
+                        }
+                    } else {
+                        alert('Wrong password please enter right password.');
+                    }
+                }
+            });
+
+        }
+    </script>

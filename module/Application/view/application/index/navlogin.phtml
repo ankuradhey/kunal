@@ -1,0 +1,163 @@
+
+<nav>
+	<section id="nav-wrp">
+		<div class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 0px">
+			<div class="navbar-inner">
+				<div class="headerSignin">
+                                       <?php 
+                                       $uri = $_SERVER['REQUEST_URI'];
+                                        if(!$this->zfcUserIdentity()){
+                                            //$controller = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('controller', 'index');
+                                            //$action = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('action', 'index'); 
+                                            if(strpos($uri,'career-assessment-program') != false){
+                                                $redirect = '/career-assessment-program';
+                                            }else if(strpos($uri,'cap-package') != ''){
+                                                $redirect = '/cap-package';
+                                            }else if(strpos($uri,'sat-exam-preparation') != ''){
+                                                $redirect = '/sat-exam-preparation';
+                                            }else if(strpos($uri,'headerforzf1') != ''){
+                                                $redirect = '/sat-exam-preparation';
+                                            }else{
+                                                $redirect = '';
+                                            }
+                                           ?>   
+                                        <div class="signins-before">
+										<a title="Login" style="display: block" href="javascript:void(0)" onClick="getPopupForms('login');" id="various1"											class="signin fancybox hide_buttons"><div class="singins">LOG IN</div></a> 
+                                        <a title="Register" style="display: block" href="<?php echo $this->basePath(); ?>/user/register<?php //echo $redirect; ?>" id="various11" class="register">
+											<div class="logins">Register</div></a>
+									</div>
+                                       <?php
+																																							
+} elseif ($user = $this->zfcUserIdentity ()) {
+            $userName  = $user->getDisplayName ();
+            $userMale  = $user->getGender ();
+            $userType  = $user->getUserTypeId();
+            $userphoto = $user->getuserPhoto();
+       
+        $userTypeSession = $userType;
+  if(isset($_SESSION['user_role']) && $_SESSION['user_role']!=''){
+                 $userTypeSession =  $_SESSION['user_role'];
+                 }                                 ?>     
+                    <div class="singins_after" style="margin-top: 0px; width: auto;">
+						<ul class="user-profileafterLogin">
+						
+                                                    <li class="profileafterLogin-Firstli">
+                                                      <?php if(isset($userphoto) && $userphoto!=""){?>
+                                                            <?php
+                                                            $filepath = $this->basePath()."/uploads/profileimages/".$userphoto;
+                                                            if(file_exists($_SERVER['DOCUMENT_ROOT'].$filepath)){ ?>
+                                                              <a href="#" class="userlogin-image"><img title="<?php echo $userName;?>" alt="<?php echo $userName;?>"  src="<?php echo $this->cdn() ?>/uploads/profileimages/<?php echo $userphoto."?".time();?>" title="<?php echo $userName;?>" height="24px"> 
+                                                            <?php }else{ ?>
+                                                                 <?php if($userMale=='Male'){?>
+                                                                 <a href="#" class="userlogin-image" style="height:23px; min-width:30px;"><img title="<?php echo $userName ?>" alt="<?php echo $userName ?>"  src="<?php echo $this->cdn() ?>/images/avatar_100_1x.png" height="24px">  
+                                                                    <?php }else if($userMale=='Female'){?>
+                                                                    <a href="#" class="userlogin-image" style="height:23px; min-width:30px;"><img title="<?php echo $userName ?>" alt="<?php echo $userName ?>"  src="<?php echo $this->cdn() ?>/images/avatar_100_G.png" height="24px">  
+                                                                <?php } } ?>
+                                                    <?php }else if($userMale=='Male'){?>
+                                                        <a href="#" class="userlogin-image" style="height:23px; min-width:30px;"><img title="<?php echo $userName ?>" alt="<?php echo $userName ?>"  src="<?php echo $this->cdn() ?>/images/avatar_100_1x.png" height="24px">  
+                                                       <?php }else if($userMale=='Female'){?>
+                                                       <a href="#" class="userlogin-image" style="height:23px; min-width:30px;"><img title="<?php echo $userName ?>" alt="<?php echo $userName ?>"  src="<?php echo $this->cdn() ?>/images/avatar_100_G.png" height="24px">  
+                                                       <?php }?>
+                                                            
+                                                                
+                                                               
+                                                                
+                                                                
+                                                         <?php if(isset($userName)){  if(strlen($userName)>9) { echo substr($userName, 0, 8).'.'; } else { echo $userName; }}?> </a>
+								<div class="profiledropdown">
+									<ul>
+										<li><a href="<?php echo $this->Url('zfcuser/myprofile') ?>">My
+												Account</a></li>
+										<li><a href="<?php echo $this->Url('my-subscriptions') ?>">My
+												Subscription</a></li>
+										<li><a href="<?php echo $this->Url('zfcuser/logout')?>"> Log Out</a>
+										</li>
+									</ul>
+								</div></li>
+							<li>
+								<div class="select-style">
+									<select onchange="calldashboard(this.value);">
+										<option value="1" <?php if($userTypeSession == '1'){?>
+											selected="selected" <?php }?>>(Student)</option>
+                                            <?php
+												if ($userType != '1')
+												 { ?>
+                                            <option value="2"<?php if($userTypeSession == '2'){?> selected="selected" <?php }?>>(Parent)</option>
+                                            	<?php } ?>
+                                            <option value="3" <?php if($userTypeSession == '3'){?> selected="selected" <?php }?>>(Mentor)</option>
+									</select>
+								</div>
+							</li>
+						</ul>
+					</div>
+                                    <?php    }  ?>	
+                                    </div>
+				<div class="navcont">
+					<div id="nav-rht" class="container">
+						<button data-target=".nav-collapse" data-toggle="collapse"
+							class="btn btn-navbar collapsed" type="button">
+							<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<div style="height: 0px;" class="nav-collapse collapse">
+							<ul class="nav">
+                                                     <?php  if ($user = $this->zfcUserIdentity ()) {  
+                                                          $classId = $user->getClassId();
+                                                          if($userType == '1'){
+                                                         ?>
+                                                            <li><a class="homelink" href="<?php echo $this->URL('website/default', array('controller' => 'index', 'action' => 'dashboard', 'param1' => $classId))?>" title="Home">HOME</a> </li>	
+                                                     <?php }else {?>
+                                                            <li><a class="homelink" href="<?php echo $this->URL('zfcuser/user-dashboard');?>" title="Home">HOME</a> </li> 
+                                                     <?php }}?>
+								<li><a title="Product Tour" target="_blank"
+									href="<?php echo $this->basePath();?>/product-tour"
+									class="brand" style="outline: medium none;">Product Tour</a></li>
+								<li>
+								   <a title="Study" onClick="menuHide();" href="javascript:void(0);" data-toggle="dropdown" style="outline: medium none;" id="indian_boards" class="dropdown-toggle closes">STUDY</a>
+
+									<ul style="" id="menu_dropdown" role="menu"	class="dropdown-menu">
+										<li id="cbse" data-submenu-id="submenu-5554">
+											<div id="ram">
+												<div class="popover" id="submenu-5554">
+													<a href="javascript:void(0);" class="boardback"><i class="fa fa-bars"></i></a>
+													<div class="board_listing">
+														<ul> <?php	
+														$boardList = $this->boardList ();
+                                                         foreach ( $boardList as $cont )
+                                                          {
+						echo "<li><a id=" . $cont->getRackId () . " href='javascript:void(0);' class=lavel2>" . $cont->getRackName ()->getName () . "</a></li>";
+															}
+															?>
+														</ul>
+													</div>
+
+													<div class="class_listing">
+														<h3 class="popover-title"></h3>
+														<div class="popover-content">
+															<div class="live_menu" id="classes"></div>
+														</div>
+														<div class="clear"></div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>
+									</li>
+								<li id="buy"><a title="Buy"	href="<?php echo $this->Url('package');?>" class="brand" style="outline: medium none;">Buy</a></li>
+                             </ul>
+                       	</div>
+					</div>
+    			</div>
+                                          
+                                            </div>
+                                        </div>
+                                   
+                        </section>
+</nav>
+
+<script type="text/javascript">
+    function calldashboard(role)
+    {
+        location.href="<?php echo $this->Url('zfcuser/user-dashboard'); ?>/"+role;
+    }
+    </script>

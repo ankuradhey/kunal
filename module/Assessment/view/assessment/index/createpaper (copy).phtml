@@ -1,0 +1,276 @@
+<?php 
+echo $this->headScript()->appendFile($this->basePath() . '/editor/ckeditor.js')
+                        ->appendFile($this->basePath() . '/editor/adapters/jquery.js')
+                        ->appendFile($this->basePath() . '/editor/_samples/sample.js');
+echo $this->headLink()->prependStylesheet($this->basePath() . '/editor/_samples/sample.css');
+
+
+?>
+<script type="text/javascript">
+
+$(function()
+{
+    var config = {
+        toolbar:[
+         ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ],
+        ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','Subscript', 'Superscript','RemoveFormat'],
+         ['UIColor'],[ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ]
+        ],
+        height: 100  
+    };
+    $('.jquery_ckeditor').ckeditor(config);
+});
+
+
+
+$(document).ready(function() {
+var i = 1;
+
+$(".addmore").click(function(){
+           i++;			 
+$('<ul class="create_paper_ul" id="ques_'+i+'"><li><label>Question</label><a style="position:absolute; right:2px; top:2px;" href="javascript:void(0)" onclick="deleteques('+i+');"><img src="<?php echo $this->cdn(); ?>/images/close_button_hover.png" height="12px" alt="Delete Question" title="Delete Question" border="0" /></a><textarea id="ques['+i+'][ques]" name="ques['+i+'][ques]" cols="" class="self_textarea jquery_ckeditor" rows=""></textarea></li> <li><label>Marks</label><span class="width5">:</span><input id="ques['+i+'][marks]" name="ques['+i+'][marks]" type="text" class="marks"/></li></ul>').appendTo($("#self"));
+
+  var config = {
+        toolbar:[
+         ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ],
+        ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','Subscript', 'Superscript','RemoveFormat'],
+         ['UIColor'],[ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ]
+        ],
+        height: 100  
+    };
+    $('.jquery_ckeditor').ckeditor(config);
+   });
+ });
+
+
+
+
+
+function deleteques(id){
+$("#ques_"+id).remove();
+}
+
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#self_btn").click(function(){
+	$(".lms-container").hide(1000);
+      $(".self-container").show(1000);
+	});
+	$("#lms_btn").click(function(){
+	$(".self-container").hide(1000);
+    $(".lms-container").show(1000);
+	});
+}); 
+</script>
+<?php if(isset($_SESSION['user']['userId']) && $_SESSION['user']['userId']!=""){?>
+<link type='text/css' rel='stylesheet' href="<?php echo $this->cdn() ?>/css/notes.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->cdn() ?>/css/user_profile.css">
+<div class="main-containter">
+	<div class="sub-containter">
+		<?php echo $this->partial('account/account/profile-menu.phtml',array('page'=>'my-students'));?>
+		<div class="clearfix"></div>
+		<table cellpadding="0" cellspacing="0" width="100%" class="container-content">
+			<tbody>
+				<tr>
+					<?php echo @$this->partial('account/account/account-menu-common.phtml',array('boardname'=>$this->getuserdetails->board_name,'board_id'=>$this->getuserdetails->board_id,'classname'=>$this->getuserdetails->class_name,'class_id'=>$this->getuserdetails->class_id));?>
+					<td class="right-td" align="top">
+						<input type="hidden" value="nav_5" id="nav_find">
+						<div class="right-content">	
+							<!--<?php //if(count($this->addedStudents)==0){ ?>-->
+							
+							 <div class="editmentor_button"><a href="<?php echo $this->Url('mentor-signup');?>"><div class="editmentor_button_name">Edit Mentor</div></a></div>
+                                                        <div class="editmentor_button"><a href="<?php echo $this->Url('mypaper');?>"><div class="editmentor_button_name"> My Paper</div></a></div>	
+							<div style="clear:both;"></div>
+							<form method="post" action="<?php echo $this->url('assessmenthome', array(), NULL, TRUE);?>" name="createpaper" id="createpaper">
+					                <div class="mcq-view mcq-review">
+            <div class="mcq-title">
+              <div class="mcq-head">Create Papers</div>
+              <div class="clear">&nbsp;</div>
+            </div>
+            <div class="mcq-svres-table">
+              <div class="sub-heading">
+                
+                <div class="right">Marks
+                  <input name="marksadded" id="marksadded" type="text" value="0" class="marks first" />
+                  <input name="marksleft" id="marksleft" type="text" value="100" class="marks" />
+                </div>
+                <div style="clear:both;"></div>
+              </div>
+            </div>
+            <div class="singleview-res-cntr">
+              <div class="singleview-res-cntr-child">
+                <div class="singleview-res-cntr-left">
+                  <ul class="create_paper_ul">
+                    <li>
+                      <label>Student Name</label>
+                      <span class="width5">:</span><?php echo $userName; ?></li>
+                    <li>
+                      <label>Class</label>
+                      <span class="width5">:</span><?php echo $className; ?><input type="hidden" name="classId" id="classId" value="<?php echo $classId; ?>" /></li>
+                    <li>
+                      <label>Subject</label>
+                      <span class="width5">:</span><?php echo $subjectName; ?><input type="hidden" name="subjectId" id="subjectId" value="<?php echo $subjectId; ?>" /></li>
+                    <li>
+                      <label>Date</label>
+                      <span class="width5">:</span><?php echo date('d-m-Y');?></li>
+                    <li>
+                      <label>Paper Name</label>
+                      <span class="width5">:</span>
+                      <input type="text" class="inputfeild" name="mentor_paper_name" id="mentor_paper_name" required/>
+                    </li>
+                    <li>
+                      <label>Marks</label>
+                      <span class="width5">:</span>
+                      <input type="text" class="marks" name="mentor_paper_marks" id="mentor_paper_marks" required />
+                    </li>
+                    <li>
+                      <label>Time</label>
+                      <span class="width5">:</span>
+                          <select name="mentor_paper_hour" id="mentor_paper_hour" style="width:150px">
+                        <?php for($a=0;$a<24; $a++)
+                                        {
+                                            if($a<10)
+                                            {
+                                                $a = '0'.$a;
+                                            }
+                                            ?>
+                        <option value="<?php echo $a; ?>"><?php echo $a; ?></option>
+                        <?php
+                                        }
+                                        ?>
+                      </select>
+                      hh
+                      <select name="mentor_paper_minute" id="mentor_paper_minute" style="width:150px">
+                        <?php for($m=0;$m<60; $m++)
+                                        {
+                                            if($m<10)
+                                            {
+                                                $m = '0'.$m;
+                                            }
+                                            ?>
+                        <option value="<?php echo $m; ?>"><?php echo $m; ?></option>
+                        <?php
+                                        }
+                                        ?>
+                      </select>
+                      mm
+
+                    </li>
+                    <li>
+                      <label>Question Source</label>
+                      <span class="width5">:</span><a href="javascript:void(0)" class="gray_btn" id="self_btn">Self</a> <a href="javascript:void(0)" class="gray_btn" id="lms_btn">LMS</a> </li>
+                  </ul>
+                  <div style="clear:both;"></div>
+                  <div class="self-container" style="display:none;">
+                    <div class="sub-heading">
+                      <div class="text18 left">Self Question Source</div>
+             <div class="right"><a href="javascript:void(0)" class="addmore"><img src="<?php echo $this->cdn() . '/images/scrll_add_icon2.png' ?>" alt="Add Question" title="Add Question" border="0" /></a></div>
+
+
+                      <div style="clear:both;"></div>
+                    </div>
+                    <div id="self">
+                       
+                      <ul class="create_paper_ul" id=ques_1>
+                        <li>
+                          <label>Question</label>
+                         
+                          <textarea id="ques[0][ques]" name="ques[0][ques]" cols="" class="self_textarea jquery_ckeditor" rows="3" cols="4"></textarea>
+                          
+                        </li>
+                        <li>
+                          <label>Marks</label>
+                          <span class="width5">:</span>
+                          <input id="ques[0][marks]" name="ques[0][marks]" type="text" class="marks" />
+                        </li>
+                      </ul>
+                    </div>
+                    <div style="clear:both;"></div>
+                  </div>
+                  <div class="lms-container" style="display:none;">
+                    <div class="sub-heading">
+                      <div class="text18 left">LMS Question Source</div>
+                      <!--<div class="right">Question Marks <select name="">
+                        <option>2</option>
+                      </select></div>-->
+                      <div style="clear:both;"></div>
+                    </div>
+                    <div id="lms">
+                      <table class="mcqTable">
+                        <tr>
+                          <th width="10%" align="left"> <div class="mcq02-radiocont">
+                              <input type="checkbox" name="chapter-select1" id="check1" class="subcheck-checkbox1">
+                              <label for="check1" class="subcheck-label1"></label>
+                            </div>
+                          </th>
+                          <th width="65%" align="left">Question</th>
+                          <th width="10%" align="left">Marks</th>
+                          <th width="15%" align="left">Action</th>
+                        </tr>
+                        
+                       <?php 
+                      foreach($questionList as $questions)
+                      { 
+                       ?>   
+                        <tr>
+                          <td align="left"><div class="mcq02-radiocont">
+                              <input type="checkbox" name="chapter-select4" id="check4" class="subcheck-checkbox1">
+                              <label for="check4" class="subcheck-label1"></label>
+                            </div></td>
+                          <td align="left"><?php echo html_entity_decode(stripslashes($questions->question));?></td>
+ <td align="left"><input type="text" name="mentor_question_marks" id="mentor_question_marks" value="<?php echo $questions->question_marks; ?>" /></td>
+                          <td align="left"><a href="">View Questions</a></td>
+                        </tr>
+                     <?php 
+                     } ?>   
+                        
+                     </table>
+                    </div>
+                    <div style="clear:both;"></div>
+                  </div>
+                  
+                 
+                  
+                </div>
+                
+              </div>
+              
+            </div>
+            <div class="clear">&nbsp;</div>
+             <div class="footer_btn"> <input type="submit" class="commanBtn" name="create" value="Create" />&nbsp;&nbsp;  <input type="button" class="commanBtn" name="preview" value="Preview" class="commanBtn"/></div>
+          </div>
+							</div>						
+							<!--<?php //}?>-->
+							<div class="clear_spacer30">&nbsp;</div>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>		
+	</div>
+</div>
+
+<?}else{?>
+	<script>
+		window.location="<? echo $this->url('home');?>"
+	</script>
+<?}?>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-43091346-1', 'devzone.co.in');
+  ga('send', 'pageview');
+ 
+</script>
+

@@ -1,0 +1,151 @@
+<style>
+.video_btns a {
+	display: block;
+	padding: 5px;
+	background: #272959;
+	float: left;
+	margin: 5px 5px 0 0;
+	color: #fff !important;
+	font-size: 12px;
+}
+.video_btns .active {
+	background: #F39A22;
+	color: #272959;
+}
+.video_btns a:hover {
+	background: #F39A22;
+	color: #272959;
+}
+</style>
+<script src="<?php echo $this->basePath() ?>/js/website/scroller.js"></script>
+<script> 
+ $(window).load(function(){
+                        $(".scrollcontent").mCustomScrollbar({
+                                theme:"minimal"
+                        });
+                });        
+</script>
+<div id="content" class="globalwhitebg">
+  <div class="container">
+    <section class="row marginbot20">
+      <div class="cap-breadscum"><a href="<?php echo $this->Url('home')?>" class="breadcrum">&nbsp;</a> &raquo; <span> <a href="<?php echo $this->Url('school-solutions')?>">School Solution</a> &raquo;  Smart Learn Class</span></div>
+      <div id="row1">
+        <div class="col-sm-4">
+          <div class="pdding5"></div>
+          <div class="staticLeftimg"><img src="<?php echo $this->cdn() ?>/images/website/school-solution/smartlearnclass.png" /></div>
+          <div class="textbig">
+            <h3>Technology Enabled Virtual Classroom</h3>
+          </div>
+          <div class="contactfordem">To Schedule a demo <a href="http://erphelpdesk.extramarks.com/helpdeskserp/?site_topic=SCH" target="_blank">Click here <img  src="<?php echo $this->cdn() ?>/images/website/school-solution/click_arrow.png" /></a></div>
+          <div class="track-feedback"> <a href="http://erphelpdesk.extramarks.com/helpdeskserp/?action=trackTicket" target="_blank">Track your ticket</a></div>
+        </div>
+        <div class="col-sm-5">
+          <div class="pdding5">
+            <h3 class="font18">Smart Learn Class</h3>
+          </div>
+          <div class="text1 scrollcontent"> Extramarks digital classrooms have undeniably become the most effectively used learning
+            solutions in a short span of time, due to the innovative content, layered structure and pedagogy,
+            for which it has been awarded and appreciated at different forums.
+            <p>Extramarks Smart Learn Classes have exposed the students to 21st century learning-teaching
+              environment. By amalgamating state-of-the-art infrastructure and professionally developed
+              content, Extramarks virtual Classes transform the conventional classrooms to an advanced
+              student-centric online learning environment. The learning solutions are created by well
+              experienced teachers with illustrious teaching background. Extramarks is currently present in
+              more than 5,000 schools across India and Abroad.</p>
+            <h2>Extramarks Content for classrooms includes:</h2>
+            <div class="cap-content" >
+              <ul type="circle">
+                <li>Smart Learning Modules</li>
+                <li>Mind maps</li>
+                <li>Formative discussions and High Order Thinking Skills (HOTS) Discussion Platforms</li>
+                <li>Virtual Labs</li>
+                <li>Assessment Centre</li>
+                <li>Interactive Concept Adventure with Animations</li>
+                <li>Game-based Support Activities</li>
+                <li>Test Centre</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="pdding5">
+            <h3></h3>
+          </div>
+          <ul class="feature">
+            <li class="feature7" id="hardwarebtn"><a href="javascript:void(0);" onClick="showhardware()">&nbsp;</a></li>
+            <li class="feature8" id="softwarebtn"><a href="javascript:void(0);" onClick="showsoftware()">&nbsp;</a></li>
+          </ul>
+          <div style="clear:both;"></div>
+          <div id="video-part1" style="height: 200px;width:100%; position: relative;"> </div>
+          <script type="text/javascript">
+    $runRightBarVideos = null;
+    $player=null;
+    var rightBarVideoArray = new Array();
+    rightBarVideoArray.push({"url": "<?php echo $this->cdn() ?>/uploads/staticvideo/hardware1.mp4", "ticker": "<?php echo $this->cdn() ?>/uploads/staticvideo/hardware1-cover.jpg", "index": 0});
+    rightBarVideoArray.push({"url": "<?php echo $this->cdn() ?>/uploads/staticvideo/hardware2.mp4", "ticker": "<?php echo $this->cdn() ?>/uploads/staticvideo/hardware2-cover.jpg", "index": 1});
+    rightBarVideoArray.push({"url": "<?php echo $this->cdn() ?>/uploads/staticvideo/software1.mp4", "ticker": "<?php echo $this->cdn() ?>/uploads/staticvideo/software1-cover.jpg", "index": 2});
+    rightBarVideoArray.push({"url": "<?php echo $this->cdn() ?>/uploads/staticvideo/software2.mp4", "ticker": "<?php echo $this->cdn() ?>/uploads/staticvideo/software2-cover.jpg", "index": 3});
+   
+    $(document).ready(function() {
+        $PlayerFactory = new EmPlayerFactory("<?php echo $this->basePath() ?>/");
+        $runRightBarVideos=function(whichOne) {
+            if(whichOne==0){ $('#btn1').addClass('active');}else{ $('#btn1').removeClass('active');} if(whichOne==1){$('#btn2').addClass('active');}else{ $('#btn2').removeClass('active');} if(whichOne==2){$('#btn3').addClass('active')}else{ $('#btn3').removeClass('active');}  if(whichOne==3){$('#btn4').addClass('active');}else{ $('#btn4').removeClass('active');}
+            if (rightBarVideoArray && rightBarVideoArray.length > 0) {
+                if ($player) {
+                    $player.removePlayer();
+                    $player=null;
+                    $("#video-part1").html("");
+                }
+                $player = $PlayerFactory.createGenericVideoPlayer();                
+                $player.attachPDVideoPlayer(
+                        rightBarVideoArray[whichOne]["url"],
+                        "#video-part1",
+                        null,
+                        null,
+                        false,
+                        rightBarVideoArray[whichOne]["ticker"]
+                        );
+            }
+
+        };        
+        $runRightBarVideos(0);
+
+    });
+
+                    </script>
+          <div class="video_btns"> <a href="javascript:void(0)" id="btn1" style="display:block" onclick="$runRightBarVideos(0);">Walkthough</a> <a href="javascript:void(0)" id="btn2" style="display:block" onclick="$runRightBarVideos(1);">Interactive Board</a> <a href="javascript:void(0)" id="btn3" style="display:none" onclick="$runRightBarVideos(2);">Senior Content</a> <a href="javascript:void(0)" id="btn4" style="display:none" onclick="$runRightBarVideos(3);">Junior Content</a> </div>
+          <div id="software-part" style="display:none;">
+            <?php //echo $this->partial('application/index/software.phtml');?>
+          </div>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+    </section>
+    <style type="text/css">
+.fancybox-margin{margin-right:17px;} 
+.mCSB_container{ padding-right:10px;}
+</style>
+  </div>
+</div>
+<script type="text/javascript" src="js/jquery.fancybox.js"></script> 
+<script>
+ function showHideDiv(showId, hideId) {
+        $("#" + showId).show();
+        $("#" + hideId).hide();
+    }
+    function showsoftware(){
+        $runRightBarVideos(2);
+         $("#btn3").show();
+         $("#btn4").show();
+         $("#btn1").hide();
+         $("#btn2").hide();
+    }
+     function showhardware(){
+        $runRightBarVideos(0);
+         $("#btn1").show();
+         $("#btn2").show();
+         $("#btn3").hide();
+         $("#btn4").hide();
+    }
+
+</script> 

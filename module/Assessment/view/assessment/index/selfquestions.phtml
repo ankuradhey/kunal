@@ -1,0 +1,123 @@
+ <?php if($this->zfcUserIdentity()){
+echo $this->headScript()->appendFile($this->basePath() . '/editor/ckeditor.js')
+                        ->appendFile($this->basePath() . '/editor/adapters/jquery.js');
+echo $this->headLink()->prependStylesheet($this->basePath() . '/editor/_samples/sample.css');
+?>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+var counterId =  $('div.ques_container').length;
+var totalmarks = 0;
+ $("#addquestionbutton").click(function(){
+       counterId++;
+	        var source = $('#source').val();
+	        $('#papersource').val('add');
+	        totalmarks = parseInt($('#mentor_paper_marks').val());
+	        
+	         var ques =  CKEDITOR.instances['qData_0'].getData();
+	         //var ques = CKEDITOR.instances['qData_0'].document.getBody().getChild(0).getText() ;
+                 var marks = $('#qmarks_0').val();
+                
+                 if(ques == '' && marks == '')
+                 {
+                        alert('Please enter question and its marks.');
+                        return false;
+                 }
+                 else if(ques == '' || ques == "<br>")
+                 {
+                        alert('Please enter question.');
+                        return false;
+                 }
+                 else if(marks == '')
+                 {
+                       alert("please enter marks alloted for this question.");
+                       return false;  
+                 }
+                 else
+                 { 
+                        if(!marks.match(/^\d+$/))
+                        {
+                            alert("Marks should be numeric.");
+                            return false;    
+                        }
+                        else
+                        {
+                                 totalmarks = parseInt(parseInt(totalmarks)+parseInt(marks));
+                                 $('#mentor_paper_marks').val(totalmarks); // for updating the paper marks
+                                 
+                                 $('#movedquestionarea').append("<div class='ques_container' id='ques_"+counterId+"'><input type='hidden' name='ques["+counterId+"][ques]' value='"+ques+"'><input type='hidden' name='ques["+counterId+"][marks]' value='"+marks+"'><input type='hidden' name='ques["+counterId+"][questionsource]' value='"+source+"'><a class='ques_close' href='javascript:void(0);' onclick='deleteques("+counterId+", "+marks+");'><img src='<?php echo $this->cdn(); ?>/images/website/close_button_hover.png' height='12px' alt='Delete Question' title='Delete Question' border='0'></a><span style='display:inline-block; width:84%;'><span style='margin-right:5px; font-weight:bold;'>Ques .</span>"+ques+"</span><span class='ques_marks'>("+marks+" marks)</span></div>");
+                               
+                                CKEDITOR.instances['qData_0'].setData( '' );
+                                $('#qmarks_0').val('');
+                          }
+                  }
+               
+       });
+
+
+ });
+
+
+
+
+
+function deleteques(id, marks){
+        $("#ques_"+id).remove();
+        totalmarks = parseInt($('#mentor_paper_marks').val());
+        updatedmarks = parseInt(totalmarks - parseInt(marks));
+        $('#mentor_paper_marks').val(updatedmarks);
+}
+
+</script> 
+<div class="self-container">
+<input type="hidden" name="source" id="source" value="self" />
+<div class="sub-heading">
+                      <div class="text18 left">Add Question</div>
+             <!--<div class="right"><a href="javascript:void(0)" class="addmore"><img src="<?php echo $this->cdn() . '/images/website/scrll_add_icon2.png' ?>" alt="Add Question" title="Add Question" border="0" /></a></div>-->
+
+
+                      <div style="clear:both;"></div>
+                    </div>
+                    <div id="self">
+                       
+                      <ul class="create_paper_ul selfquestiondiv" id=ques_1>
+                        <li>
+                          <label>Question<span class="staricon">*</span></label>
+                         
+                          <textarea id="qData_0" name="qData_0" cols="" class="self_textarea" rows="3" cols="4"></textarea>
+                          
+                        </li>
+                        <li>
+                          <label>Marks<span class="staricon">*</span></label>
+                          <span class="width5">:</span>
+                          <input id="qmarks_0" name="qmarks_0" type="text" class="marks" maxlength="3" />
+                        </li>
+                        
+                      </ul>
+                    </div>
+                    <div style="text-align:center; margin-bottom:10px ">
+                   <input type="button" id="addquestionbutton" name="addquestionbutton" class="btn btn-primary" name="Add question" value="Add question" /></div>
+                    <div style="clear:both;"></div>
+                  </div>
+                  
+                 
+               
+              
+ <script type="text/javascript">
+    
+    var editor=CKEDITOR.replace('qData_0', 
+                                { toolbar:[
+         ['Source', 'Templates' ],
+         ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Unlink','Subscript', 'Superscript','RemoveFormat'],
+         ['UIColor'],[ 'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar' ]
+        ],height:100
+
+                      });
+    CKFinder.setupCKEditor( editor, '<?php echo $this->basePath() ?>/editor/ckfinder/' );			
+</script>
+<?php }else{ ?>
+	<script>
+		window.location="<? echo $this->url('home');?>"
+	</script>
+<?php }?> 

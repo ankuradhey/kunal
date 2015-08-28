@@ -1,0 +1,360 @@
+<?php echo $this->doctype(); ?>
+<head>
+    <meta charset="utf-8">
+    
+      <?php //echo $this->MetaTagsWidget(); ?>
+      <?php echo $this->UserTrackerWidget(); ?>
+    <?php
+    $this->basePath = $this->basePath();
+    ?>
+   <?php  $filepath=@split("module", __FILE__); 
+	$extramarkcss=$filepath[0]."public/css/extramark.css"; 
+	$responsivecss=$filepath[0]."public/css/responsive.css";
+	$democss=$filepath[0]."public/css/demo.css";
+	$modalPopupcss=$filepath[0]."public/css/modalPopup.css";
+	$user_profilecss=$filepath[0]."public/css/user_profile.css";
+	$jqueryfancyboxcss=$filepath[0]."public/css/jquery.fancybox.css";
+	$scrollercss=$filepath[0]."public/css/scroller.css";
+	$owlcarouselcss=$filepath[0]."public/css/buy_slider/owl.carousel.css";
+	$owlthemecss=$filepath[0]."public/css/buy_slider/owl.theme.css";
+	$fontawesomemincss=$filepath[0]."public/css/font-awesome.min.css";
+	$tabcontentcss=$filepath[0]."public/css/tabcontent.css";
+    $jquery_1_9_1_minjs=$filepath[0]."public/js/jquery-1.9.1.min.js";
+	$jquery_cookiejs=$filepath[0]."public/js/jquery.cookie.js"; 
+	$owl_carouseljs=$filepath[0]."public/js/owl.carousel.js"; 
+	$jquery_fancyboxjs=$filepath[0]."public/js/jquery.fancybox.js"; 
+	$jquery_fancybox_packjs=$filepath[0]."public/js/jquery.fancybox.pack.js"; 
+	$jquery_mCustomScrollbar_concat_minjs=$filepath[0]."public/js/jquery.mCustomScrollbar.concat.min.js";
+	$customjs=$filepath[0]."public/App/js/custom.js"; 
+	$em_player_factoryjs=$filepath[0]."public/js/libs/em/em_player_factory.js"; 
+	$extramarkjs=$filepath[0]."public/js/extramark.js"; 
+	?>
+    <!-- Le styles -->
+    <?php
+    echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->cdn() . '/images/favicon.ico'))
+            ->appendStylesheet($this->cdn() . '/css/extramark.css?'.filemtime($extramarkcss))
+            ->appendStylesheet($this->cdn() . '/css/responsive.css?'.filemtime($responsivecss))
+            ->appendStylesheet($this->cdn() . '/css/demo.css?'.filemtime($democss))
+            ->appendStylesheet($this->cdn() . '/css/modalPopup.css?'.filemtime($modalPopupcss))
+            ->appendStylesheet($this->cdn() . '/css/user_profile.css?'.filemtime($user_profilecss))
+            ->appendStylesheet($this->cdn() . '/css/jquery.fancybox.css?'.filemtime($jqueryfancyboxcss))
+            ->appendStylesheet($this->cdn() . '/css/scroller.css?'.filemtime($scrollercss))
+			->appendStylesheet($this->cdn() . '/css/buy_slider/owl.carousel.css?'.filemtime($owlcarouselcss))
+			->appendStylesheet($this->cdn() . '/css/buy_slider/owl.theme.css?'.filemtime($owlthemecss))
+            ->appendStylesheet($this->cdn() . '/css/font-awesome.min.css?'.filemtime($fontawesomemincss))
+             ->appendStylesheet($this->cdn() . '/css/tabcontent.css?'.filemtime($tabcontentcss));
+    ?>
+    <!-- Scripts -->
+      <script>
+        var BASE_URL = "<?php echo $this->basePath; ?>";
+        var notesUrl = BASE_URL;   
+        var commentsUrl = BASE_URL;
+       
+
+    </script>
+    <?php
+    echo $this->headScript()
+            ->appendFile($this->basePath . '/js/jquery-1.9.1.min.js?'.filemtime($jquery_1_9_1_minjs))
+            ->appendFile($this->basePath . '/js/jquery.cookie.js?'.filemtime($jquery_cookiejs))
+			->appendFile($this->basePath . '/js/owl.carousel.js?'.filemtime($owl_carouseljs))
+            ->appendFile($this->basePath . '/js/jquery.fancybox.js?'.filemtime($jquery_fancyboxjs))
+            ->appendFile($this->basePath . '/js/jquery.fancybox.pack.js?'.filemtime($jquery_fancybox_packjs))
+            ->appendFile($this->basePath . '/js/jquery.mCustomScrollbar.concat.min.js?'.filemtime($jquery_mCustomScrollbar_concat_minjs))
+            ->appendFile($this->basePath . '/App/js/custom.js?'.filemtime($customjs))
+            ->appendFile($this->basePath . '/js/libs/em/em_player_factory.js?'.filemtime($em_player_factoryjs))
+            ->appendFile($this->basePath . '/js/extramark.js?'.filemtime($extramarkjs));
+       
+    ?>
+
+  
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#country_name").change(function() {
+
+                var country_code = $("#country_name").val();
+                $('#imagechange').attr('src', '<?php echo $this->cdn() ?>/images/flags/' + country_code + '_32.png');
+            });
+            $(".study").click(function() {
+                $("#boardclasscontainer").show();
+            });
+            $(".lavel2").click(function() {
+                $('.popover-title').html($(this).html()); //For setting d Board Title
+                $.ajax({type: 'POST',
+                    url: BASE_URL + "/lms/index/containerlist/" + $(this).attr('id'),
+                    // data: {rack_container_id: $(this).attr('id')},
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#classes').html('');
+                        var i = 0;
+                        var check2 = false;
+                        var j = 0;
+                        var classToUse = '';
+                        var classEven = 'sub-hdlft1';
+                        var classOdd = 'sub-hdlft2';
+                        var flag = true;
+
+                        $.each(data.options, function(key, obj)
+                        {
+                            if (check2)
+                            {
+                                if (j == 0 && j % 4 == 0)
+                                {
+                                    classEven = 'sub-hdlft2';
+                                    classOdd = 'sub-hdlft1';
+                                }
+                                else if (j % 4 == 0)
+                                {
+                                    if (flag)
+                                    {
+                                        classEven = 'sub-hdlft1';
+                                        classOdd = 'sub-hdlft2';
+                                        flag = false;
+                                    }
+                                    else
+                                    {
+                                        classEven = 'sub-hdlft2';
+                                        classOdd = 'sub-hdlft1';
+                                        flag = true;
+                                    }
+                                }
+                                if (j % 2 == 0)
+                                    classToUse = classEven;
+                                else
+                                    classToUse = classOdd;
+                                j++;
+                            }
+
+                            if (i == 0)
+                                classToUse = 'sub-lfthd';
+                            if (i == 1) {
+                                classToUse = 'sub-rhthd';
+                                check2 = true;
+                            }
+                            i++;
+                            $(".board_listing ul li:odd").css("background-color", "#5484f7");
+                            $('#classes').append('<div name="class_div" class="' + classToUse + '"><a href="' + BASE_URL + '/website/index/dashboard/' + obj.rack_id + '">' + obj.rack_name + '</a></div>');
+
+                        }
+
+                        )
+
+                    }
+                });
+
+
+                $(".class_listing").show();
+                $(".boardback").show(1000);
+                $(".board_listing").animate({width: "0", }, 500);
+                $(".class_listing").animate({marginLeft: "30px"}, 500);
+            });
+
+            $(".boardback").click(function() {
+                $(".board_listing").animate({width: "200px", }, 500);
+                //                    $('#classes').children().remove();
+                $('[name=class_div]').remove();
+                $(".class_listing").hide(500);
+            });
+
+            $("#mainSubjectBlockList").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+        });
+        $(window).load(function()
+        {
+            //alert('mcustom');
+
+        });
+    </script>
+     <script type="text/javascript">
+  var _gaq = _gaq || [];
+//  _gaq.push(['_setAccount', 'UA-2851024-1']);
+  _gaq.push(['_setAccount', 'UA-57172380-1']);
+
+   _gaq.push(['_setCustomVar',
+              1,                   // This custom var is set to slot #1.  Required parameter.
+              'Gender',     // The name acts as a kind of category for the user activity.  Required parameter.
+              'Male',               // This value of the custom variable.  Required parameter.
+              2                    // Sets the scope to session-level.  Optional parameter.
+        ],
+        ['_setCustomVar',
+              2,                   // This custom var is set to slot #1.  Required parameter.
+              'Gender',     // The name acts as a kind of category for the user activity.  Required parameter.
+              'Female',               // This value of the custom variable.  Required parameter.
+              1                    // Sets the scope to session-level.  Optional parameter.
+        ]
+     );
+ _gaq.push(['_trackEvent',
+      'Shopping', // category of activity
+      'Item Removal', // Action
+   ]);
+     _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1384140601806542&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-K3M4SN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K3M4SN');
+</script>
+<!-- End Google Tag Manager -->
+
+    <div id="header-wrapper">
+
+
+<?php echo $this->render('layout/header.phtml'); {
+    ?>
+            <?php echo $this->NavLoginWidget(); ?>
+        <?php } ?>  
+
+    </div>
+    <!--login popup-->
+    <div id="overlay" class="overlay"></div>
+    <div id="overlay_logins" class="overlay_logins"></div>
+    <div id="subject_box" style="display: none;">
+    </div>
+    <div id="login_banner">
+        <div id="register-box" class="register-box">
+            <div class="register-contbox">
+               <!-- <form method="post" name="loginForm" id="loginForm" action="javascript:void(0)">-->
+                    <h1>Login <a onClick="closePopup()" id="close_button" href="JavaScript:void(0)"></a></h1>
+                    <div id="Login-Social">
+                        <ul>
+                            <li> <a onClick="window.location = '<?php echo $this->basePath(); ?>/user/login/facebook'" href="javascript:void(0);" id="Login-Facebook" title="Sign In via Facebook"> <span>Facebook</span> </a> <span>Facebook</span> </li>
+                            <li> <a onClick="window.location = '<?php echo $this->basePath(); ?>/user/login/twitter'" href="javascript:void(0);" id="Login-Twitter" title="Sign In via Twitter"> <span>Twitter</span> </a> <span>Twitter</span> </li>
+                            <li> <a onClick="window.location = '<?php echo $this->basePath(); ?>/user/login/google'" href="javascript:void(0);" id="Login-Google" title="Sign In via Google"> <span>Google</span> </a> <span>Google</span> </li>
+                        </ul>
+                    </div>
+
+                    <?php echo $this->zfcUserLoginWidget(); ?>
+                    <?php 
+                        /*----Ashutosh----(after register redirection for custom pages)*/
+                        $uri = $_SERVER['REQUEST_URI'];
+                        //$controller = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('controller', 'index');
+                        //$action = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('action', 'index'); 
+                        if(strpos($uri,'career-assessment-program') != ''){
+                            $loginRedirect = '/cap-package';
+                        }else if(strpos($uri,'cap-package') != '' || strpos($uri,'career-counseling-test') != ''){
+                            $loginRedirect = '/cap-package';
+                        }else if(strpos($uri,'sat-exam-preparation') != ''){
+                            $loginRedirect = '/diagnostic';
+                        }else if(strpos($uri,'sat') != '' || strpos($uri,'vocabularybooster') != '' || strpos($uri,'fulllengthtest') != '' 
+                                || strpos($uri,'performancetracker') != '' || strpos($uri,'practiceexercises') != ''){
+                            $loginRedirect = '/diagnostic';
+                        }else{
+                            $loginRedirect = '';
+                        }
+                    ?>
+
+                    <span id="loginFailed" class="valid-error"></span>
+                    <div class="join-text">Not a member? &nbsp;&nbsp;<a tabindex="4" href="<?php echo $this->basePath(); ?>/user/register<?php echo $loginRedirect;?>">Join Now</a><br>
+                    </div>
+                    <span style="display:none;float:left; margin-top:30px;" id="loadding"><img src="<?php echo $this->cdn(); ?>/images/loader16.gif" alt="loader" tabindex="7"></span>
+                    <div class="log-butbg"> <a tabindex="6" href="javascript:void(0);" onClick="return validateLogin();" class="signin">
+                            <div class="singins">LOG IN</div>
+                        </a> </div>
+                    <div class="join"><a tabindex="5" class="forgot_password"  href="javascript:void(0);" onClick="getPopupForms('forgot');">Forgot password?</a></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="forgot_banner">
+    </div>
+    <!--register popup-->
+
+    <script>
+$(document).ready(function() {
+    $(".iconn").click(function() {
+        $(".notifi_box_arrow").toggle();
+        $(".notifi_box").toggle();
+        $(".blank_div").toggleClass("blank_div_show");
+        $("#notifiBox").toggleClass("highlight_zindex");
+        $(".dropdown-menu").hide().toggleClass("highlight_zindex");
+    });
+    $(".blank_div").click(function() {
+        $(".notifi_box_arrow").hide();
+        $(".notifi_box").hide();
+        $(".dropdown-menu").hide().removeClass("highlight_zindex");
+        $(".blank_div").hide();
+        $("#notifiBox").removeClass("highlight_zindex");
+    });
+});
+    </script>
+    <!--register popup end-->
+<?php
+echo $this->content;
+echo $this->render('layout/footer.phtml');
+?>
+    <script type="text/javascript" src="<?php echo $this->basePath; ?>/js/jquery.menu-aim.js"></script>
+    <script type="text/javascript" src="<?php echo $this->basePath; ?>/js/menu.js"></script>
+    <script>
+        $(".navbar #cbse .popover").css("display", "block");
+        $(".navbar .nav > li > a").hover(function() {
+            var e = $(window).width();
+            if (e <= 979) {
+                $(".navbar .popover").css("left", "117px");
+                $(".navbar .popover").css("top", "0px")
+            } else {
+                $(".navbar .popover").css("left", "137px");
+                $(".navbar .popover").css("top", "0px")
+            }
+        });
+        $(window).resize(function() {
+            var e = $(window).width();
+            if (e <= 979) {
+                $(".navbar .popover").css("left", "117px");
+                $(".navbar .popover").css("top", "0px")
+            } else {
+                $(".navbar .popover").css("left", "137px");
+                $(".navbar .popover").css("top", "0px")
+            }
+        })
+        $(".nav > li > a").css("outline", "none");
+    </script>
+    <div class="blank_div">&nbsp;</div>
+    <div class="backbase_transform">&nbsp;</div>
+
+<!--Facebook remarking code -->
+<script type="text/javascript">
+   adroll_adv_id = "IUKRJ2XKQFAG3MORH7SGRO";
+   adroll_pix_id = "PN5SB5J4UZAA5EW6GZ2QID";
+   (function () {
+   var oldonload = window.onload;
+   window.onload = function(){
+      __adroll_loaded=true;
+      var scr = document.createElement("script");
+      var host = (("https:" == document.location.protocol) ?
+   "https://s.adroll.com" : "http://a.adroll.com");
+      scr.setAttribute('async', 'true');
+      scr.type = "text/javascript";
+      scr.src = host + "/j/roundtrip.js";
+      ((document.getElementsByTagName('head') || [null])[0] ||
+
+   document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+      if(oldonload){oldonload()}};
+   }());
+   </script>
+
+</body>
+</html>

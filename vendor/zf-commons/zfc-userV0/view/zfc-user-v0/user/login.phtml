@@ -1,0 +1,92 @@
+<?php
+$form = $this->loginForm;
+$form->prepare();
+$form->setAttribute('action', $this->url('zfcuser/login'));
+$form->setAttribute('class', 'form-horizontal');
+$form->setAttribute('method', 'post');
+?>
+<div class="modal-body">
+<?php
+echo $this->form()->openTag($form)
+?>
+
+    <div class="form-group clearfix">
+        <?php //echo $this->formLabel($form->get('identity')) ?>
+        <label for="usernameLogin" class="col-sm-2 control-label">Email or Username<sup>*</sup></label>
+        <div class="col-sm-10 padd-right">
+        <?php echo $this->formInput($form->get('identity')) ?>
+            <!-- <input type="text" onKeyPress="loginSubmit(event);" placeholder="Please enter your email address" id="usernameLogin" name="usernameLogin" tabindex="1" value="">
+            --><span id="errorusernameLogin" class="valid-error"></span> 
+        </div>
+    </div>
+    <div class="form-group password">
+        <?php //echo $this->formLabel($form->get('credential')) ?>
+        <label for="passwdLogin" class="col-sm-2 control-label">Password<sup>*</sup></label>
+        <div class="col-sm-10 padd-right">
+        <?php echo $this->formInput($form->get('credential')) ?>
+            <!-- <input type="password" onKeyPress="loginSubmit(event);" placeholder="Please enter your password" id="passwdLogin" name="passwdLogin" tabindex="2" value="">
+            --><span id="errorpasswdLogin" class="valid-error"></span> 
+        </div>
+    </div>
+    <?php echo $this->formInput($form->get('redirect')) ?>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="css-checkbox1" id="checkboxG1" name="checkboxG1"> <strong>Remember me</strong>
+                </label>
+            </div>
+        </div>
+    </div>
+
+<?php //echo $this->form()->closeTag()  ?>
+</div>
+  <?php 
+    $uri = $_SERVER['REQUEST_URI'];
+    if (strpos($uri, 'career-assessment-program') != false) {
+        $redirectURL = '/career-assessment-program';
+    } else if (strpos($uri, 'cap-package') != '') {
+        $redirectURL = '/cap-package';
+    } else if (strpos($uri, 'sat-exam-preparation') != '') {
+        $redirectURL = '/sat-exam-preparation';
+    } else if (strpos($uri, 'headerforzf1') != '') {
+        $redirectURL = '/sat-exam-preparation';
+    } else {
+        $redirectURL = '';
+    }
+    if($this->redirect != ''){
+      $this->redirect = '/'.$this->redirect;
+    }else if($this->redirect == '' && $redirectURL != ''){
+      $this->redirect = $redirectURL;
+    }
+  ?>
+<div class="modal-footer clearfix">
+<?php //if($this->enableRegistration) : ?>
+    <span id="loginFailed" class="valid-error" style="text-align: center;margin-bottom: 10px;color:red;"></span>
+    <div class="left-bottom">
+        <span><?php echo $this->translate('Not a member?'); ?><a href="<?php echo $this->basePath(); ?>/user/register<?php echo $this->redirect; ?>"><?php echo $this->translate('Join Now!'); ?></a></span>
+        <a data-whatever="@mdo" data-target="#exampleModalforget" data-toggle="modal" href="javascrip:;" class="forget-pass">Forgot password?</a>
+    </div>
+    
+       <div class="log-butbg" style="float: right;">
+           <span style="display:none;float:left; margin:9px 9px 0 0" id="loadding"><img src="<?php echo $this->basePath(); ?>/images/netLoader.gif" alt="loader" tabindex="7"></span>
+           <a tabindex="6" href="javascript:void(0);" onClick="return validateLogin();" class="btn btn-primary">
+           <div class="singins">LOG IN</div>
+    </a> </div>
+<?php //endif; ?>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var remember = $.cookie('remember');
+        if (remember == 'true')
+        {
+            var email = $.cookie('email');
+            var password = $.cookie('password');
+            // autofill the fields
+            $('#usernameLogin').val(email);
+            $('#passwdLogin').val(password);
+            $('#checkboxG1').attr('checked', true);
+        }
+    });
+</script>

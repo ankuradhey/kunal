@@ -1,0 +1,280 @@
+
+<?php 
+if(!empty($childData)){
+foreach ($childData as $child){ 
+   
+    $class_ids = $child->classId;
+ }
+}else{
+    $class_ids = '';
+}
+
+?>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/website/externals/angular.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/container_prog_easypiechart.js"></script>
+<script type="text/javascript">
+    var siteUrl = '<?php echo $this->basePath(); ?>';
+    //alert(siteUrl)
+    $(document).ready(function() {
+        $(".rightTabaccordion .accord-header").click(function() {
+            if ($(this).next("div").is(":visible")) {
+                $(this).next("div").slideUp("slow");
+            } else {
+                $(".rightTabaccordion .accord-content").slideUp("slow");
+                $(this).next("div").slideToggle("slow");
+            }
+        });
+
+        $(".accord-content ul li").click(function() {
+            $(".accord-contentli-submenu").toggle("slow");
+        });
+
+    });
+
+var class_id = "<?php echo $class_ids; ?>";
+//if(class_id ==''){
+// 
+//	$(".preloader").hide();
+//	$("#fadded-image").show();
+//        
+//	}
+
+</script>
+
+
+
+
+<!-- Facebook Conversion Code for Extramarks Registration -->
+<script>(function() {
+  var _fbq = window._fbq || (window._fbq = []);
+  if (!_fbq.loaded) {
+    var fbds = document.createElement('script');
+    fbds.async = true;
+    fbds.src = '//connect.facebook.net/en_US/fbds.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(fbds, s);
+    _fbq.loaded = true;
+  }
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', '6017846005253', {'value':'0.00','currency':'INR'}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6017846005253&amp;cd[value]=0.00&amp;cd[currency]=INR&amp;noscript=1" /></noscript>
+
+<!-- Facebook Conversion Code for Extramarks Registration -->
+<script>(function() {
+  var _fbq = window._fbq || (window._fbq = []);
+  if (!_fbq.loaded) {
+    var fbds = document.createElement('script');
+    fbds.async = true;
+    fbds.src = '//connect.facebook.net/en_US/fbds.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(fbds, s);
+    _fbq.loaded = true;
+  }
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', '6017846005253', {'value':'0.00','currency':'INR'}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6017846005253&amp;cd[value]=0.00&amp;cd[currency]=INR&amp;noscript=1" /></noscript>
+
+<div id="in-containerbg">
+
+    <div id="ProMiddle_pannel">  
+        
+        <div id="DashboardRight_pannel">
+            
+            <?php 
+//            if($this->countuserlog < 2)
+            if($this->welcome)
+            { ?>
+                <div class="welcomcontent">
+                <?php
+                if($this->usertypeid==1)
+                {
+                    global $freestudent;
+                    echo $freestudent;
+                }
+                else if($this->usertypeid==2)
+                {
+                  if($this->childcount>1)
+                  {
+                    // echo $this->partial('zfc-user/user/parentpopup.phtml',array('boardList' => $this->boardList , 'countries' => $this->countries ,'states' => $this->states ,'userCountryId' => $this->userCountryId , 'userStateId' => $this->userStateId ,'userCity' => $this->userCity,'userObj'=>$this->userObj));
+ 
+                  }  
+                   global $freeparent;
+                   echo $freeparent; 
+                }
+                else
+                {
+                    global $freeteacher;
+                    echo $freeteacher; 
+                }
+                // $_SESSION['user']['first_login'] = ''; 
+                //unset($_SESSION['user']['first_login']);
+                 
+            ?>
+                    </div>
+            <?php } else { ?>
+          
+      <?php if($this->usertypeid==2){
+          if($this->childcount<1)
+                  {
+                    // echo $this->partial('zfc-user/user/parentpopup.phtml',array('boardList' => $this->boardList , 'countries' => $this->countries ,'states' => $this->states ,'userCountryId' => $this->userCountryId , 'userStateId' => $this->userStateId ,'userCity' => $this->userCity,'userObj'=>$this->userObj));
+ 
+                  }  
+                            ?>
+               <!-- parent can show child report from here-->
+               <div style="min-height:350px;">
+               <div class="preloader overallloader" id="preloaderdiv"  style="display: block; top:20%;">
+             <img src="<?php echo $this->basePath()?>/images/loading_icon.gif" width="50">
+         </div>
+               <div ng-app="multiCoverageApp" style="max-height: 627px; overflow: auto; overflow-x: hidden;">
+                  <?php if(empty($class_ids)) { ?>
+                   <script>document.getElementById("preloaderdiv").style.display = "none"; </script>
+                  <div id="fadded-image" style="display:block;"><img width="753"  src="<?php echo $this->basePath() ?>/images/faded-progress-img.jpg"></div>
+                      <?php  } else {?>
+                  <div ng-include="'<?php echo $this->basePath().'/reportApp/templates/multiCoverageTemplate.html';?>'"> </div>
+                <?php } ?>
+               </div>
+               </div>
+               
+               <div id="twotables">
+        <div style="position:relative" class="schedule-boxbg" id="schedule_dsad">
+            <div style="display: none;" id="preloader_schedule" class="preloader">
+             <img  src="<?php echo $this->basePath(); ?>/images/website/loading.gif">
+         </div>
+            <div class="con-grp-box">
+                <h2>My package &frasl; Buy package</h2>
+                 <div class="schedule-graphs" style="min-height:80px;">
+                    <ul style="margin:10px; padding:0px;">
+                   <?php if(count($this->parentpkg)>0){ ?>  
+                   <?php foreach($this->parentpkg as $key=>$packages){ ?>  
+                    <li >
+                      <?php  echo $key+1;?>. <a href="<?php echo $this->URL('my-subscriptions');?>" style="font-size:14px !important; color:#272959; font-family:Arial, Helvetica, sans-serif;"><?php echo $packages->board.',('.$packages->class.'),'. $packages->package_name;?> </a>
+                     <span id="subwidget"> <?php 
+                    $key = $packages->actual_package_id;
+                    $key1 = $packages->package_syllabi_id;
+                        echo $this->SubjectdataWidget($key,'subscription', $key1); ?></span>
+                    </li>
+                   <?php } } else{ ?>
+                     <a href="<?php echo $this->URL('package');?>" style="font-size:14px !important; color:#272959; font-family:Arial, Helvetica, sans-serif;">Buy package </a>
+                   <?php }  ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div ng-click="mcqTestEligiblity(userType);" ng-class="senior" style="position:relative" class="schedule-boxbg ">
+           <div style="display: none;" id="preloader_test" class="preloader">
+              <img  src="<?php echo $this->basePath(); ?>/images/website/loading.gif">
+         </div>
+            <div class="con-grp-box">
+              <h2>Parents corner</h2>
+            <div class="schedule-graphs" style="min-height:80px;">
+                <ul style="margin:10px; padding:0px;">
+                  <li style="font-size:14px !important; color:#272959; font-family:Arial, Helvetica, sans-serif;">
+                     1. consolidate feedback
+                  </li>
+                  <li style="font-size:14px !important; color:#272959; font-family:Arial, Helvetica, sans-serif;">
+                     2. exam notification
+                  </li>
+                </ul>  
+             </div>
+        </div>
+     </div>
+  </div>      
+<!--                               <li>
+                                  
+                                  <?php if(count($childData) >'0'){
+                                    foreach ($childData as $child){ 
+                                      ?>
+                                   <a href="<?php //echo $this->basePath() ?>/report/index/coverage-report#coverage/<?php echo $child->user_id; ?>/<?php echo $child->classId; ?>" title="View your child progress"><img src="<?php echo $this->basePath() ?>/images/add-child_white.png"> <span>View your child progress</span></a>
+                               
+                                  <?php 
+                                   break;
+                                    }
+                                     
+                                    }else{?>
+                                   <a href="<?php //echo $this->URL('myChild');?>" onclick="addChildPopup(''); return false;"><img src="<?php echo $this->basePath() ?>/images/add-child_white.png"> <span>Add a child</span></a>
+                                    <?php }?>
+                              </li>  -->
+                              
+                      <?php  } else {?>
+<!--                          <li><a href="<?php //echo $this->URL('my-students');?>"><img src="<?php echo $this->basePath() ?>/images/add-child_white.png"> <span>Add Learner</span></a></li>-->
+            <?php }?>
+             <ul class="parent_section-ul">
+               <?php if($this->usertypeid==3){?> 
+                 <li><a href="<?php echo $this->URL('my-students');?>"><img src="<?php echo $this->basePath() ?>/images/add-child_white.png"> <span>Add Learner</span></a></li>
+             <li><a  onclick="menuHidden();" href="javascript:void(0);" data-toggle="dropdown" style="outline: medium none;" id="indian_boards" class="dropdown-toggle closes"><img src="<?php echo $this->basePath() ?>/images/Start-as-learner-icon.png"><span>Start As a Learner</span></a></li>
+              
+              <?php }else { ?>		 
+<!--               <li><a onclick="menuHide();" href="javascript:void(0);" data-toggle="dropdown" style="outline: medium none;" id="indian_boards" class="dropdown-toggle closes"><img src="<?php //echo $this->basePath() ?>/images/Start-as-learner-icon.png"><span>Start As a Learner</span></a></li>-->
+              <?php } ?>
+            
+            </ul> 
+                      <?php } ?>
+       </ul>               
+               
+		</div>
+
+      <div class="profileNotification">
+            <?php echo $this->NotificationWidget(); ?>
+            <?php echo $this->RightPanelWidget((isset($_SESSION['user']['user_type_role'])) ? $_SESSION['user']['user_type_role'] : '', $this->navigationarray); ?>    
+        </div> 
+        <?php //echo $this->ToggleNotificationWidget(); ?>
+        
+    </div>
+</div>
+
+<script>
+function menuHidden() {
+    if ($(".dropdown-menu").css('display') == 'block') {
+        $(".dropdown-menu").hide();
+        $(".blank_div").hide();
+        var data = {
+            userrole:0
+         }
+         changeUserRole(data);
+
+    } else {
+        $(".dropdown-menu").show().addClass("highlight_zindex");
+        $(".blank_div").show().removeClass("highlight_zindex");
+        var data = {
+            userrole:1
+         }
+          changeUserRole(data);
+    }
+}
+
+
+function changeUserRole(data) {
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->basePath(); ?>/user/changeuserrole',
+            data: data,
+            dataType: 'html',
+            async: false,
+            success: function(data) {//alert(data.key)
+               return true;
+            }
+        });
+    }
+
+</script>
+
+
+<!--<script type="text/javascript" src="<?php //echo $this->basePath(); ?>/js/divpopup/jquery.simplemodal.js"></script>-->
+<!--<link href="<?php //echo $this->basePath(); ?>/js/divpopup/basic.css" rel="stylesheet" type="text/css">-->
+<!--<link rel="stylesheet" type="text/css" href="<?php //echo $this->basePath(); ?>/css/buy_slider/owl.carousel.css">-->
+
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/website/externals/angular-route.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/website/externals/angular-sanitize.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/website/externals/underscore-min.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/container_prog_easypiechart.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/container_prog_carousel.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/container_prog_easypiechart.js"></script>
+<!--<script type="text/javascript" src="<?php //echo $this->basePath(); ?>/css/buy_slider/owl.carousel.js"></script>-->
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/container_prog_easySlider1.7.js"></script>
+
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/reportApp/js/controllers/multiCoverageController.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/reportApp/js/services/filter.js"></script>

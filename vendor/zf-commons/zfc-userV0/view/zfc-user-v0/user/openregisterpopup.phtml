@@ -1,0 +1,36 @@
+<?php
+if(!$this->zfcUserIdentity() && strpos('register',$_SERVER['REQUEST_URI']) === false ) {
+    // source 
+    $source = $this->source;
+    // referer
+    $referer = "$_SERVER[HTTP_REFERER]";
+    
+    // current page
+    $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $current_page = $referer;
+    
+    $boardListArr = $this->boardList();
+    $countryListArr = $this->CountryList();
+    ?>
+   
+       <style>
+         #regiterContainer{position: relative;}
+         .ui-autocomplete.ui-front{ z-index: 9999999 !important; width: 300px !important}
+/*         #exampleModalRegisterPopUp{ position: absolute !important; overflow-y:inherit;}*/
+         body.modal-open{ overflow: hidden}
+/*         .ui-autocomplete{position: fixed !important;}*/
+         #content.register-page{ background: none !important; }
+         button.Close-buttonreg{ display: block !important; color: #000; position: absolute; right: 8px; top: 12px; opacity:1;}
+       </style>
+
+
+    <?php
+    echo $this->zfcUserRegisterWidget( array('source' => $source ,
+                                            'referer' => $referer ,
+                                            'current_page' => $current_page ,
+                                            'boardList' => $boardListArr ,
+                                            'countryData' => $countryListArr) ); 
+    die;
+}
+?>     
+    

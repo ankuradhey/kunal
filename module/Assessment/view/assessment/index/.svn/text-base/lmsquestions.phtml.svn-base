@@ -1,0 +1,150 @@
+<!--<script type='text/javascript' src='<?php echo $this->basePath();?>/js/jquery.simplemodal.js'></script>
+<script type='text/javascript' src='<?php echo $this->basePath();?>/js/basic.js'></script>-->
+    <?php if($this->zfcUserIdentity()){ 
+//echo $this->headScript()->appendFile($this->basePath() . '/js/divpopup/jquery.simplemodal.js');
+
+    $boardId   = $this->board_id;
+    $classId   = $this->class_id;
+    $subjectId = $this->subject_id;
+?>
+<style>
+.ques_css, .ques_css *, .ques_css strong *, .ques_css font *, .ques_css spanxx *, font, strong, spanxx, font *, strong *, spanxx *, .GramE, spanxx.GramE, spanxx.GramE *, .ques_css spanxx.GramE { font-size:11pt !important;font-family:arial !important; verticalx-align:middle !important; font-weight: normal !important; margin:0;padding:3px; color:#000000; }
+
+</style>
+ <script type="text/javascript">
+ $(document).ready(function() {
+
+
+var counterId =  $('div.ques_container').length;
+
+var totalmarks = 0;
+ $("#lmsquestionMoved").click(function(){
+         
+                var source = $('#source').val();
+	        $('#papersource').val('add');
+	        totalmarks = parseInt($('#mentor_paper_marks').val());
+	        
+                $.each($(".subcheck-checkbox1:checked"),
+                       function () {
+                       counterId++;
+                            var marks = 0;
+                            var ques =  $(this).closest("td").siblings("td").html();
+                            var questionId = $(this).val();
+                            var marks = $(this).closest("td").siblings("td").find('input[type="text"]').val();
+                            if(!marks.match(/^\d+$/))
+                            {
+                                    alert("Marks should be numeric.");
+                                    return false;    
+                            }
+                            if($('#queslms_'+questionId).length==0)
+                            { 
+                              totalmarks = parseInt(parseInt(totalmarks)+parseInt(marks));
+                              $('#mentor_paper_marks').val(totalmarks); // for updating the paper marks
+                              
+//                              appendQuestion.push(questionId);   
+                             $('#movedquestionarea').append('<div class="ques_container" id="queslms_'+questionId+'"><input type="hidden" name="ques['+counterId+'][questionId]" id="question_'+questionId+'" value="'+questionId+'"><input type="hidden" name="ques['+counterId+'][marks]" value="'+marks+'"><input type="hidden" name="ques['+counterId+'][questionsource]" value="'+source+'"><a class="ques_close" href="javascript:void(0)" onclick="deleteques('+marks+','+questionId+');"><img src="<?php echo $this->cdn(); ?>/images/website/close_button_hover.png" height="12px" alt="Delete Question" title="Delete Question" border="0" /></a><span style="display:inline-block; width:80%;"><span style="margin-right:5px; font-weight:bold;">Ques .</span>'+ques+'</span><span class="ques_marks">('+marks+' marks)</span></div>');
+                             
+                            } 
+                       });
+                     if($('input.subcheck-checkbox1:checked').length == 0)
+                     {
+                        alert('Please select atleast one question');
+                        return false;
+                     }
+                     
+                       
+                 });
+                    
+                    
+
+ });
+ 
+ function deleteques(marks,questionId){        
+        $("#queslms_"+questionId).remove();
+        totalmarks = parseInt($('#mentor_paper_marks').val());
+        updatedmarks = parseInt(totalmarks - parseInt(marks));
+        $('#mentor_paper_marks').val(updatedmarks);
+}
+
+    function getnextpage(page)
+     {
+       $("#questionArea").load('<?php echo $this->Url('lmsquestions')?>/page/'+page+'/<?php echo $boardId; ?>/<?php echo $classId; ?>/<?php echo $subjectId; ?>');
+     }
+
+    function getanswers(ques_id)
+    {
+       $.ajax({url:"<?php echo $this->Url('getquestionanswer')?>/"+ques_id,
+                 success:function(result){
+                 $("#answerpop").html(result);
+                 $('#answerpop').modal('show');
+             }
+       });
+    }
+ </script>
+ <div class="self-container" style="position:relative; padding-bottom:40px;">
+ <?php 
+            
+            if(count($questionList) > 0)
+                    {
+                    ?>
+  <input type="hidden" name="source" id="source" value="lms" />
+                    <div class="sub-heading">
+                      <div class="text18 left">Select Question From LMS</div>
+                      <div class="pull-right" style="margin-top:8px;"><input class="btn btn-primary" type="button" name="lmsquestionMoved" id="lmsquestionMoved" value="Add Selected Questions" /></div>
+                      <div style="clear:both;"></div>
+                    </div>
+                    
+                    <div id="lms">
+                   
+                      <table class="table table-striped" id="mcqTable" style="padding-bottom:30px;">
+                       <tr>
+                          <th width="5%" align="left"> <div class="mcq02-radiocont">
+                              <!--<input type="checkbox" name="chapter-select1" id="check1" class="subcheck-checkbox1">-->
+                              <label for="check1" class="subcheck-label1"></label>
+                            </div>
+                          </th>
+                          <th width="70%" align="left">Question</th>
+                          <th width="10%" align="left">Marks</th>
+                          <th width="15%" align="left">Answer</th>
+                        </tr>
+                        <tbody id="mcqTableTbody">
+                       <?php 
+                       $x=0;
+                      foreach($paginator as $questions)
+                      { 
+//                          echo '<pre>';print_r($questions);echo '</pre>';die('Macro Die');
+                          $quesDet=$questions['questiondata'];
+//                          echo '<pre>';print_r($quesDet);echo '</pre>';die('Macro Die');
+                          ?>   
+                        <tr>
+                          <td align="left" width="5%"><div class="mcq02-radiocont">
+                              <input type="checkbox" name="question[<?php echo $x; ?>][questionId]" id="quesl_<?php echo $x; ?>" value="<?php echo $quesDet['questionid']; ?>" class="subcheck-checkbox1">
+                              <label for="quesl_<?php echo $x; ?>" class="subcheck-label1"></label>
+                            </div></td>
+                          <td align="left" width="70%" class="ques_css"><?php echo html_entity_decode(stripslashes($quesDet['question']));?></td>
+ <td align="left" width="10%"><input type="text" class="lmsquestionmarks" name="question[<?php echo $x; ?>][marks]" id="quesmarks_<?php echo $x; ?>" value="<?php echo $quesDet['questionmarks']; ?>" maxlength="3" /></td>
+ <td align="left" width="15%"><a href="javascript:void(0);" onclick="getanswers('<?php echo $quesDet['questionid'];?>');">View</a></td>
+                          <!--<td align="left"><a href="">View Questions</a></td>-->
+                        </tr>
+                     <?php 
+                    $x++; } ?>   
+                        </tbody>
+                     </table>
+                     <div class="holder">
+                        <?php echo $this->paginationControl($paginator, 'Sliding', 'paginator-slide');?>  
+                     </div>
+                    </div>
+            <?php } else { echo '<div style="text-align:center; padding-top:10px; ">No questions found in Extramarks repository.</div>';}  ?>
+                    </div>
+                    
+                 <div style="clear:both;"></div>
+  
+<?php }else{ ?>
+	<script>
+		window.location=<?php echo $this->url('home');?>
+	</script>
+<?php } ?>                  
+        
+<div id="answerpop" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"  class="modal fade" aria-hidden="false">
+    
+</div>

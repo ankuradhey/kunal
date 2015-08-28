@@ -1,0 +1,113 @@
+<?php if($this->zfcUserIdentity()){  
+echo $this->headScript()->appendFile($this->basePath() . '/editor/ckeditor.js')
+                        ->appendFile($this->basePath() . '/editor/adapters/jquery.js')
+                        ->appendFile($this->basePath() . '/editor/_samples/sample.js');
+echo $this->headLink()->prependStylesheet($this->basePath() . '/editor/_samples/sample.css')
+->prependStylesheet($this->cdn() . '/css/website/bootstrap.css')
+				->prependStylesheet($this->cdn() . '/css/extramark.css')
+				->prependStylesheet($this->cdn() . '/css/notes.css');
+?>
+
+<style type="text/css">
+body{ padding: 15px 0; margin: 0; font-family: 'Open Sans', sans-serif;}
+.mcq-view{ font-family: 'Open Sans', sans-serif;}
+.Left_Side p{ float: left; margin: 0; width: 70%}
+#in-container{ border-radius: 8px; -webkit-border-radius: 8px; -moz-border-radius: 8px; -o-border-radius: 8px;}	
+ul.resp-tabs-list, p{
+font-size:13px;
+}
+.singleview-res-cntr-child{ display: table; width: 100%}
+.singleview-res-cntr-child{ width: 100%}
+</style>
+<form method="post" action="<?php echo $this->url('studenttestattempt', array(), NULL, TRUE);?>" name="studenttestattempt" id="studenttestattempt" enctype="multipart/form-data">
+
+<div class="mcq-view mcq-review" style="margin-top:0px;">
+            
+<input type="hidden" name="source" id="source" value="<?php echo $paperSource; ?>" />
+            <div class="mcq-title" style="text-align:center">
+             <div><?php echo $paperName; ?></div>
+			  <div>(<?php echo $paperClass.' - '.$paperSubject; ?>)</div>
+			  <div>Marks: <?php echo $paperMarks; ?></div>
+                          <?php if($paperTime != '00:00'){?> <div>Time: <?php echo $paperTime.' (hh:mm)'; ?></div><?php } ?>
+              <div class="clear">&nbsp;</div>
+            </div>
+            
+            <div class="singleview-res-cntr">
+             <span>
+			<div style="padding:10px 10px; font-size:14px;"><span style="color:#2C6085; font-weight:bold;"><img style="vertical-align:middle" src="<?php echo $this->cdn(); ?>/images/website/packages/next.png" height="13px" /> Instruction</span> : <?php echo $paperInstruction; ?></div>
+              <div class="singleview-res-cntr-child">
+                <div class="singleview-res-cntr-left">
+                
+                
+                <?php
+                if($paperSource == 'add')
+                { 
+                $x=1; 
+                foreach($paperQuestion as $questions)
+                { 
+                ?>
+                 <div id="lms">
+                        <table class="mcqTable">
+                        
+                        <tr>
+                          <td align="left" width="10%"><strong style="font-size:16px;">Ques <?php echo $x; $x++; ?>. </strong></td>
+                          <td align="left" width="80%" style="font-size:16px;" class="Left_Side"><?php  echo html_entity_decode(stripslashes($questions['question']));?> <span style="float:right;">(Marks : <?php echo $questions['questionMarks']; ?>)</span></td> 
+                        </tr>
+                         <tr>
+                          <td align="left" width="10%"><strong>Ans.</strong></td>
+                          <td align="left" width="80%"><?php echo $paperAnswer[$questions['mentorPaperQuestionId']]['ans']; ?></td> 
+                        </tr>
+                        
+                        
+                        </table>
+                </div>
+              <?php } } else if($paperSource == 'upload'){ ?>
+                <div id="lms">
+                        <table class="mcqTable">
+                        
+                       
+                        <?php 
+                        $q=0;
+                        foreach($paperQuestion as $questions)
+                        { ?>
+                        <tr>
+                          <td align="left" width="10%"><strong> <?php if($q == 0){ ?> Question: <?php } else {?>&nbsp; <?php }?> </strong></td>
+                          <td align="left" width="80%"><a href="<?php echo $this->url('downloadquestion')?>/<?php echo $questions->paperUploadFileName; ?>">Download Question File</a><span style="float:right;">(Marks : <?php echo $questions->paperUploadFileMarks; ?>)</span></td> 
+                        </tr>
+                        <?php $q++; } ?>
+                    
+                         <tr>
+                          <td align="left" width="10%"><strong>Upload your answer.</strong></td>
+                          <td align="left" width="80%"><input type="file" name="ans[]" id="ans[]" /> <a href="javascript:void(0)" class="addmore"><img src="<?php echo $this->cdn() . '/images/scrll_add_icon2.png' ?>" alt="Add Question" title="Add Question" border="0" /></a></td> 
+                        </tr>
+                        
+                        <tr >
+                        <td>&nbsp;</td>
+                        <td>
+                         <div id="selfupload"> 
+                         </div>
+                         </td>
+                        </tr>
+                        
+                        </table>
+                </div>
+              <?php } ?>
+                  
+                  <div style="clear:both;"></div>
+
+                </div>
+                
+              </div>
+              
+            </div>
+            <div class="clear">&nbsp;</div>
+             <div class="footer_btn">
+                
+                 <input type="button" class="commanBtn" id="submitButton" name="close" value="Close" onclick="window.close();" /></div>
+          </div>
+       </form>
+<?php }else{ ?>
+	<script>
+		window.location="<? echo $this->url('home');?>"
+	</script>
+<?php } ?> 

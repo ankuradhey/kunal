@@ -1,0 +1,75 @@
+   
+<!--footer here-->
+<footer>
+<div id="footer">
+<section>
+<div id="footer-cont">
+<div id="footer_lft">
+<ul>
+<li class="footer-menu-heading">Extramarks</li>
+<li><a href="<?php echo $this->url('aboutus') ?>" title="About Us">About us</a></li>
+<li><a href="<?php echo $this->url('about-leader') ?>" title="Leadership">Leadership</a></li>
+<li><a href="<?php echo $this->url('awards') ?>" title="Awards">Awards</a></li>
+ <li><a href="http://www.extramarks.com/newsletter/2014/april-july/index.html" target="_blank" title="Newsletters">Newsletters</a></li>
+
+</ul>
+<ul>
+<li class="footer-menu-heading">Testimonials</li>
+<li><a href="<?php echo $this->Url('students') ?>" title="Students">Students</a></li>
+<li><a href="<?php echo $this->Url('parents') ?>" title="Parents">Parents</a></li>
+<li><a href="<?php echo $this->Url('teachers') ?>" title="Teachers">Teachers</a></li>
+<li><a href="<?php echo $this->Url('school') ?>" title="School">School</a></li>
+</ul>
+</div>
+
+<div id="footer_rht">
+<ul>
+<li class="footer-menu-heading"><a style="cursor:pointer;color: #000000;" href="<?php echo $this->Url('terms-of-use') ?>">Legal</a></li>
+<li><a href="<?php echo $this->Url('terms-of-use') ?>" title="Terms of Use">Terms of Use</a></li>
+<li><a href="<?php echo $this->Url('user-policy') ?>" title="User Policy">User Policy</a></li>
+<li><a href="<?php echo $this->Url('copyright-policy') ?>" title="Copyright">Copyright</a></li>
+<li><a href="<?php echo $this->Url('report-abuse') ?>" title="Report Abuse">Report Abuse</a></li>
+</ul>
+<ul>
+<li class="footer-menu-heading"><a href="<?php echo $this->Url('faq') ?>">FAQ</a></li>
+<li><a href="<?php echo $this->Url('child-safety') ?>" title="Child Safety">Child Safety</a></li>
+<li><a href="<?php echo $this->Url('privacy') ?>" title="Privacy">Privacy</a></li>
+<li><a href="<?php echo $this->Url('disclaimer') ?>" title="Disclaimer">Disclaimer</a></li>
+</ul>
+</div>
+
+
+
+	<div class="copyright_footer">
+	 <p class="bottom_links">
+		<a style="cursor:pointer;color: #000000;" href="<?php echo $this->Url('contact-us') ?>" title="Contact Us"><b>Contact</b></a> | <a style="cursor:pointer;color: #000000;" href="<?php echo $this->Url('careers') ?>" title="Careers"><b>Careers</b></a> |
+		<a style="cursor:pointer;color: #000000;" href="<?php echo $this->Url('sitemap') ?>" title="Sitemap"><b>Sitemap</b></a> | 
+        <a style="cursor:pointer;color: #000000;" href="/rss.xml" target="_blank" title="RSS Feed"><b>RSS Feed</b></a>
+	 </p>	 
+	 <p class="copymrg">Copyright(c) 2014 Extramarks. All rights reserved. </p>
+	</div>
+</div>
+</section>
+</div>
+</footer>
+<!-- footer end-->
+
+<script>
+document.oncontextmenu=disableit
+function disableit()
+{
+//alert("done")
+return false;
+}
+</script>
+
+
+<!--Start of Zopim Live Chat Script-->
+<script type="text/javascript">
+window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
+$.src='//v2.zopim.com/?2NlZ9lrv9aGdB2Rb9uVIhKDwQX1tvO3n';z.t=+new Date;$.
+type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+</script>
+<!--End of Zopim Live Chat Script-->

@@ -1,0 +1,63 @@
+<?php
+     if(isset($this->emailid)){
+         $emailid =  $this->emailid;
+     }
+     if(isset($this->username)){
+         $emailid = $this->username;   
+     }
+       $password = $emailid;
+    
+?>
+<script type="text/javascript">
+    $(document).ready(function(){	
+	autologinuser("<?php echo $emailid; ?>","<?php echo $password; ?>");	
+});  
+
+</script>
+<div id="banner">
+ <div class="banner_support">
+	    <div id="image_banner">
+			<img src="<?php echo $this->basePath() ?>/images/My-Groups-View/color_code_map1.gif" width="758px" height="389px" />
+		</div>
+		<div id="banner_contai">
+			<div class="banner_lft_top">
+				<img src="<?php echo $this->basePath() ?>/images/banner_left.png" width="201px" height="182px" />
+			</div>
+			<div class="clear"></div>
+			<section>
+				<div id="banner_lft">
+					<h1>Education made</h1>
+					<h2>Easy &amp; Effective</h2>
+					<!--<h3>Serving K-12 students since 2009</h3>-->
+					<a href="<?php echo $this->Url('easy-effective') ?>" target="_blank" class="hlearn brand"><img src="<?php echo $this->basePath() ?>/images/ban-mr.png" width="19px" height="19px" />LEARN HOW</a>
+				</div>
+			</section>
+		</div>		
+	</div>
+</div>
+<div id="banner_container" style="clear:both;">
+	<div class="clear">&nbsp;</div>
+</div>
+<div id="home-container">
+<section>
+	<div id="hcontainer">
+	<!--onclick="window.open('<?php //echo $this->Url('smart-learning-class') ?>','mywindow');"
+	onclick="window.open('http://beta.extramarks.com/sat-testprep/sat.html','mywindow');"
+	-->
+		<ul>				
+			<li style="cursor: pointer;" id="board_banner">
+				<p class="icons_sprite board" ></p><p class='hcontainer2'>SCHOOL&nbsp;&nbsp;<br/>SOLUTIONS</p>
+			</li>	
+			<li style="cursor: pointer;" id="learning_banner">
+				<p class="icons_sprite learning" ></p><p class='hcontainer2'>EXTRAMARKS&nbsp;&nbsp;<br/>LIVE TAB</p>
+			</li>	
+			<li style="cursor: pointer;" id="study_banner">
+				<p class="icons_sprite blog"></p><p class='hcontainer3'>SAT PREP &amp;<br/>OVERSEAS&nbsp;STUDY</p>
+			</li>	
+			<li class="hcontainer_last" style="cursor: pointer;" id="skill_banner">
+				<p class="icons_sprite school"></p><p class='hcontainer4'>SKILL&nbsp;&nbsp;<br/>DEVELOPMENT</p>
+			</li>	
+		</ul>
+	</div>
+</section>
+</div>

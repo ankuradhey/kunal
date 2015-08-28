@@ -1,0 +1,65 @@
+<?php
+$manu = Array();
+$manu = array(
+  		"about-menu" => array(
+       			'aboutus' => 'Company',
+        		'about-leader' => 'Leadership',
+				'awards'=>'Awards',
+				'students'=>'Testimonials',
+				'approach'=>'Approach',
+				'contact-us'=>'Contacts'
+            ),
+        "product-menu" => array(
+               'school-solutions' => 'School Solutions',
+        		'extramarks-live-tab' => 'Extramarks Live Tab',
+				'studyabroad'=>'Overseas Study',
+				'caphome'=>'Career Assessment Program',
+				'http://eprakhar.com/'=>'Skill Development'
+         	),
+		 "resource-menu" => array(
+               'mediacenter' => 'Media Center',
+        		'careers' => 'Careers',
+				'blog'=>'Blog',
+				'http://www.extramarks.com/newsletter/2014/sep-dec/index.html'=>'Newsletter',
+			
+         ),
+		 "legel-menu" => array(
+               'terms-of-use' => 'Terms of use',
+        		'user-policy' => 'User Policy',
+				'copyright-policy'=>'Copyright Policy',
+				'report-abuse'=>'Report Abuse',
+		  ),
+		  "lpt-menu" => array(
+               //'learntab' => 'Learn',
+        		//'practice' => 'Practice',
+				//'test'=>'Test',
+				'BoardExam'=>'Board Exam',
+				'sat'=>'SAT',
+				'toefl'=>'TOEFL'
+		  ),
+		   "others-menu" => array(
+               'faq' => 'FAQ',
+        		'child-safety' => 'Child Safety',
+				'privacy'=>'Privacy',
+				'disclaimer'=>'Disclaimer',
+		 ),
+		  
+   );
+
+?>
+<div class="menu-category">
+    <div class="container">
+      <nav class="nav-menu">
+        <ul class="nav-cate clearfix cl-effect-4">
+        
+        <?php foreach($manu[$this->menu] as $key=>$ManuNames){ 	if (strpos($key, "http://") === false) {?>
+		       <li><a <?php echo $this->active == $key ? "class='active'" : ""; ?> href="<?php echo $this->Url($key) ?>"><?php echo $ManuNames; ?></a></li>
+	     <?php }else{?>
+    	  <li><a <?php echo $this->active == $key ? "class='active'" : ""; ?> href="<?php echo $key; ?>" target="_blank"><?php echo $ManuNames; ?></a></li>
+    
+	    <?php } } ?>
+       
+    </ul>	
+</nav>
+</div>
+</div>

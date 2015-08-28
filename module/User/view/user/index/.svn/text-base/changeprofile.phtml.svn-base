@@ -1,0 +1,710 @@
+<link rel="stylesheet" href="<?php echo $this->fileversion($this->basePath("css/website/register.css")); ?>" type="text/css" media="screen" />
+<link href="<?php echo $this->cdn("/css/website/profile.css"); ?>" rel="stylesheet">
+
+<!--Content section start here-->
+<div id="content" class="profile-pages">
+    <div class="container">
+        <div class="row">
+            <div class="myprofile-content">
+                <div class="profile-view globle-click clearfix">
+                    <strong>My Profile</strong>
+                    <i class="icons-ar"></i>	
+                </div>
+                <!-- OLD DESIGN -->
+<?php if($this->zfcUserIdentity() && $this->zfcUserIdentity()->getId()!=""){
+       $userId     = $this->zfcUserIdentity()->getId();
+       $usertypeId = $this->zfcUserIdentity()->getUserTypeId();
+      
+    ?>
+
+      <?php echo $this->partial('user/index/profile-menu.phtml',array('page'=>'change-profile','addedmentors'=>count($this->addedMentors),'addedStudents' => count($this->addedStudents)));?>
+      
+
+               
+                 
+                      <?php if(isset($_GET['error']) && $_GET['error'] == 'false' ) { ?>  
+                        <center><span style="color:red"><?php echo 'Error: Only .jpg,.png,.gif,.pjpg images  for upload'; ?></span></center>
+                      <?php } if(isset($_GET['error']) && $_GET['error'] == 'tfalse' ){ ?>
+                        <center><span style="color:red">     <?php echo "Error: File is corrupt Or not proper "; ?></span></center>
+                      <?php } ?>
+                      
+                     <input type="hidden" value="nav_1" id="nav_find">
+                     
+                      <section class="profile-block change-Profile">
+                            <div class="addmentor-form">
+                                <form class="form-horizontal" name="updateprofile" id="updateprofile" action="<?php //echo $this->URL('zfcuser/updateprofile') ?>" enctype="multipart/form-data"  method="post" >
+                     <span style="font-size: 16px;color:red;" class="errorfrm1" id="starerr"></span>
+                         
+                         <div class="form-group">
+                           <label for="file" class="col-sm-2 control-label">Your Photo</label>
+                           <div class="col-sm-8 rightprofile">
+                                 <?php if(isset($this->user->user_photo) && $this->user->user_photo!=""){?>
+                                <figure style="max-width:90px; float:left;"><img src="<?php echo $this->basePath() ?>/uploads/profileimages/<?php echo $this->user->user_photo."?".time();?>" alt="" height="72" style="max-width:90px;"/></figure>
+                                 <?php }else if($this->user->gender=='Male' || $this->user->gender==''){?>
+                                <figure> <img src="<?php echo $this->cdn() ?>/images/avatar_100_1x.png" height="72" style="max-width:100px;"/> </figure>
+                                 <?php }else if($this->user->gender=='Female'){?>
+                                <figure> <img src="<?php echo $this->cdn() ?>/images/avatar_100_G.png" height="72" style="max-width:100px;"/></figure>
+                                 <?php }?>
+                                 <input type="hidden" id="hidfile" name="hidfile" value="<?php if(isset($this->user->user_photo)){echo $this->user->user_photo;}?>">
+                              
+                                <div class="photobrowser" style="clear:none; margin-top:10px;">
+                                   
+                                        <div class="upload_File" style="float:none;">
+									     <input type="file"  name="image_file" id="image_file">
+									    </div>
+                                     <p style="margin-top:5px;" class="file-size ">(max file size 1Mb)</p>
+                               </div>
+                           </div>
+                            <input type="hidden" name="fileerror" id="fileerror" value="0"/>
+
+                             <div class="errorfrm1" id="errorimage">&nbsp;<?php echo $this->fileerror?></div>
+                             <p class="errorfrm1" id="errorimage1"></p>
+                         </div>
+                           
+                         <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">Name<sup>*</sup></label>
+                            <div class="col-sm-4 rightprofile">
+                              <input type="text" class="form-control" onkeypress="updateKeypress(event)" id="username" name="username" placeholder="User Name" value="<?php if(isset($this->user->firstName)){echo ucfirst($this->user->firstName);}?>">
+                              <p class="errorfrm1"  id="errorname">&nbsp;</p>
+                            </div>
+                         </div>
+                           
+                         <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">Gender<sup>*</sup></label>
+                            <div class="col-sm-4 rightprofile">
+                                 <?php if(isset($this->user->gender) && $this->user->gender!=''){?>
+                                      <?php if($this->user->gender=="Male" || $this->user->gender=="male"){?>
+                                               <div class="radio-box">
+                                                  <input type="radio" id="radio11" name="sex" value="Male" class="css-checkbox" checked="checked">
+                                                  <label for="radio11">Male</label>	
+                                              </div>
+                                             <div class="radio-box">
+                                                  <input type="radio" id="radio12" name="sex" value="Female" class="css-checkbox">
+                                                  <label for="radio12">Female</label>	
+                                             </div
+                                              ><p class="errorfrm1"  id="errorusergender">&nbsp;</p>
+                                    <?php }else if($this->user->gender=="Female" || $this->user->gender=="female"){?>
+                                               <div class="radio-box">
+                                                  <input type="radio" id="radio11" name="sex" value="Male" class="css-checkbox">
+                                                  <label for="radio11">Male</label>	
+                                              </div>
+                                             <div class="radio-box">
+                                                  <input type="radio" id="radio12" name="sex" value="Female" class="css-checkbox" checked="checked">
+                                                  <label for="radio12">Female</label>	
+                                             </div
+                                              ><p class="errorfrm1"  id="errorusergender">&nbsp;</p>
+                                    <?php }}else{ ?>
+                                            <div class="radio-box">
+                                                  <input type="radio" id="radio11" name="sex" value="Male" class="css-checkbox">
+                                                  <label for="radio11">Male</label>	
+                                              </div>
+                                             <div class="radio-box">
+                                                  <input type="radio" id="radio12" name="sex" value="Female" class="css-checkbox">
+                                                  <label for="radio12">Female</label>	
+                                             </div
+                                              ><p class="errorfrm1"  id="errorusergender">&nbsp;</p>  
+                                    <?php } ?>
+                            </div>
+                        </div>
+		  
+                           
+                        
+		  <div class="form-group">
+		      <span class="left-txt">I am a</span>
+		      <span class="right-text"> <?php if(isset($this->usertypes) && count($this->usertypes)!=0){
+                                  foreach($this->usertypes as $usertype){ if($this->user->user_type_id==$usertype->user_type_id){ echo $usertype->name;}}}?></p>
+                              <input type ="hidden" name="usertype" value="<?php echo $this->user->user_type_id;?>"/></span>
+                                <p class="errorfrm1"  id="errorusertype">&nbsp;</p>
+		    
+		  </div>
+
+                  <div class="form-group">
+		    <label for="mobile" class="col-sm-2 control-label">Mobile<sup>*</sup></label>
+		    <div class="col-sm-4 rightprofile">
+            <div class="col-sm-3 padd">
+                        <?php $phonenumber[]=''; 
+                              if(isset($this->user->mobile)){
+                                  $phonenumber = explode('-', $this->user->mobile);
+                                  $phoneCodeFlag = true;
+                              }else{
+                                  $phoneCodeFlag = false;
+                              } ?>
+                             <span class="dropdown_reg_custom" >
+                                 <select id="phonecode" name="phonecode">
+                                    <?php if(isset($this->countries) && count($this->countries)>0){foreach($this->countries as $Countries){  ?>
+                                    <?php if($phoneCodeFlag == true && $phonenumber['0']==$Countries->getphonecode()){?>
+                                    <option value="+<?php echo $Countries->getphonecode(); ?>" data-image="<?php echo $this->cdn() ?>/images/website/flags/<?php echo strtolower($Countries->getiso())?>_32.png" selected="selected">+<?php echo $Countries->getphonecode() ?></option>
+                                    <?php }else if($phoneCodeFlag == false && $countaryid == $Countries->getCountryId()){?>
+                                    <option value="+<?php echo $Countries->getphonecode(); ?>" data-image="<?php echo $this->cdn() ?>/images/website/flags/<?php echo strtolower($Countries->getiso())?>_32.png" selected="selected">+<?php echo $Countries->getphonecode() ?></option>
+                                    <?php }else{?>
+                                    <option value="+<?php echo $Countries->getphonecode(); ?>" data-image="<?php echo $this->cdn() ?>/images/website/flags/<?php echo strtolower($Countries->getiso())?>_32.png">+<?php echo $Countries->getphonecode() ?></option>
+                                    <?php }}}else{?>
+                                    <option value="+<?php echo $Countries->getphonecode(); ?>" data-image="<?php echo $this->cdn() ?>/images/website/flags/<?php echo strtolower($Countries->getiso())?>_32.png">+<?php echo $Countries->getphonecode() ?></option>
+                                    <?php }?>
+                                 </select>
+                              </span>
+                              </div>
+		      <div class="col-sm-9 padd">
+                          <input style="height:41px; margin-top:4px;" class="form-control" type="text" onkeypress="updateKeypress(event)" id="phonenumber" name="phonenumber" <?php if($this->register_by=='mobile') {?>readonly="readonly"<?php }?> placeholder="Enter mobile number" value="<?php if(count($phonenumber)>1){if(isset($phonenumber['1'])){echo $phonenumber['1'];}}else{if(isset($phonenumber['0'])){echo $phonenumber['0'];}}?>"/>
+                       <p class="errorfrm1"  id="errorphonenumber">&nbsp;</p>
+                       </div>
+                      </div>
+		  </div>
+
+                    <div class="form-group">
+                        <label for="code" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-4 rightprofile">
+                            <input type="text" id="useremail" class="form-control" placeholder="Please enter email address" <?php if($this->register_by=='email') {?>readonly="readonly"<?php }?> name="useremail" value="<?php if($this->zfcUserIdentity()->getEmail()) {echo $this->zfcUserIdentity()->getEmail();}?>" />
+                          <p class="errorfrm1" id="erroremail">&nbsp;</p>
+                        </div>
+                    </div>						
+                        
+                        <?php $name=''; 
+                        if(isset($this->user->user_type_id) && $this->user->user_type_id !='2'){
+                           $name='Student';
+                           }else{
+                           $name='Child';
+                           }
+                           ?>
+
+                    <?php if(isset($this->user->nameChild) && $this->user->nameChild!=""){?>    
+                    <div class="form-group">
+                        <span class="left-txt">My <?php echo $name; ?>'s Name</span>
+                        <span class="right-text"><?php if(isset($this->user->nameChild)){echo trim($this->user->nameChild,',');}?></span>
+                        <p class="errorfrm1" id="erruchild">&nbsp;</p>
+                    </div>
+                    <?php }?>   
+
+                        <?php if($this->user->user_type_id == '1'){?>  
+                         <div class="form-group">
+                        <label class="col-sm-2 control-label">Board<sup>*</sup></label>
+                        <div class="col-sm-4 rightprofile">
+                           <select name="board" class="CostomSelect" id="board">
+                               <option value="">Select Board</option>
+                                 <?php if(isset($this->boards)){ 
+                                     foreach($this->boards as $key=>$boards){    ?>
+                                 <?php if($this->user->boardId==$boards['customBoardId']){?>
+                                 <option value="<?php echo $boards['customBoardId'];?>" selected="selected"><?php echo $boards['boardName'];?></option>
+                                 <?php }else{?>
+                                 <option value="<?php echo $boards['customBoardId'];?>"><?php echo $boards['boardName'];?></option>
+                                 <?php }}}?> 
+                              </select>
+                              <p class="errorfrm1" id="errorboard">&nbsp;</p>
+
+                        </div>
+                      </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Class<sup>*</sup></label>
+                            <div class="col-sm-4 rightprofile" id="selectedClass">
+                                <select id="classnames" class='select' name="classnames">
+                                          <?php if(isset($this->classes)){foreach($this->classes as $key=>$classname){ 
+                                            if($this->user->classId==$key){?>
+                                          <option value="<?php echo $key;?>" selected="selected"><?php echo $classname;?></option>
+                                          <?php }else{?>
+                                          <option value="<?php echo $key;?>"><?php echo $classname;?></option>
+                                          <?php }}}?>
+                                 </select>
+                                 <span style="display:none"  id="loadImageclass" href="javascript:void(0);"><img  src="<?php echo $this->cdn() ?>/images/loader16.gif" /></span> 
+                                 <p class="errorfrm1" id="errorclassname">&nbsp;</p>
+		           </div>
+		      </div>
+
+                        
+
+                        <div class="form-group">
+                            <label for="name2" class="col-sm-2 control-label">School Name</label>
+                            <div class="col-sm-4 rightprofile">
+                             
+                              <input class="form-control" type="text" onkeypress="updateKeypress(event)" id="userschool" placeholder="Enter your school name" name="userschool"  value="<?php if(isset($this->user->school_name)){echo urldecode($this->user->school_name);}?>"/>
+                              <p class="errorfrm1" id="errorschool">&nbsp;</p>
+                            </div>
+                        </div>
+
+
+                        <?php } ?>
+                        
+
+                         <div class="form-group">
+                            <label for="code" class="col-sm-2 control-label">Postal Code</label>
+                            <div class="col-sm-4 rightprofile">
+                                <input type="text" class="form-control" placeholder="Please enter postal code" onkeypress="updateKeypress(event);" id="postalcode" name="postalcode"  maxlength="6" value="<?php if(isset($this->user->postalcode)){echo $this->user->postalcode;}?>"/>
+                              <p class="errorfrm1" id="errorpostalcode">&nbsp;</p>
+                            </div>
+                          </div>
+                          <?php if(isset($this->user->dob)){ $dob = $this->user->dob; $dobArr = explode('-',$dob); }?>
+                          <div class="form-group">
+                            <label for="code" class="col-sm-2 control-label">Date of Birth</label>
+                            <div class="col-sm-8 rightprofile padd-left">
+                            	<div class="col-sm-4">
+                                <select name="dob_month" id="dob_month" class="CostomSelect">
+                                <option value="">Month</option>
+                                <?php for($i=1;$i<=12;$i++) {
+                                   $monthName = date("M", mktime(0, 0, 0, $i, 10));
+                                ?>
+                                <option value="<?php echo $i; ?>" <?php if(isset($dobArr[1]) && $dobArr[1]==$i){ ?>Selected<?php } ?>><?php echo $monthName; ?></option>
+                                <?php } ?>
+                                </select>
+                                </div>
+                                <div class="col-sm-4">
+                                <select name="dob_day" id="dob_day" class="CostomSelect">
+                                    <option value="">Day</option>
+                                    <?php for($i=1;$i<=31;$i++){ ?>
+                                    <option value="<?php echo $i; ?>" <?php if(isset($dobArr[0]) && $dobArr[0]==$i){ ?>Selected<?php } ?>><?php echo $i; ?></option>
+                                    <?php } ?>
+                                </select>
+                                </div>
+                                <div class="col-sm-4">
+                                <select name="dob_year" id="dob_year" class="CostomSelect">
+                                    <option value="">Year</option>
+                                    <?php for($i=Date('Y');$i>Date('Y') - 70;$i--){ ?>
+                                    <option value="<?php echo $i; ?>" <?php if(isset($dobArr[2]) && $dobArr[2]==$i){ ?>Selected<?php } ?>><?php echo $i; ?></option>
+                                    <?php } ?>
+                                </select>
+                                </div>
+                              <p class="errorfrm1" id="errordob">&nbsp;</p>
+                            </div>
+                          </div>
+
+
+                         <div class="form-group">
+                            <label class="col-sm-2 control-label">User Location<sup>*</sup></label>
+                            <div class="col-sm-4 rightprofile">
+                               <select id="ucountries" class="CostomSelect" name="ucountries">
+                                    <option value="">Country</option>
+                                    <?php if(isset($this->countries)){foreach($this->countries as $countryname){?>
+                                    <?php if($this->countaryid == $countryname->getcountryid()){?>
+                                    <option value="<?php echo $countryname->getcountryid();?>" selected="selected"><?php echo $countryname->getcountryname();?></option>
+                                    <?php }else{?>
+                                    <option value="<?php echo $countryname->getcountryid();?>"><?php echo $countryname->getcountryname();?></option>
+                                    <?php }}}?>
+                                 </select>
+                            </div>
+                            <div class="col-sm-4 rightprofile" id="selectStates">
+                               <select class="CostomSelect" id="states" name="states" >
+                                    <option value="">State</option>
+                                    <?php if(isset($this->states) && count($this->countries)>0 ){foreach($this->states as $statenames){  ?>
+                                    <?php if($this->stateid == $statenames->getstateId()){?>
+                                    <option value="<?php echo $statenames->getstateId();?>" selected="selected"><?php echo $statenames->getstatename();?></option>
+                                    <?php }else{?>
+                                    <option value="<?php echo $statenames->getstateId();?>"><?php echo $statenames->getstatename();?></option>
+                                    <?php }}}?>
+                                 </select>
+                            </div>
+                            <p class="errorfrm1" id="errorcountry">&nbsp;</p>
+                            <p class="errorfrm1" id="errorstate">&nbsp;</p>
+                          </div>
+
+
+                        <div class="form-group city">
+                            <label for="city" class="col-sm-2 control-label">City name</label>
+                            <div class="col-sm-4 rightprofile">
+                             
+                              <input class="form-control" type="text" placeholder="Enter your city name" onkeypress="updateKeypress(event)" id="other_city" name="other_city"  value="<?php if(isset($this->cityValue)){echo $this->cityValue;}?>"/>
+                              <p class="errorfrm1" id="errorothercity">&nbsp;</p>
+                            </div>
+                        </div>
+
+
+                         <?php if($this->user->user_type_id == '1'){?>  	
+                        
+
+                          <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox" name="allowschedule" value="1" <?php if($this->user->allowschedule == '1') echo "checked";else echo ""; ?> style="display:inline-block"> 
+                                       <strong>Allow parent/mentor to manage schedule</strong>
+                                    </label>
+                                </div>	
+                          </div>
+                                    <?php } ?>
+                       
+
+                        
+                        
+                        <div class="editButton">
+                           <input type="button" value="SAVE CHANGES" onclick="updateuserProfile()" id="updateuserprofile" name="updateuserprofile" class="btn btn-primary"/>
+                           
+                           <input type="button" onclick="location.href = '<?php echo $this->Url('zfcuser/myprofile') ?>';" value="CANCEL" class="btn btn-warning"/>
+                        
+                        
+                           <input type="hidden" id="hiduserid" name="hiduserid" value="<?php if($this->zfcUserIdentity()->getId()){ echo $this->zfcUserIdentity()->getId();}?>">
+                           
+                        
+                            
+                        </div>
+                        
+                     </form>
+                     
+                      </div>
+                   </section>
+ 
+<?php }else{?>
+<script>
+   window.location="<?php echo $this->url('home');?>"
+</script>
+<?php }?>
+      </div>
+        </div>
+    </div>
+</div>
+<script type='text/javascript'>//<![CDATA[
+   $(window).load(function(){
+   $('.custom-upload input[type=file]').change(function(){
+      $(this).next().find('input').val($(this).val());
+   });
+   });//]]> 
+   
+</script>
+<script type="text/javascript" language="JavaScript">
+   $( document ).ready(function() {
+       document.forms['updateprofile'].elements['username'].focus();
+   });
+</script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/jquery.dd.js"></script>
+<script type="text/javascript">
+    
+   $(".dropdown_reg_custom select").msDropDown();
+//   $("#dropdown_flag_customsd select").msDropDown();
+//   var a=$("#nav_find").val();
+   $(document).ready(function(){
+   
+   $("#ucountries").change(function(){
+        $("#states").val('');
+   	$("#states").parent().find(".holder").text("");
+   	$("#states").parent().find(".holder").text("Select a state");
+   	var countryid=$("#ucountries").val();		
+   	$.ajax({
+   		type:	'POST',
+   		url:   	BASE_URL+'/user/getstates',
+   		data:	{countryid:countryid},
+   		success: function(data){ 						
+   			$("#states").html(data.statenames);							
+   		}
+   	});	
+   });
+   
+   $("#profile").height($(".right-content").height()+8);
+   });
+   $(window).resize(function(){
+   $("#profile").height($(".right-content").height()+8);
+   });
+   
+   $(document).ready(function() {
+   $('#image_file').bind('change', function() {
+   	if(this.files[0].size > 1000141){
+   		$("#fileerror").val(1);
+   		alert("Image size should be below 1 mb");
+   		return false;
+   	}
+   	else
+   	{
+   		$("#fileerror").val(0);
+   	}
+   });
+   });
+   function updateKeypress(e){
+       if(e.keyCode == 13){
+            updateuserProfile();
+       }
+   }
+   
+   function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+   function updateuserProfile()
+   { 
+     var letters = /^[a-zA-Z ]*$/; 
+     var numbers = /^[0-9]+$/;
+     var emailregex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+     var uphonenumber=$("#phonenumber").val();
+     var ucityname=$("#other_city").val();
+     var uname=$("#username").val();
+     var postalcode=$("#postalcode").val();	
+     var uschool=$("#userschool").val();
+     var dob_month=$("#dob_month").val();
+     var dob_day=$("#dob_day").val();
+     var dob_year=$("#dob_year").val();
+     var useremail = $("#useremail").val();
+     var flag=true;
+     var dobCount = 0;
+     if($('#image_file').val()!=""){
+        var val = $('#image_file').val();
+        switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+                case 'gif': case 'jpg': case 'png': case 'jpeg':
+                        $('#errorimage1').html('');
+                        break;
+                default:
+                        $(this).val('');
+                        $('#errorimage1').html('Please upload jpg/png/gif/jpeg formats');
+                        $('#image_file').focus();
+                        flag=false;
+                        return false;
+           }
+        }
+       if($("#fileerror").val()==1)
+       {
+            $("#errorimage").html("Image size should be below 1 mb");
+            $('#image_file').focus();
+            flag=false;
+   	}else{
+            $("#errorimage").html('');
+   	}		
+   	if(uname==""){
+   		$("#errorname").html("Please enter your name");
+   		$("#username").focus();
+   		flag=false;
+   	}else if(!uname.match(letters)){
+   		$("#errorname").html("Please enter only alphabets");
+   		flag=false;
+   	}else{
+   		$("#errorname").html("");
+   	}
+   	
+   	if ( ( updateprofile.sex[0].checked == false ) && ( updateprofile.sex[1].checked == false ) )
+   	{
+   		$("#errorgender").html("Please select your Gender" );
+   		
+   		flag=false;
+   	}else{
+   		$("#errorgender").html("");
+   	}		
+   	if($("#usertype").val()=="0"){
+   		$("#errorusertype").html("Please select your usertype");
+   		$("#usertype").focus()
+   		flag=false;
+   	}else{
+   		$("#errorusertype").html("");
+   	}
+         if(uphonenumber==""){
+   		$("#errorphonenumber").html("Please enter only mobile number");
+   		$("#phonenumber").focus();
+   		flag=false;
+   	}
+        
+        if(dob_month) {
+            dobCount++;
+        }
+   	if(dob_day) {
+            dobCount++;
+        }
+        if(dob_year) {
+            dobCount++;
+        }
+        
+        if(dobCount!=3 && dobCount!=0) {
+            $("#errordob").html("Please select date of birth correctly.");
+            flag=false;
+        }
+        
+        if(useremail.trim()!='') {
+            $("#errorMessage_email").html('');
+            if (!emailregex.test(useremail)) {
+                $("#erroremail").show();
+                $("#erroremail").html('Please enter valid email address');
+                flag=false;
+            } else {
+                if($('input[name="useremail"]').is('[readonly]') ) {   }else{
+                    $.ajax({
+                        async: false,
+                        type: 'POST',
+                        url: BASE_URL + '/user/checkemailexistsexceptloginuser',
+                        data: {email_id: useremail},
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.output == 'failure') {
+                                    $("#erroremail").show();
+                                    $("#erroremail").html('Entered email id already exists');
+                                    flag=false;
+                            } else {
+                                $("#erroremail").hide();
+                                $("#erroremail").html('');
+                            }
+                        }
+                    });
+                }
+            }
+        }
+        
+   	if(uphonenumber!="" && !uphonenumber.match(numbers)){
+   		$("#errorphonenumber").html("Please enter only numbers");
+   		$("#phonenumber").focus();
+   		flag=false;
+   	}else if(uphonenumber.match(numbers)){
+                      var a = uphonenumber.split(" ").join(""); 
+                      var filter = /^[0-9-,+]+$/;
+                      var intsOnly = /^\d+$/;
+                      if (filter.test(a)) {
+                        var phoneCodeValue = $("#phonecode").val();
+                        //var mobileLength = (phoneCodeValue == '224') ? 9 : 10;
+                        $("#errorMessage_mobile").html('');
+                        $("#errorMessage_mobile").hide();
+                        if (!intsOnly.test($("#phonenumber").val())) {
+                            $("#errorphonenumber").show();
+                            $("#errorphonenumber").html('Please enter a valid mobile number');
+                            flag = false;
+                        }else{
+                        $.ajax({
+                            async: false,
+                            type: 'POST',
+                            url: BASE_URL + '/user/checkcountryphonedegits',
+                            data: {phone_code: phoneCodeValue,phone_digits: $("#phonenumber").val().length,'country_type':'country_code'},
+                            dataType: 'json',
+                            success: function(data) {
+                               if (data.output == 'failure') {
+                                    $('#errorphonenumber').css('display','block');
+                                    $("#errorphonenumber").html('Please enter a valid mobile number');
+                                    flag = false;
+                                }else if (data.output == 'fail') {
+                                    $('#errorphonenumber').css('display','block');
+                                    $("#errorphonenumber").html(data.message);
+                                    flag = false;
+                                }
+                                        
+                            }
+                          });
+                          if ( $('input[name="phonenumber"]').is('[readonly]') ) {  }else{
+                            $.ajax({
+                              async: false,
+                              type: 'POST',
+                              url: BASE_URL + '/user/checkmobileexistsexceptloginuser',
+                              data: {mobile_number: uphonenumber,mobile_code: phoneCodeValue},
+                              dataType: 'json',
+                              success: function(data) {
+                                  if (data.output == 'failure') {
+                                      $('#errorphonenumber').css('display','block');
+                                      $("#errorphonenumber").html('Mobile number already exist');
+                                      flag = false;      
+                                  } else {
+                                      $('#errorphonenumber').css('display','none');
+                                      $("#errorphonenumber").html('');
+                                  }
+                              }
+                          });
+                        }
+                        }
+                      }
+                  }else{
+                    $("#errorphonenumber").html("");
+                }
+             <?php if($usertypeId !='2' && $usertypeId !='3') { ?>                                            
+        if($("#board").val()==""){
+   		$("#errorboard").html("Please select your Board.");
+   		$("#board").focus()
+   		flag=false;
+   	}else{
+   		$("#errorboard").html("");
+   	}
+   	if($("#classnames").val()==""){
+   		$("#errorclassname").html("Please select your Class.");
+   		$("#classnames").focus()
+   		flag=false;
+   	}else{
+   		$("#errorclassname").html("");
+   	}
+             <?php } ?>
+         
+   	if($("#ucountries").val()=="" || $("#states").val()=="") {			
+   		$("#errorcountry").html("Please select the Country and State.");
+   		$("#ucountries").focus()
+   		flag=false;
+   	}else{
+   		$("#errorcountry").html("");
+   	}
+   	if(ucityname!=""){
+   		if(!ucityname.match(letters)){
+   			$("#errorothercity").html("Please enter only alphabets.");
+   			$("#other_city").focus();
+   			flag=false;
+   		}else{
+   			$("#errorothercity").html("");			
+   		}
+   	}
+   
+   	if(flag==false){
+   	$("#starerr").html("All (*) fields are mandatory ");
+   		$('html, body , div .right-content').animate({scrollTop: 0}, 300);
+   		return false;
+   	}else{
+   		$("#updateprofile").submit();
+   	}
+   }
+   $(document).ready(function(){ 
+      
+
+   $("#board").change(function() {
+        
+        var optionString = '<option value="">Select Class</option>';
+        $("#classnames").html(optionString);
+        if($(this).val()){
+            $('#loadImageclass').show();
+            $.ajax({type: 'POST',
+                url: BASE_URL + "/lms/index/custom-containerlist/"+$(this).val(),
+                dataType: 'json',
+                success: function(data) {
+                   $('#loadImageclass').hide();
+                   var optionString = '<select id="classnames" name="classnames" class="select"><option value="">Select Class</option>';
+                   $("#classnames").html(optionString);
+                   $.each(data.options, function(key, obj)
+                   {
+                        optionString += '<option value="'+obj.rack_id+'">'+obj.rack_name+'</option>';
+
+                   })
+                 optionString+='</select><p class="errorfrm1" id="errorclassname">&nbsp;</p>';
+
+                    $('#selectedClass').html(optionString).promise().done(function(){ 
+                            $('#classnames').selectbox({});
+                   
+                     });
+                }
+            });
+      }else{
+      var optionString = '<select id="classnames" name="classnames" class="select"><option value="">Select Class</option>';
+       optionString+='</select><p class="errorfrm1" id="errorclassname">&nbsp;</p>';            
+        $('#selectedClass').html(optionString).promise().done(function(){ 
+                $('#classnames').selectbox({});
+
+         });
+      }
+        
+
+    });
+   
+   
+   
+   $("#states").change(function(){ 		
+   	var stateid=$("#states").val();
+   	var countryid=$("#ucountries").val();		
+   	$.ajax({
+   		type:	'POST',
+   		url:   		BASE_URL+'/user/getcities',
+   		data:	{countryid:countryid,stateid:stateid},
+   		success: function(data){
+   			if(data.output=='success'){ 				
+   				$("#cities").html(data.citynames);
+   			}							
+   		}
+   	});
+   });
+   });
+   function getallcities(){ }	
+</script>
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/website/bootstrap-filestyle.js"></script>
+<script type="text/javascript">
+			
+			$('#image_file').filestyle({
+				icon : false
+			});
+
+</script>
+<style type="text/css">
+.ddlabel{ margin-left: 16px;  position: relative; top: 2px;}
+.dd .ddArrow{ margin-top: -11px}
+.dropdown_reg_custom{ position: relative; top: 4px;}
+</style>

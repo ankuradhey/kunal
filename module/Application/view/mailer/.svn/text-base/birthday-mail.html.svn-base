@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>:: Extramarks Education Pvt. Ltd. ::</title>
+</head>
+
+<body>
+<table width="700" border="0" align="center" cellpadding="0" cellspacing="0" style="border:25px solid #f8ecca; font-family:verdana">
+  <tr>
+    <td colspan="2" style="padding:0;"><a href="http://www.extramarks.com" target="_blank"><img src="{SITE_URL}/images/website/mailer/banner.jpg"></a></td>
+  </tr>
+  <tr>
+  <td colspan="2" style="padding:10px 20px; font-family:verdana; font-size:20px; line-height:26px; color:#333333;">
+  <p style="padding-top:0; margin-top:0;">Dear {STUDENT},</p>
+We Wish you a very happy birthday from the entire team of Extramarks</td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" style="padding:0; font-family:verdana; font-size:16px; line-height:26px; color:#333333;"><img src="{SITE_URL}/images/website/mailer/enjoy-img.jpg"></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center" valign="middle" style="padding:5px 0px; color:#333; font-size:13px; font-family:verdana;">For assistance call <strong>1800-120-5301</strong> or mail us at <a href="mailto:live@extramarks.com"><strong>live@extramarks.com</strong></a> Happy Learning & High Scoring,</td>
+  </tr>
+
+
+  <tr>
+  <td  width="250" align="left" style="padding:10px 20px;">
+    <p><a href="#" style="color:#1c75ba; text-decoration:none;"><strong>Extramark Video tour</strong></a></p>
+	<p><a href="#" style="color:#1c75ba; text-decoration:none;"><strong>Learn More</strong></a></p></td>
+    <td  width="450" style="padding:10px 20px; text-align:left;">
+    <p style="margin-left:50px;"><a href="http://www.extramarks.com" target="_blank" style="text-decoration:none;color:#FF0000">www.extramarks.com</a></p>
+    <table width="0%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <tr>
+        <td style="padding:0px 10px;"><a href="https://www.facebook.com/ExtramarksDigitalEducation" target="_blank"><img src="{SITE_URL}/images/website/mailer/facebook.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="https://plus.google.com/+extramarks" target="_blank"><img src="{SITE_URL}/images/website/mailer/google.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="https://twitter.com/extramarks" target="_blank"><img src="{SITE_URL}/images/website/mailer/twitter.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="https://www.youtube.com/channel/UC7t6bG2oCbKXBm2vyVwCdwQ" target="_blank"><img src="{SITE_URL}/images/website/mailer/youtube.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="mailto:live@extramarks.com"><img src="{SITE_URL}/images/website/mailer/mail.jpg"></a></td>
+        <td style="padding:0px 10px;"><a href="https://www.pinterest.com/extramarksedu/" target="_blank"><img src="{SITE_URL}/images/website/mailer/pinintrest.jpg"></a></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+ 
+  <tr>
+    <td colspan="2" style="padding:10px 20px; font-family:verdana; font-size:14px; line-height:22px; color:#333333;">You have received this mail because you are a registered user of <a href="http://www.extramarks.com/" target="_blank" style="text-decoration:none">www.extramarks.com</a>. If you do not wish to receive such mails from us <a href="mailto:unsubscribe@extramarks.com" style="text-decoration:none;">click here</a> to unsubscribe. </td>
+  </tr>
+</table>
+</body>
+</html>

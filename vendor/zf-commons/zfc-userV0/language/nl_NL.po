@@ -1,0 +1,131 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZfcUser\n"
+"Report-Msgid-Bugs-To: zf-devteam@zend.com\n"
+"POT-Creation-Date: 2014-04-11 21:39+0100\n"
+"PO-Revision-Date: 2014-04-11 21:39+0100\n"
+"Last-Translator: Stijnhau <stijnhau@gmail.com>\n"
+"Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: language/msgIds.php:6
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: language/msgIds.php:7
+msgid "Email"
+msgstr "E-mail adres"
+
+#: language/msgIds.php:8
+msgid "New Email"
+msgstr "Nieuw e-mail adres"
+
+#: language/msgIds.php:9
+msgid "Verify New Email"
+msgstr "Nieuw e-mail adres verificatie"
+
+#: language/msgIds.php:10
+msgid "Display Name"
+msgstr "Bijnaam"
+
+#: language/msgIds.php:11
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: language/msgIds.php:12
+msgid "Password Verify"
+msgstr "Wachtwoord verificatie"
+
+#: language/msgIds.php:13
+msgid "Current Password"
+msgstr "Huidig wachtwoord"
+
+#: language/msgIds.php:14
+msgid "Verify New Password"
+msgstr "Nieuw wachtwoord verificatie"
+
+#: language/msgIds.php:15
+msgid "New Password"
+msgstr "Nieuw wachtwoord"
+
+#: language/msgIds.php:16
+msgid "Please type the following text"
+msgstr "Type de volgende tekst"
+
+#: language/msgIds.php:17
+msgid "Submit"
+msgstr "Verzend"
+
+#: language/msgIds.php:18 view/zfc-user/user/login.phtml:1
+msgid "Sign In"
+msgstr "Aanmelden"
+
+#: language/msgIds.php:19 view/zfc-user/user/register.phtml:1
+msgid "Register"
+msgstr "Registreer"
+
+#: language/msgIds.php:20
+msgid "No record matching the input was found"
+msgstr "Er zijn geen gegevens gevonden die met de invoer overeenkomen"
+
+#: language/msgIds.php:21
+msgid "A record matching the input was found"
+msgstr "Er zijn al gegevens die met de invoer overeenkomen"
+
+#: language/msgIds.php:22
+msgid "Authentication failed. Please try again."
+msgstr "Inloggen mislukt. Probeer het opnieuw."
+
+#: view/zfc-user/user/changeemail.phtml:1
+#, php-format
+msgid "Change Email for %s"
+msgstr "Wijzig het e-mail adres van %s"
+
+#: view/zfc-user/user/changeemail.phtml:3
+msgid "Email address changed successfully."
+msgstr "Het e-mail adres is gewijzigd."
+
+#: view/zfc-user/user/changeemail.phtml:5
+msgid "Unable to update your email address. Please try again."
+msgstr "Het is niet gelukt het e-mail adres te wijzigen. Probeer het nog eens."
+
+#: view/zfc-user/user/changepassword.phtml:1
+#, php-format
+msgid "Change Password for %s"
+msgstr "Wijzig het wachtwoord van %s"
+
+#: view/zfc-user/user/changepassword.phtml:3
+msgid "Password changed successfully."
+msgstr "Het wachtwoord is gewijzigd."
+
+#: view/zfc-user/user/changepassword.phtml:5
+msgid "Unable to update your password. Please try again."
+msgstr "Wachtwoord wijzigen mislukt. Probeer het nog eens."
+
+#: view/zfc-user/user/index.phtml:2
+msgid "Hello"
+msgstr "Hallo"
+
+#: view/zfc-user/user/index.phtml:3
+msgid "Sign Out"
+msgstr "Afmelden"
+
+#: view/zfc-user/user/login.phtml:31
+msgid "Not registered?"
+msgstr "Niet geregistreerd?"
+
+#: view/zfc-user/user/login.phtml:31
+msgid "Sign up!"
+msgstr "Registreren!"
+
+#: view/zfc-user/user/register.phtml:5
+msgid "Registration is disabled"
+msgstr "Registratie is uitgeschakeld."

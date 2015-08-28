@@ -1,0 +1,77 @@
+<?php  
+$popupId       = '';
+$user          = $this->user;
+$checkpassword = $this->passwordupdate;
+$checkprofile  = $this->Profileupdate;
+$checkEmpackg  = $this->checkEmpackage;
+
+$mobileLoginFlag = $this->mobileLoginFlag;
+
+if(!empty($checkpassword))
+{
+   $popupId = "location11"; //for open profile, activatepackage section
+}else{
+    $popupId = "location10";//for open password,profile, activatepackage section
+}
+
+
+$social = $this->SocialLogin();
+$social = count($social);
+
+
+ if($social >0){
+     if(empty($checkprofile))
+            $popupId = "location11";//for open profile, activatepackage section
+            else
+                $popupId = "loc";
+ }
+ 
+   if(!empty($checkpassword) && !empty($checkprofile))
+   {
+        if(empty($checkEmpackg))
+        {
+           $popupId = "loc";//For empty popupId to open
+        }else{
+           $popupId = $popupId; 
+        }
+      
+    $configvalue = $this->configvalue();                  
+    if(isset($configvalue['registration_drive']['package_drive']) && strtolower($configvalue['registration_drive']['package_drive']) =='off'){	
+        $popupId = "loc";
+    }
+        
+    }
+ 
+
+?>
+ <script>
+	 $(window).load(function() {    
+         <?php if($mobileLoginFlag == 0) { ?>    
+            var popupId = "<?php echo "location_otp"; ?>";
+            $('#'+popupId).modal('show');
+            return false;
+              <?php } ?>
+          <?php if(!empty($checkEmpackg)) { ?>       
+
+        var popupId = "<?php echo $popupId; ?>";
+            $('#'+popupId).modal('show');
+            
+        <?php if(!empty($checkprofile)){ ?>
+                    $('.updateProfile').hide();
+                    $('.activatePackage').show();
+                    $('#packageTab').addClass('active');
+                    $('#profileTab').removeClass('active');  
+                //    $('.activationTabPopup li').first().remove();
+                    $(".activatePackage p").css({"margin-top":"37px", "padding-left":"12px"})
+    <?php }
+ }else{ 
+     $popupId = (!empty($checkprofile) &&  !empty($checkpassword))?'locs':$popupId;
+     ?>
+        
+        
+        var popupId = "<?php echo $popupId; ?>";
+            $('#'+popupId).modal('show');
+         <?php } ?>
+                 
+    });
+ </script>   

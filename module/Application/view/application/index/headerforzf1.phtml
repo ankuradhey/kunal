@@ -1,0 +1,94 @@
+<style>
+.close{ font-weight: normal; font-size: 32px; float: right; position: static}
+.close:hover, .close:focus{ color: #b10000; opacity: 1}
+.modal-header .close{ margin-top: -4px}	
+h4.modal-title{ font-size: 18px;}
+.form-control{height: 40px; border: 1px solid #d3d3d3; box-shadow: 0 0 0 rgba(0, 0, 0, 0) inset; -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0) inset; -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0) inset;
+
+ display: block;
+  width: 100% !important;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.custom-lightbox .control-label{ float: left; width: 70px; padding-left: 0; margin-right: 0}
+.form-group label{ padding-top: 0}
+</style>
+<?php  echo $this->render('layout/header.phtml'); 
+    ?>
+            <?php //echo $this->NavLoginWidget(); ?>
+        <?php  ?>  <div class="modal fade custom-lightbox" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Login</h4>
+                    </div>
+                    <ul class="login-social clearfix">
+                        <li class="col-xs-4"><a onClick="window.location = '<?php echo $this->basePath(); ?>/user/login/facebook'" href="javascript:;"><i class="icons-facebook img-circle"></i><span>Facebook</span></a></li>
+                        <li class="col-xs-4"><a onClick="window.location = '<?php echo $this->basePath(); ?>/user/login/twitter'" href="javascript:;"><i class="icons-twitter img-circle"></i><span>Twitter</span></a></li>
+                        <li class="col-xs-4"><a onClick="window.location = '<?php echo $this->basePath(); ?>/user/login/google'" href="javascript:;"><i class="icons-google img-circle"></i><span>Google</span></a></li>
+                    </ul>
+                    
+                        <?php echo $this->zfcUserLoginWidget(); ?>   
+
+                  <?php 
+                        /*----Ashutosh----(after register redirection for custom pages)*/
+                        $uri = $_SERVER['REQUEST_URI'];
+                        //$controller = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('controller', 'index');
+                        //$action = $this->getHelperPluginManager()->getServiceLocator()->get('application')->getMvcEvent()->getRouteMatch()->getParam('action', 'index'); 
+                        if(strpos($uri,'career-assessment-program') != ''){
+                            $loginRedirect = '/cap-package';
+                        }else if(strpos($uri,'cap-package') != '' || strpos($uri,'career-counseling-test') != ''){
+                            $loginRedirect = '/cap-package';
+                        }else if(strpos($uri,'sat-exam-preparation') != ''){
+                            $loginRedirect = '/diagnostic';
+                        }else if(strpos($uri,'sat') != '' || strpos($uri,'vocabularybooster') != '' || strpos($uri,'fulllengthtest') != '' 
+                                || strpos($uri,'performancetracker') != '' || strpos($uri,'practiceexercises') != ''){
+                            $loginRedirect = '/diagnostic';
+                        }else{
+                            $loginRedirect = '';
+                        }
+                    ?>
+                    
+                </form>
+                
+                </div>
+            </div>
+        </div>
+        
+        
+ <div class="modal fade custom-lightbox forget-popup" id="exampleModalforget" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Forgot Password?</h4>
+      </div>
+    <div class="modal-body">
+  <p id="enter_email_p">Enter your email to reset your password:</p>     	
+ <form class="form-horizontal">
+  <div class="form-group successMessage" >
+    <label for="inputEmail3" class="col-sm-2 control-label">Email<sup>*</sup></label>
+    <div class="col-sm-10 padd-right">
+        <input type="email" placeholder="Please Enter Your Email ID" id="fgtemail" name="fgtemail" onKeyPress="return forgotSubmit(event)" value="" class="form-control" >
+        <span style="position: relative; display: none;" id="erroremailreset" class="valid-error"></span>
+    </div>
+  </div>
+  <div class="form-group clearfix successMessage">
+      <button type="button" class="btn btn-primary" onClick="resetPassword();">RESET PASSWORD</button>	
+  </div>
+     <div class="form-group clearfix erroremailonforgot" style="color: green; text-align:center;">
+        <span class="valid-error" id="erroremailonforgot" style="color: green; display: none;"></span>
+     </div>
+  </form>
+      </div>
+    </div>
+  </div>
+</div>

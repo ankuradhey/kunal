@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * Global Configuration Override
+ *
+ * You can use this file for overriding configuration values from modules, etc.
+ * You would place values in here that are agnostic to the environment and not
+ * sensitive to security.
+ *
+ * @NOTE: In practice, this file will typically be INCLUDED in your source
+ * control, so do not include passwords or other sensitive information in this
+ * file.
+ */
+include( 'vendor/PHPMailer_5.2.4/sendmail.php');
+include( 'vendor/PHPExcel/Classes/PHPExcel.php');
+include( 'vendor/PHPExcel/Classes/PHPExcel/IOFactory.php');
+include( 'vendor/PHPExcel/Classes/PHPExcel/Cell.php');
+return array(
+    'service_manager' => array(
+        'factories' => array(
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+            'SlaveAdapter' => 'Common\Factory\Model\SlaveAdapterServiceFactory',
+            'SlaveAdapter2' => 'Common\Factory\Model\SlaveAdapter2ServiceFactory',
+            'SlaveAdapter3' => 'Common\Factory\Model\SlaveAdapter3ServiceFactory'
+        ),
+        'abstract_factories' => array(
+            'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
+        ),
+    ),
+    'constant' => array(
+        'contentPath' => 'http://school.extramarks.com/content_data/',
+        'templatePath' => 'http://school.extramarks.com/template/',
+        'webhost'=>'http://school.extramarks.com',
+        'emplayer'=>'http://school.extramarks.com/emplayer/emplayer.php?crsid=',
+        'emplayerPath'=>'http://school.extramarks.com/emplayer/',
+    ),
+    'websiteMode'=> 'lms',
+    'default_content' => array(
+        'board' => 'free',
+        'class' => 'free',
+        'subject' => 'free',
+        'sub subject' => 'free',
+        'chapter' => 'block',
+        'topic' => 'free',
+        'service'=>'free',
+        'content'=>'block',
+    ),
+    'product'=> array('productId'=>'1'),
+    'daily_report_to' => 'neha.dixit@extramarks.com,alok.vishwakarma@extramarks.com,karunn@extramarks.com',
+    'ftp_config' => array(
+        'junior_board_name' => 'K5',
+        'FTP_SERVER' => '10.1.9.99',
+        'FTP_USERNAME' => 'exmtest',
+        'FTP_PASSWORD' => 'exm@123',
+        'WEBSITE_ENV' => 'development'
+    ),
+    'social_authentication' => array(
+        'googleClientId' => '222081534395-phjr6r8j7v6bbl0psdqpeaqu87eos2js.apps.googleusercontent.com',
+        'googleSecret' => 'fUyogu50KxNZrhnes0BpbIxP',
+        'twitterConsumerKey' => 'J0umXT2j0xt9tgIIh52APTcxR',
+        'twitterConsumerSecret' => 'Et8OCrMKQG1shCo5uLslV6aXX5k0nTPgcC7xsosSEiHHNcynL2',
+        'facebookClientId' => '640256979338806',
+        'facebookSecret' => '5ef0d46c478dc2b248b3406ecaaba6b9'
+        
+    )
+);
+
+

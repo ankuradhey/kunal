@@ -1,0 +1,21 @@
+<?php if(count($this->getreply)>0){?>
+<?php $replyanswers=array();foreach($this->getreply as $replyanswer){ $replyanswers=$replyanswer;?>
+<div class="view-content">
+<h5><?php  echo $replyanswer->reply_message;?></h5>
+<ul class="clearfix">
+
+<li><?php  echo ucfirst($replyanswer->first_name);?></li>
+<li><?php  echo $replyanswer->board_name;?></li>
+<li><?php  echo $replyanswer->class_name;?></li>
+<li><a href="javascript:void(0)" onclick="downloadfile('<?php echo $replyanswer->pdf_file_name; ?>','<?php echo $replyanswer->up_down_id; ?>')" title="downloads this file"><?php  echo ($replyanswer->file_name !='')?$replyanswer->file_name:$replyanswer->pdf_file_name; ?></a></li>
+</ul>
+</div>
+<?php } ?>
+<?php }else{ ?>
+<div class="view-content">
+<ul class="clearfix">
+    <li>There are no comments or answers.</li>
+</ul>
+</div>
+<?php }?>
+

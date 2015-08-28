@@ -1,0 +1,207 @@
+<link rel="stylesheet" href="<?php echo $this->basePath("css/website/note.css"); ?>" type="text/css" media="screen" />
+<style>
+    .sbOptions{background: #f4f4f4;}
+</style>
+<div id="content" class="note-page">
+    <div class="container">
+        <div class="row">
+            <div class="note-content">
+                <div class="test-breadcrumbs">
+                    <ul>
+                        <li><?php echo $this->parentlist[0]['rack_name']; ?> ></li>
+                        <li><a href="#"><?php echo $this->parentlist[1]['rack_name']; ?> ></a></li>
+                        <li><a id="subjectName" href="#"><?php echo $this->subjectName; ?></a>
+                            &nbsp;<?php
+                            if ($this->userName != '') {
+                                echo 'Notes of ' . $this->userName;
+                            }
+                            ?>
+                        </li>
+                    </ul>	
+                    <?php if (isset($_GET['studentId']) && $_GET['studentId'] != '') { ?>
+                        <span>
+                            <a href="<?php echo $this->Url('my-students') ?>">My Students</a>
+                        </span>
+                    <?php } ?>
+                </div>
+                <?php
+                $value = '';
+                if ($this->getUserId == '') {
+                    $userId = $this->userId;
+                    $value = 0;
+                } else {
+                    $userId = $this->getUserId;
+                    $value = 1;
+                }
+                ?>
+                <div class="note-innercontent">
+                    <div class="clearfix form-group" id="notesDiv">
+                        <div class="col-sm-5 text-right">Select your Subject</div>
+                        <?php if (count($this->subjects) != 0) { ?>
+                            <div class="col-sm-4"><select class="select" name="sub-select" id="sub-select" onchange="getnotes('<?php echo $this->navigationarray[0] . "-" . $this->navigationarray[1] . "-" . $this->navigationarray[2] . "-" . $this->navigationarray[3]; ?>', '0', '<?php echo $userId ?>',<?php echo $value ?>)">
+                                <?php foreach ($this->subjects as $subject) { ?>
+                                    <option value="<?php echo $subject['id'] . '-/' . $subject['subject_name']; ?>" <?php if ($this->subjects[0]['id'] == $subject['id']) { ?> selected="selected" <?php } ?> > <?php echo $subject['subject_name']; ?></option>
+                                    <?php
+                                }
+                                ?>
+                                </select></div>
+                            <?php
+                        }
+                        ?>
+                       </div>
+                    <div class="clearfix form-group" id="childSubjects">
+                        <?php if (count($this->currentChildSubjects) > 1) { ?>
+                    
+                        <div class="col-sm-5 text-right">Select Title</div>
+                           <?php if (count($this->subjects) != 0) { ?>
+                                <div class="col-sm-4"><select class="CostomSelect" name="sub-select" id="sub-select1" onchange="getnotes('<?php echo $this->navigationarray[0] . "-" . $this->navigationarray[1] . "-" . $this->navigationarray[2] . "-" . $this->navigationarray[3]; ?>', '1', '<?php echo $userId ?>',<?php echo $value ?>)">
+                                        <?php foreach ($this->currentChildSubjects as $currentChildSubjects) { ?>
+                                        <?php foreach ($this->currentChildSubjects as $currentChildSubjects) { ?>
+                                            <option value="<?php echo $currentChildSubjects['id'] . '-/' . $currentChildSubjects['chapter_name']; ?>"><?php echo $currentChildSubjects['chapter_name']; ?></option>
+                                        <?php }break; ?>	
+                                    <?php } ?>
+                                    </select></div>
+                        
+                                <?php
+                            }
+                            ?>
+
+                        <?php
+                            }
+                            ?>
+                    </div>
+                    <hr style="border-color:#d3d3d3">
+                    <div class="table-responsive common-border" id="notesAjax">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>S No.</th>
+                                <th>Latest Updated Date</th>
+                                <th>Chapter</th>
+                                <th>No. of Notes</th>
+                                <?php
+                                if ($this->getUserId == '') {
+                                    ?>
+                                    <th>Actions</th>
+                                    <?php
+                                }
+                                ?>
+                            </tr>
+                            <?php
+                            $count = 0;
+                            if (isset($this->notes) && count($this->notes) != 0) {
+                                foreach ($this->notes as $key => $notes) {
+                                  //  echo "<pre />"; print_r($notes);
+                                    $count +=1;
+                                    $nottextt_id = explode('-/', $notes[1]);
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $count; ?></td>
+                                        <td><?php echo $notes['updated_date']; ?></td>
+                                        <td><?php echo $key; ?></td>
+                                        <td><?php echo $notes['totalNotes']; ?></td>
+                                        <?php if ($this->getUserId == '') { ?>
+                                            <td>
+                                                <a data-whatever="@mdo" data-target="#note-popup" data-toggle="modal" class="add-notes" onclick="opennotespopup(<?php echo $nottextt_id[0]; ?>, '<?php echo $notes['container_id'] . '-/' . $notes['chapter_id']; ?>',<?php echo $notes['totalNotes']; ?>);" href="javascript:void(0);">View</a><b class="add-notes">&nbsp;/&nbsp;</b><a class="add-notes" onclick="deleteNotes('<?php echo $notes['container_id'] . '-/' . $notes['chapter_id']; ?>',<?php echo $this->subjectId; ?>, '<?php echo $this->navigationarray[0] . "-" . $this->navigationarray[1] . "-" . $this->navigationarray[2] . "-" . $this->navigationarray[3]; ?>', 'viewPage');" href="javascript:void(0);">Delete</a>
+                                            </td>
+                                        <?php } ?>
+                                    </tr>
+                                    <?php
+                                } 
+                            } else {
+                                ?>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="no-record" ><p>No records found</p></div>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                        </table>
+                        <div class="modal fade custom-lightbox note-Popup notes-popup" id="notes-popup"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <?php
+                                        $nottext = array();
+                                        $count = 0;
+                                        if (isset($this->notes) && count($this->notes) != 0) {
+                                            foreach ($this->notes as $key => $notess) {
+                                                $count +=1;
+                                                ?>
+                                                <?php $nottext = explode('-/', $notess[1]); ?>
+                                                <h4 class = "modal-title" id="chapterName<?php echo $nottext[0]; ?>" style="display:none;"><?php echo $key . '-' ?>- <strong id="NotesNumber<?php echo $nottext[0]; ?>">1</strong></h4>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                        <a href = "#" class = "add-notes">
+                                            <img src = "<?php echo $this->basePath('images/website/note/notes_add_button.png'); ?>" alt = "" />
+                                        </a>
+                                    </div>
+                                    <div class = "modal-body">
+                                        <?php
+                                        $nottext = array();
+                                        $count = 0;
+                                        if (isset($this->notes) && count($this->notes) != 0) {
+                                            foreach ($this->notes as $key => $notess) {
+                                                $count +=1;
+                                                ?>
+                                                <?php $nottext = explode('-/', $notess[1]); ?>
+                                                <p id="saveNotesSuccusses" style="color: #257CB5;"></p>
+                                                <div class='add_txt'>
+                                                    <textarea id="notesText<?php echo $nottext[0]; ?>" class='notes_popup-txxarea' ><?php echo $nottext[1]; ?></textarea>
+                                                </div>
+                                                <input type="hidden" id="notesChapterId<?php echo $nottext[0]; ?>" name="notesChapterId<?php echo $nottext[0]; ?>" value="<?php echo $notess['chapter_id']; ?>">
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class = "model-footer clearfix">
+                                        <div class = "note-footer-letf">
+                                            <a href = "javascript:void(0);" class = "save"  onclick="saveNotes('<?php echo $this->navigationarray[0] . "-/" . $this->navigationarray[1] . "-" . $this->navigationarray[2] . "-" . $this->navigationarray[3]; ?>',<?php echo $this->subjectId; ?>)"><img src = "<?php echo $this->basePath('images/website/note/notes_save_image.png'); ?>" alt = "" /></a>
+                                            <!--<a href = "javascript:void(0);" class = "print" onclick="printNotes(<?php echo $this->subjectId ?>,<?php echo $nottext[0]; ?>)"><img src = "<?php echo $this->basePath('images/website/note/notes_print_button.png'); ?>" alt = "" /></a>-->
+                                            <a href = "javascript:void(0);" class = "delete" onclick="deleteNotes('',<?php echo $this->subjectId; ?>, '', 'popUpNotes')"><img src = "<?php echo $this->basePath('images/website/note/notes_delete_button.png'); ?>" alt = "" /></a>
+                                        </div>
+                                        <div class = "note-footer-right">
+                                            <a href = "#" class = "next" onclick="getNotesAction('Next',<?php echo $this->subjectId ?>, 'notes')" >Next <img src = "<?php echo $this->basePath('images/website/note/notes_right_arrow.png'); ?>" alt = "" /></a>
+                                            <a href = "#" class = "prev" onclick="getNotesAction('Prev',<?php echo $this->subjectId ?>, 'notes')"><img src = "<?php echo $this->basePath('images/website/note/notes_left_arrow.png'); ?>" alt = "" /> Prev.</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hidPrevNext" name="hidPrevNext" value="0"/>
+<input type="hidden" id="hidPrevNextnote_id" name="hidPrevNextnote_id" value=""/>
+<input type="hidden" id="hidnote_id" name="hidnote_id" value=""/>
+<input type="hidden" id="hidtotalNotes" name="hidtotalNotes" value=""/>
+<input type="hidden" id="hidPresentNoteid" name="hidPresentNoteid" value=""/>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#responsive_menu .subject a").addClass('active');
+        $("#ms1item").removeClass('opens');
+        $(".normals").html('');
+    });
+    $(document).ready(function() {
+        var childValue = '';
+        var value = $('#sub-select').val();
+
+        if ($('#sub-select1').length) {
+            childValue = $('#sub-select1').val();
+        }
+        if (childValue != '') {
+            return getnotes('<?php echo $this->navigationarray[0] . "-" . $this->navigationarray[1] . "-" . $this->navigationarray[2] . "-" . $this->navigationarray[3]; ?>', '1', '<?php echo $userId ?>',<?php echo $value ?>);
+        } else {
+            return getnotes('<?php echo $this->navigationarray[0] . "-" . $this->navigationarray[1] . "-" . $this->navigationarray[2] . "-" . $this->navigationarray[3]; ?>', '0', '<?php echo $userId ?>',<?php echo $value ?>);
+        }
+    });
+
+</script>

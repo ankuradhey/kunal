@@ -1,0 +1,71 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <?php $filepath = explode("module", __FILE__);
+    $extramarkcss = $filepath[0] . "public/css_admin/extramark.css";
+    $extramarkjs = $filepath[0] . "public/js_admin/extramark.js";
+    ?>
+
+    <!-- <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" /> -->
+    <title>Extramarks</title>   
+    <link rel="shortcut icon" href="<?php echo $this->basePath() ?>/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo $this->basePath() ?>/favicon.ico" type="image/x-icon">
+   
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->cdn() ?>/css/website/bootstrap.css ">
+    
+     <link rel="stylesheet" type="text/css" href="<?php echo $this->cdn() ?>/css/website/global.css ">
+     <link rel="stylesheet" type="text/css" href="<?php echo $this->cdn() ?>/css/website/dealer.css">	
+     
+    <script src="<?php echo $this->basePath() ?>/js_admin/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="<?php echo $this->basePath() ?>/js/website/bootstrap.js" type="text/javascript"></script>   
+    <script> var BASE_URL = '<?php echo $this->basePath(); ?>';</script>    
+
+</head>
+<div id="wrapper">
+<!--Header section start here-->
+<header> 
+ <div class="container">
+  <div class="row">
+   <div class="header-top clearfix" style="height:43px">
+       <div class="logo"><a href="#"><img src="<?php echo $this->cdn() ?>/images/extramarks-logo.png" alt="" title="" /></a></div>
+   </div>
+   	
+  </div>	
+ </div>
+ <div class="header-nav">
+<div class="header-nav">
+  <div class="container">
+  <div class="row">
+  <nav class="collapse navbar-collapse bs-navbar-collapse custom-nav">
+     <ul class="nav navbar-nav">
+     <?php if(isset($_SESSION['dealerdata'])){ ?>
+     <li class="guest last"><span style="color:white;"><?php echo ucfirst($_SESSION['dealeremail']); ?></span></li>
+     <li><a href="<?php echo $this->basePath() ?>/dealer/index/dealerlogout" style="color:white; font-size:14px;"> [Logout]</a></li>
+     <?php } else { ?>
+     <!--<li class="guest last"><a href="<?php echo $this->basePath() ?>/dealer"><span></span> Login</a></li>-->
+     <?php } ?>
+        </nav>
+  </div>
+  </div>
+  </div>
+</div>
+</header>
+
+<!--Header section end here-->	
+
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	 $(".CostomSelect").each(function(){
+            $(this).wrap("<span class='select-wrapper'></span>");
+            $(this).after("<span class='holder'></span>");
+        });
+        $(".CostomSelect").change(function(){
+            var selectedOption = $(this).find(":selected").text();
+            $(this).next(".holder").text(selectedOption);
+        }).trigger('change');					   
+});
+
+</script>
+

@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Extramarks LIVE</title>
+<style type="text/css">
+body {margin: 0px;}
+</style>
+</head>
+
+<body>
+<table width="730" border="0" align="center" cellpadding="0" cellspacing="0" style="border:#999 1px solid;">
+  <tr style="background-color:#272959; color:#FFFFFF;">
+    <td colspan="2" style="padding:15px 15px; text-align:justify; font-size:18px; line-height:18px;"><strong>Dear {USER_NAME},</strong></td>
+  </tr>
+  <tr style="background-color:#eaeaea">
+    <td colspan="2" style="padding:10px 15px 0px 15px; text-align:justify; font-family:verdana; font-size:14px; line-height:24px;"><p>Beyond the  school gates, there is a very important role that parents have to play. Today&rsquo;s children are growing in a rapidly changing digital age that is very different from what it used to be before. A variety of technologies are all around us so it becomes nearly impossible to keep children at bay. It takes no time for a child to gain fluency on the modern technology. Therefore as Parents, it is vital to realize, when used wisely, technology and media can support effective learning and optimize the potential for learning and development. Extramarks Live understands every parent and allows them to analyze a child&rsquo;s academic progress and content knowledge through a unique mentoring program. &lsquo;Mentor&rsquo; enables the parent to evaluate the child&rsquo;s worksheets and also give feedbacks for a better performance next time.<br>
+    </p></td>
+  </tr>
+  <tr style="background-color:#eaeaea">
+    <td colspan="2" valign="top" style="padding:0px 15px; text-align:justify; font-size:14px; line-height:18px;"><table width="750" border="0" cellspacing="0" cellpadding="5">
+      <tr>
+        <td colspan="2" align="left" valign="middle"><span style="padding:10px 15px 0px 0px; text-align:justify; font-family:verdana; font-size:14px; line-height:24px;">With your free registered account at Extramarks LIVE, as a parent you will be able to:</span></td>
+        </tr>
+      <tr>
+        <td width="7" align="left" valign="middle">&nbsp;</td>
+        <td width="723" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+          <tr>
+            <td width="12" align="left" valign="middle"><img src="{SITE_URL}/images/website/mailer/sub-arror.jpg" width="12" height="11" alt=""/></td>
+            <td width="681" align="left" valign="top" style="font-family:verdana">Supervise and track your child&#8217;s progress</td>
+            </tr>
+          <tr>
+            <td align="left" valign="middle"><img src="{SITE_URL}/images/website/mailer/sub-arror.jpg" width="12" height="11" alt=""/></td>
+            <td align="left" valign="middle" style="font-family:verdana">Identify the problem areas</td>
+            </tr>
+          <tr>
+            <td align="left" valign="top"><img src="{SITE_URL}/images/website/mailer/sub-arror.jpg" width="12" height="11" alt=""/></td>
+            <td align="left" valign="top" style="font-family:verdana">Monitor the study hours of your child</td>
+            </tr>
+          <tr>
+            <td align="left" valign="middle"><img src="{SITE_URL}/website/images/mailer/sub-arror.jpg" width="12" height="11" alt=""/></td>
+            <td align="left" valign="top" style="font-family:verdana">Evaluate your child&#8217;s performance</td>
+            </tr>
+          <tr>
+            <td align="left" valign="middle"><img src="{SITE_URL}/images/website/mailer/sub-arror.jpg" width="12" height="11" alt=""/></td>
+            <td align="left" valign="top" style="font-family:verdana">Improve your child&#8217;s learning graph</td>
+          </tr>
+          </table></td>
+      </tr>
+  </table></td>
+  </tr>
+  <tr style="background-color:#eaeaea">
+    <td colspan="2" style="padding:0px 15px; text-align:justify; font-size:14px; line-height:22px; font-family:verdana;"><p><strong>Our three way approach of Learn, Practice and Test will help your child comprehend,analyse and evaluate his learning.</strong></p>
+      <p><strong>LEARN:</strong> Challenging and difficult concepts are made simpler for your child through stimulating and engaging animations, quick study and lessons.</p>
+      <p> <strong>PRACTICE:</strong> Ample amount of practice is provided through solved papers,virtual labs, value based questions, High Order Thinking Skills questions and much more!</p>
+      <p> <strong>TEST:</strong> Concept knowledge can be assessed well through a range of MCQs, CCE based short and long questions and various interesting game based exercises.</p>
+      <p> Access first chapter of your chosen class absolutely free of cost!</p>
+      <p>Join Extramarks LIVE and make learning easy and effective for your child.</p>
+    <p> Hurry! Subscribe now to avail great discounts.</p></td>
+  </tr>
+  <tr style="background-color:#eaeaea">
+    <td colspan="2" style="padding:0px 10px; text-align:justify; font-size:14px; line-height:18px;"><table width="750" border="0" cellspacing="0" cellpadding="5">
+      <tr style="width:375px">
+        <td align="left" valign="middle" style="line-height:20px"><strong style="padding-left:0px; font-family:verdana"> Email :</strong> <a href="mailto:live@extramarks.com" style="text-decoration:none">live@extramarks.com</a> <a href="http://www.extramarks.com/contact-us" target="_blank" style="text-decoration:none"><strong style="padding-left:460px; font-family:verdana">HELPDESK</strong></a></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td width="232" rowspan="2" style="padding:0px 20px; text-align:left"><a href="http://www.extramarks.com/" target="_blank"><img src="{SITE_URL}/images/website/mailer/logo.gif" width="149" height="155" alt=""/></a></td>
+    <td width="548" height="118" align="left" valign="middle"><img src="{SITE_URL}/images/website/mailer/tex1.jpg" alt="" width="360" height="44"/><br>
+&nbsp; <a href="http://www.extramarks.com/product-tour" target="_blank"><img src="{SITE_URL}/images/website/mailer/producttour.jpg" width="166" height="36" alt=""/></a>&nbsp;&nbsp;<a href=" http://www.extramarks.com/easy-effective" target="_blank"><img src="{SITE_URL}/images/website/mailer/learnhow.jpg" width="141" height="37" alt=""/></a></td>
+  </tr>
+  <tr>
+    <td style="padding:5px 10px; text-align:left"><span style="font-size:18px;font-family:verdana;">Call <strong>1800-102-5301</strong> or visit <strong><a href="http://www.extramarks.com/" style="color:#FF0004; text-decoration:none" target="_blank">www.extramarks.com</a></strong></span></td>
+  </tr>
+</table><br>
+<div align="center" style="font-size:11px;font-family:verdana; color:#333333; padding:10px 0px;">Do not wish to receive these mails, then please send us a mail at <a href="mailto:live@extramarks.com" title="unsubscribe@extramarks.com">unsubscribe@extramarks.com</a> with the subject <strong>"Unsubscribe".</strong></div>
+</body>
+</html>
