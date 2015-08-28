@@ -1,6 +1,0 @@
-<iframe id="fulscr3" src="/emplayer/emplayer.php?crsid=4322" webkitallowfullscreen='true' mozallowfullscreen='true' allowfullscreen='true' class="VideoIframe" ></iframe>
-<iframe id="fulscr4" src="/emplayer/emplayer.php?crsid=4323" webkitallowfullscreen='true' mozallowfullscreen='true' allowfullscreen='true' class="VideoIframe" ></iframe>
-<div class="video_btns">
-			<a href="javascript:void(0)" id="btn3">Senior Content</a>
-			<a href="javascript:void(0)" id="btn4">Junior Content</a>
-</div>

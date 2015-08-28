@@ -1,8 +1,0 @@
-K 10
-svn:ignore
-V 38
-.travis.yml
-.gitignore
-.coveralls.yml
-
-END

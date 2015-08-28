@@ -1,9 +1,0 @@
-<?php echo $this->doctype(); ?>
-<?php  echo $this->render('layout/header_dealer.phtml'); ?> 
-    <body>
-        
-        <?php
-        echo $this->content;       
-        ?>
-    </body>
-</html>

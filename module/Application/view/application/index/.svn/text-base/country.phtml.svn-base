@@ -1,7 +1,0 @@
-<select tabindex="5" name="country_name" class="custom-selectsh" id="country_name" onchange="changeLearn();">
-<?php foreach ($this->countryList as $country) {
-	
-    echo "<option>$country->countryName</option>";
-}?>
-
-</select>
