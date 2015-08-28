@@ -64,45 +64,7 @@ class IndexController extends AbstractActionController
     	return $this->entityManager;
     }
    public function indexAction()
-    {  
-//        $session_user = new Container('maskedEmailSession');
-//        $session_user->getManager()->getStorage()->clear('maskedEmailSession');
-         $configdetail = $this->getServiceLocator()->get('config');
-          $mode = $configdetail['websiteMode'];
-         
-           if($mode == 'website')
-            {
-                $this->layout('layout/layout_v1');
-            }
-        
-        $repository = $this->getServiceLocator()->get("countrydetails");
-        $repository->listOf();
-        $ticker = $this->getServiceLocator()->get('Assessment\Model\TickerTable');         
-         $maskdata = $ticker->getAllActivemasks();
-         $tickerdata = $ticker->getAllActiveTicker('text');
-         $maskdata = $maskdata->current();
-         $tickerdata = $tickerdata->current();          
-       // $country=new Countrydetails();
-        //$country->listOf();
-      //  $foo = $this->forward()->dispatch('index', array('action' => 'country'));
-          
-        $packagestatustable = $this->getServiceLocator()->get('Package\Model\TpackagecategoryTable');
-        $packagestatus=$packagestatustable->getPackagecategory();
-        foreach($packagestatus as $key=>$value){
-            $category_status[$value->id]=$value->status;
-        }
-        $view =  new ViewModel(array(
-             'maskdata' =>$maskdata,
-            'tickerdata' =>$tickerdata,
-            'category_status'=>$category_status
-        ));
-       if($mode == 'website'){
-             $view->setTemplate('website/index/index_v1.phtml'); 
-             return $view;   
-           }else{
-             return $view;
-		   }
-    }
+    {}
     
     public function headerforzf1Action(){
         $result = new ViewModel();

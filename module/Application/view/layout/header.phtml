@@ -1,111 +1,13 @@
-<?php 
-if(@$_SESSION['tabletuser']['tabletactive']=='0'){?>
-<script type="text/javascript">
-    $(document).ready(function(){	
-	return askpasswordpopuptablet('forgotablet');	
-});  
-</script>
-<?php }?>
- <?php   if(isset($_SESSION['tabletuser']['email'])){
-             $_SESSION['tabletuser']['email'];
-        }if(isset($_SESSION['tabletuser']['user_name'])){
-              $_SESSION['tabletuser']['user_name'];
-        }
-         unset($_SESSION['tabletuser']['tabletactive']);
-       
-?>
-<header id="header">
-                <div id="mview">
-                    <div class="headerTopleft">
-                        <div class="headerCountry">
-                            <?php
-                            $this->basePath = $this->basePath();
-                            ?>
-                            <?php if($this->zfcUserIdentity()){ ?>
-                            <div id="search">
-                                <input type="text" id="searchValue" name="searchValue" placeholder="<?php
-                                       if (@$_SESSION['user']['searchtext'] != '') {
-                                       echo @$_SESSION['user']['searchtext'];
-                                       } else {
-                                       ?>Search...<?php } ?>" size="40">
-                                <input type="button" id="searchbutton" value="&nbsp;" class="searchbutton" onClick="searchResults('')">
-                                <script>
-                                    $("#searchValue").keyup(function(event) {
-                                        if (event.keyCode == 13) {
-                                            $("#searchbutton").click();
-                                        }
-                                    });
-                                </script>
-                            </div>
-                            <?php } else { ?>
-                            <div>
-                                <div id="search">
-                                    <input type="text" id="searchValue" name="searchValue" placeholder="<?php
-                                           if (isset($_SESSION['user']['searchtext']) && $_SESSION['user']['searchtext']!= '') {
-                                           echo $_SESSION['user']['searchtext'];
-                                           } else {
-                                           ?>Search...<?php } ?>" size="40">
-                                    <input type="button" id="searchbutton" value="&nbsp;" class="searchbutton" onClick="searchResults('')">
-                                    <script>
-                                        $("#searchValue").keyup(function(event) {
-                                            if (event.keyCode == 13) {
-                                                $("#searchbutton").click();
-                                            }
-                                        });
-                                    </script>
-                                </div>
-                                <div class="countrycontain">
-                                    <?php
-                                    if (!isset($_SESSION['ip_countrycode']))
-                                        $_SESSION['ip_countrycode'] = 'in';
-                                    ?>
-                                    <div class="itemNameHead mtop16"> <span class="flagView"> <a href="javascript:void(0);" id="trigger_select"><img width="30" id="imagechange" src="<?php echo $this->basePath ?>/images/flags/<?php echo strtolower($_SESSION['ip_countrycode']); ?>_32.png" alt="Flag" /></a> </span> </div>
-                                    <label>
-                                        <?php
-					                         $objectsList = $this->CountryList('2');
-                                        ?>
-                                        <select name="country_name" class="custom-selectsh" id="country_name"  >
-                                            <?php
-                                            if (count($objectsList) > 0) {
+<section class="topbar">
+    <ul class="container-fluid top-menu">
+        <li class="col-md-4">
 
-                                                foreach ($objectsList as $Countries) {
-                                                    ?>
-                                                    <?php if (isset($_SESSION['ip_countryname']) && strtolower($_SESSION['ip_countryname']) == strtolower($Countries->getNiceName())) { ?>
-
-                                                    <option selected="selected" value="<?php echo strtolower($Countries->getIso()) ?>"><?php echo $Countries->getCountryName(); ?></option>
-                                                    <?php
-                                                    //                                                echo '<pre>';print_r('ssssssssss'); echo '</pre>';die('macro Die');        
-                                                    } else {
-                                                    ?>
-                                                    <option value="<?php echo strtolower($Countries->getIso()) ?>"><?php echo $Countries->getCountryName() ?></option>
-                                                    <?php } ?>
-                                                    <?php }
-                                                    } ?>
-                                                </select>
-                                            </label>
-                                            <script>$(".custom-selectsh1").each(function() {
-                                                    $(this).wrap("<span class='select-wrappersh'></span>");
-                                                    $(this).after("<span class='holders'></span>")
-                                                })</script>
-                                        </div>
-                                        <div class="itemNameHead callusTxt"><img src="<?php echo $this->basePath ?>/images/mobile_icon.png" alt="1800-102-5301" />Toll Free: 1800-102-5301</div>
-                                    </div>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <div id="logout" class="logout_pop"> <a class="sroupact_close" href="javascript:void(0);" onClick="$.fancybox.close();"></a>
-                                <h2>Logging Out</h2>
-                                <div style="text-align:center;">
-                                    <div class="logpop_botsp">Do you want to save this session as a record for your further review and reports.</div>
-                                    <div> <a class="groupact_fsub1" href="#">Yes</a> <a class="groupact_fres1" href="#">No</a> </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="logo" style="z-index:99999"><a href="<?php echo $this->url('home') ?>" title="Extramarks" style="background:none;"><img src="<?php echo $this->basePath ?>/images/extramarks-logo.png" alt="extramarks" /></a> </div>
-                        <!--<div class="mobile_search"><img src="<?php echo $this->basePath ?>/images/mobile_search.png" /></div>-->
-                        <div class="mobile_icons"> <a href="tel:1800-102-5301">
-                                <p class="call_icon"> <img src="<?php echo $this->basePath ?>/images/mobile_call.png" alt="mobile" /> </p>
-                            </a>
-                            <p class="menu_icon"> <img src="<?php echo $this->basePath ?>/images/mobile_menu.png" alt="mobile" /> </p>
-                        </div>
-                    </header>
+        </li>
+        <li class="col-md-4 text-center">
+            <a href="/" class="brand logo">LOGO here</a>
+        </li>
+        <li class="col-md-4 text-right">
+            <a href="javascript:;" data-toggle="modal" data-target="#myModal">Login / </a><a href="javascript:;" data-toggle="modal" data-target="#registrationModal">Register</a>
+        </li>
+    </ul>
+</section>

@@ -8,7 +8,9 @@ return array(
         'Application',
         'User','Common', 'Notification',
         'DoctrineModule',
-    	'DoctrineORMModule', 'ZfcUser', 'ZfcBase', 'ZfcUserDoctrineORM'
+    	'DoctrineORMModule', 'ZfcUser', 'ZfcBase', 'ZfcUserDoctrineORM',
+        'ScnSocialAuth',
+        'ScnSocialAuthDoctrineORM',
 //        'Aws',
 //        'CdnLight'
 		
